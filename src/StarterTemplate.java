@@ -1,7 +1,8 @@
 /**
- * Lab 01 : Knowlede Processing Techniques [KPT]
+ * Data Connectivity and Access
  * @author Nirbhay Ashok Pherwani
  * Email: np5318@rit.edu
+ * @link: https://nirbhay.me
  */
 public class StarterTemplate {
     /**
