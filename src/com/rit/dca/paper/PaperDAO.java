@@ -1,6 +1,7 @@
 package com.rit.dca.paper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Data Connectivity and Access
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 public class PaperDAO {
     /**
      * Gives a list of paper instances
+     * @param userId for which papers are required
      * @return array list of papers for userId provided
      */
     public ArrayList<Paper> getPapers(int userId){
@@ -19,30 +21,24 @@ public class PaperDAO {
     }
 
     /**
-     * Gives a paper's instance
-     * @return paper's instance for paperId provided
+     * Gives a paper's instance for paperId provided
+     * @param paperId - id for which paper information is required
+     * @return paper's instance
      */
     public Paper getPaper(int paperId){
         return null;
     }
 
     /**
-     * Creates a new paper and sets
-     * the information for it
-     * @return paperId for newly created paper
+     * Creates a new paper or updates an existing
+     * paper and sets the information for it
+     * @param paperDetails key value pairs containing paper information
+     * @return Paper instance for  created / updated paper
      */
-    public int setPaper(String submissionTitle, String submissionAbstract, int submissionType, String fileName,
-                        String[] subjects, String[] coAuthorsFirstNames, String[] coAuthorsLastNames){
-        return -1;
+    public Paper setPaper(HashMap<String, Object> paperDetails){
+        //int paperId, String submissionTitle, String submissionAbstract, int submissionType, String fileName,
+        //String[] subjects, String[] coAuthorsFirstNames, String[] coAuthorsLastNames
+        return null;
     }
 
-    /**
-     * Updates an existing paper
-     * with the information provided for it
-     * @return successful or not
-     */
-    public boolean setPaper(int paperId, String submissionTitle, String submissionAbstract, int submissionType, String fileName,
-                            String[] subjects, String[] coAuthorsFirstNames, String[] coAuthorsLastNames){
-        return false;
-    }
 }
