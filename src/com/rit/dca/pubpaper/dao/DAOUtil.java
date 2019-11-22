@@ -1,4 +1,4 @@
-package com.rit.dca.pubpaper.database;
+package com.rit.dca.pubpaper.dao;
 
 /**
  * Database Connectivity and Access
@@ -7,9 +7,8 @@ package com.rit.dca.pubpaper.database;
  * Profile: https://nirbhay.me
  */
 
-public class DBUtil {
+public class DAOUtil {
     protected final String userName = "root";
     protected final String password = "google12";
     protected final String host = "jdbc:mysql://localhost:3306/travel?useSSL=false";
-    protected final String MYSQL_DRIVER = "com.mysql.jdbc.Driver";
 }
