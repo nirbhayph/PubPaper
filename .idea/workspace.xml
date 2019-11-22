@@ -2,12 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2dc52dc1-f0a3-4a78-840d-5474be2d6f57" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/dao/AffiliationDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/dao/SubjectDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/dao/TypeDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/model/Affiliation.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/model/Subject.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/model/Type.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/database/DBUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/database/MySQLDatabase.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -96,7 +92,14 @@
       <option name="project" value="LOCAL" />
       <updated>1574439980389</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="added afilliation, subject and type model and dao classes">
+      <created>1574444775281</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1574444775281</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -118,6 +121,7 @@
     <MESSAGE value="paper and author class created" />
     <MESSAGE value="starter template" />
     <MESSAGE value="modified packaging for classes. updated comments. updated access modifiers. updated starter template" />
-    <option name="LAST_COMMIT_MESSAGE" value="modified packaging for classes. updated comments. updated access modifiers. updated starter template" />
+    <MESSAGE value="added afilliation, subject and type model and dao classes" />
+    <option name="LAST_COMMIT_MESSAGE" value="added afilliation, subject and type model and dao classes" />
   </component>
 </project>
