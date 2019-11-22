@@ -1,10 +1,10 @@
-package com.rit.dca.paper;
+package com.rit.dca.pubpaper.model;
 
 /**
- * Data Connectivity and Access
+ * Database Connectivity and Access
  * @author Nirbhay Ashok Pherwani
  * Email: np5318@rit.edu
- * @link: https://nirbhay.me
+ * Profile: https://nirbhay.me
  */
 
 public class Paper {
@@ -22,7 +22,7 @@ public class Paper {
         return paperId;
     }
 
-    protected void setPaperId(int paperId) {
+    public void setPaperId(int paperId) {
         this.paperId = paperId;
     }
 
@@ -30,7 +30,7 @@ public class Paper {
         return title;
     }
 
-    protected void setTitle(String title) {
+    public void setTitle(String title) {
         this.title = title;
     }
 
@@ -38,7 +38,7 @@ public class Paper {
         return abstractText;
     }
 
-    protected void setAbstractText(String abstractText) {
+    public void setAbstractText(String abstractText) {
         this.abstractText = abstractText;
     }
 
@@ -46,7 +46,7 @@ public class Paper {
         return track;
     }
 
-    protected void setTrack(String track) {
+    public void setTrack(String track) {
         this.track = track;
     }
 
@@ -54,7 +54,7 @@ public class Paper {
         return status;
     }
 
-    protected void setStatus(String status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
@@ -62,7 +62,7 @@ public class Paper {
         return submissionType;
     }
 
-    protected void setSubmissionType(int submissionType) {
+    public void setSubmissionType(int submissionType) {
         this.submissionType = submissionType;
     }
 
@@ -70,7 +70,7 @@ public class Paper {
         return submitterId;
     }
 
-    protected void setSubmitterId(int submitterId) {
+    public void setSubmitterId(int submitterId) {
         this.submitterId = submitterId;
     }
 
@@ -78,7 +78,7 @@ public class Paper {
         return fileId;
     }
 
-    protected void setFileId(String fileId) {
+    public void setFileId(String fileId) {
         this.fileId = fileId;
     }
 
@@ -86,7 +86,7 @@ public class Paper {
         return tentativeStatus;
     }
 
-    protected void setTentativeStatus(String tentativeStatus) {
+    public void setTentativeStatus(String tentativeStatus) {
         this.tentativeStatus = tentativeStatus;
     }
 }

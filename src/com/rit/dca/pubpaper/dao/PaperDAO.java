@@ -1,13 +1,15 @@
-package com.rit.dca.paper;
+package com.rit.dca.pubpaper.dao;
+
+import com.rit.dca.pubpaper.model.Paper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Data Connectivity and Access
+ * Database Connectivity and Access
  * @author Nirbhay Ashok Pherwani
  * Email: np5318@rit.edu
- * @link: https://nirbhay.me
+ * Profile: https://nirbhay.me
  */
 
 public class PaperDAO {

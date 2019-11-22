@@ -1,10 +1,11 @@
-package com.rit.dca.user;
+package com.rit.dca.pubpaper.dao;
+
+import com.rit.dca.pubpaper.model.User;
 
 import java.util.HashMap;
 
 /**
- * Class : Database Connectivity and Access (DCA)
- *
+ * Database Connectivity and Access
  * @author Dhiren Chandnani
  * Email: dc6288@rit.edu
  */
@@ -12,7 +13,6 @@ public class UserDAO {
 
     /**
      * Get the profile info for user object (properties like name, affiliation)
-     *
      * @return User object of the profile requested
      */
     private User getProfile() {
@@ -21,7 +21,6 @@ public class UserDAO {
 
     /**
      * Set/Create profile info for existing/new user
-     *
      * @param profileDetails HashMap (key-value pairs) of profile parameters
      * @return User object of the profile which is updated/created
      */
@@ -32,7 +31,6 @@ public class UserDAO {
 
     /**
      * Resets user's password
-     *
      * @param email emailId of the user
      * @return Boolean value indicating if password reset was successful or no
      */
@@ -42,7 +40,6 @@ public class UserDAO {
 
     /**
      * Login a particular user into the system
-     *
      * @param email    emailId of the user
      * @param password password of the user
      * @return Token - userId
@@ -53,7 +50,6 @@ public class UserDAO {
 
     /**
      * Set user's password for the first time
-     *
      * @param password password of the user
      * @return Boolean value indicating if setting the password was successful
      */

@@ -1,4 +1,4 @@
-package com.rit.dca.user;
+package com.rit.dca.pubpaper.model;
 
 /**
  * Class : Database Connectivity and Access (DCA)
@@ -20,7 +20,7 @@ public class User {
         return userId;
     }
 
-    protected void setUserId(int userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 
@@ -28,7 +28,7 @@ public class User {
         return lastName;
     }
 
-    protected void setLastName(String lastName) {
+    public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
@@ -36,7 +36,7 @@ public class User {
         return firstName;
     }
 
-    protected void setFirstName(String firstName) {
+    public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
@@ -44,15 +44,15 @@ public class User {
         return email;
     }
 
-    protected void setEmail(String email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 
-    protected String getPwd() {
+    public String getPwd() {
         return pwd;
     }
 
-    protected void setPwd(String pwd) {
+    public void setPwd(String pwd) {
         this.pwd = pwd;
     }
 
@@ -60,7 +60,7 @@ public class User {
         return expiration;
     }
 
-    protected void setExpiration(String expiration) {
+    public void setExpiration(String expiration) {
         this.expiration = expiration;
     }
 
@@ -68,7 +68,7 @@ public class User {
         return isAdmin;
     }
 
-    protected void setIsAdmin(int isAdmin) {
+    public void setIsAdmin(int isAdmin) {
         this.isAdmin = isAdmin;
     }
 
@@ -76,7 +76,7 @@ public class User {
         return affiliationId;
     }
 
-    protected void setAffiliationId(int affiliationId) {
+    public void setAffiliationId(int affiliationId) {
         this.affiliationId = affiliationId;
     }
 
@@ -84,7 +84,7 @@ public class User {
         return canReview;
     }
 
-    protected void setCanReview(String canReview) {
+    public void setCanReview(String canReview) {
         this.canReview = canReview;
     }
 }
