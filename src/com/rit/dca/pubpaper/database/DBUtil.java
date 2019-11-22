@@ -1,5 +1,12 @@
 package com.rit.dca.pubpaper.database;
 
+/**
+ * Database Connectivity and Access
+ * @author Nirbhay Ashok Pherwani
+ * Email: np5318@rit.edu
+ * Profile: https://nirbhay.me
+ */
+
 public class DBUtil {
     protected final String userName = "root";
     protected final String password = "google12";
