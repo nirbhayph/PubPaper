@@ -36,6 +36,7 @@ Stories:
 this will make some tasks easy if we have the Paper/User Object in Hand!
 For Eg - PaperModel can have AffiliationObject inside it rather than just affiliation id. We will have to write second query in get method to achieve this.
 Another Eg - We should store ArrayList<PaperSubjects> in Papers
+ArrayList<PaperAuthors> in both users and papers.
 We can store Type Instance in Papers rather than just submissionType
 
 To note : The functions like getType for PaperId have still been built. But it's good to have vice-versa.
