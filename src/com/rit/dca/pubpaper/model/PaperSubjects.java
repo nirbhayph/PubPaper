@@ -1,4 +1,4 @@
-package com.rit.dca.pubpaper.dao;
+package com.rit.dca.pubpaper.model;
 
 /**
  * Database Connectivity and Access
