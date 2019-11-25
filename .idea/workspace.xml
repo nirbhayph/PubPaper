@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2dc52dc1-f0a3-4a78-840d-5474be2d6f57" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/dao/PaperSubjects.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Notes.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/Notes.txt" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -177,7 +177,14 @@
       <option name="project" value="LOCAL" />
       <updated>1574702520716</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="notes updated">
+      <created>1574703481448</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1574703481448</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -210,6 +217,7 @@
     <MESSAGE value="added note pad" />
     <MESSAGE value="affiliations class methods defined" />
     <MESSAGE value="updated DAOUtil with new queries. Defined TypeDAO methods." />
-    <option name="LAST_COMMIT_MESSAGE" value="updated DAOUtil with new queries. Defined TypeDAO methods." />
+    <MESSAGE value="notes updated" />
+    <option name="LAST_COMMIT_MESSAGE" value="notes updated" />
   </component>
 </project>
