@@ -13,9 +13,10 @@ public class UserDAO {
 
     /**
      * Get the profile info for user object (properties like name, affiliation)
+     * @param userId - user id for which profile data is requested. 
      * @return User object of the profile requested
      */
-    private User getProfile() {
+    private User getProfile(int userId) {
         return null;
     }
 
