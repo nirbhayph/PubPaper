@@ -3,6 +3,7 @@ package com.rit.dca.pubpaper.dao;
 import com.rit.dca.pubpaper.database.MySQLDatabase;
 import com.rit.dca.pubpaper.model.User;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -99,5 +100,81 @@ public class UserDAO {
      */
     private boolean setPassword(String password) {
         return false;
+    }
+
+    /**
+     * Get all users (Admin only)
+     * @param userId id of the user
+     * @return ArrayList<User> Arraylist of all users in the database
+     */
+    public ArrayList<User> getAllUsers(int userId){
+        MySQLDatabase connection = new MySQLDatabase(DAOUtil.HOST, DAOUtil.USER_NAME, DAOUtil.PASSWORD);
+        ArrayList<User> userList = new ArrayList<User>();
+
+        if(connection.connect()){
+
+            // setup parameters for admin query
+            List<String> adminParams = new ArrayList<String>();
+            adminParams.add(Integer.toString(userId));
+
+            // call get data on admin query
+            ArrayList<ArrayList<String>> adminValidation = connection.getData(DAOUtil.CHECK_ADMIN, adminParams);
+
+            // check if result contains single record and user is admin
+            if(adminValidation.size() == 2){
+                if(Integer.parseInt(adminValidation.get(1).get(0)) == 1){
+
+                    // setup parameters for get all users query
+                    List<String> userParams = new ArrayList<String>();
+
+                    // call get data on get all users query
+                    ArrayList<ArrayList<String>> userData = connection.getData(DAOUtil.GET_ALL_USERS, userParams);
+
+                    int iCount = 1;
+                    for (ArrayList<String> iUser : userData) {
+
+                        // skip first row as meta data
+                        if (iCount == 1) {
+                            ++iCount;
+                            continue;
+                        }
+
+                        // setup retrieved user's instance
+                        User user = new User();
+                        user.setUserId(Integer.parseInt(iUser.get(0)));
+                        user.setEmail(iUser.get(3));
+                        user.setPwd(iUser.get(4));
+                        user.setFirstName(iUser.get(2));
+                        user.setLastName(iUser.get(1));
+                        user.setAffiliationId(-1); //iUser.get(5)
+                        user.setIsAdmin(Integer.parseInt(iUser.get(8)));
+                        user.setCanReview(iUser.get(6));
+                        user.setExpiration(iUser.get(7));
+
+                        // add user instance to returning array list
+                        userList.add(user);
+                    }
+
+                    // close connection to database
+                    connection.close();
+
+                    return userList;
+
+                }
+                else{
+
+                    // close connection to database
+                    connection.close();
+                }
+            }
+            else{
+
+                // close connection to database
+                connection.close();
+            }
+        }
+
+        // return null if unable to validate if user is admin to database
+        return null;
     }
 }

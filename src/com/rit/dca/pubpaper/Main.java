@@ -18,8 +18,8 @@ public class Main {
 
         // Authenticate User
         UserDAO user = new UserDAO();
-        User validatedUser = user.login("np5318@rit.edu", "google12");
-        if( user != null){
+        User validatedUser = user.login("stevez@cssconsult.com", "c704e98e5f46b4afd32682cf53d740524b4f6910");
+        if( validatedUser != null){
             System.out.println("Logged In Successfully - " + validatedUser.getUserId());
 
             // Get all papers for validated user
@@ -61,6 +61,12 @@ public class Main {
             Type type = accessType.getType(9995);
             if(type != null){
                 System.out.println("\nPaper's Type Is : " + type.getTypeId() + " - " + type.getTypeName());
+            }
+
+            // Get all users
+            ArrayList<User> userList = user.getAllUsers(validatedUser.getUserId());
+            for(User iUser: userList){
+                System.out.println("\nFirstName : " + iUser.getFirstName() + "\t|\tLastName : " + iUser.getLastName());
             }
         }
     }

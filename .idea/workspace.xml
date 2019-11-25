@@ -2,8 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2dc52dc1-f0a3-4a78-840d-5474be2d6f57" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/model/PaperAuthors.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Notes.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/Notes.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/mysql_connector_java_5_1_48.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/mysql_connector_java_5_1_48.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/dao/DAOUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/dao/DAOUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/dao/UserDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/dao/UserDAO.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -27,10 +31,10 @@
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../PE03_FinalFiles/Database_Drivers/mysql-connector-java-5.1.48.jar!/" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="project.structure.side.proportion" value="0.0" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
