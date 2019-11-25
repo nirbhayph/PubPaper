@@ -5,3 +5,39 @@ We should associate other classes objects in the models of PaperDAO and UserDAO 
 Exception Handling in every method
 Authorization for some methods
 Delete for authorized users
+
+Stories:
+1) admin should be able to see all users
+2) admin should be able to delete users
+3) admin should be able to add users
+4) new user can add himself
+5) reset password
+6) set my password
+7) delete my account
+8) admin can update user's role.
+9) admin should be able to update affiliations
+10) user can update his affiliation
+11) admin can update user's review status
+13) admin can update any of the user's info
+14) email needs to be sent out for reset password
+15) user can add papers
+16) user can update his own paper's properties
+17) user can update/add/delete his own paper's subjects
+18) user can update his paper type
+19) user can delete his paper's properties (We need to set them to null if he does so)
+20) PaperAuthors can be updated by paper submitter
+21) user cannot change properties like isAdmin or canReview without admin permission.
+22) admin can give user these properties
+23) reviewing papers after submission functionality needs to be built for papers and admin can allocate that!
+    (NOT NECESSARY TO BUILD)
+
+24) Remember to associate authorization in a clean way for each task
+25) We should associate other classes objects in the models of PaperDAO and UserDAO as they are linked to child classes,
+this will make some tasks easy if we have the Paper/User Object in Hand!
+For Eg - PaperModel can have AffiliationObject inside it rather than just affiliation id. We will have to write second query in get method to achieve this.
+Another Eg - We should store ArrayList<PaperSubjects> in Papers
+We can store Type Instance in Papers rather than just submissionType
+
+To note : The functions like getType for PaperId have still been built. But it's good to have vice-versa.
+
+26) make login and registration with salting and not directly.
