@@ -6,6 +6,7 @@
       <change beforePath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/dao/AffiliationDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/dao/AffiliationDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/dao/DAOUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/dao/DAOUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/dao/TypeDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/dao/TypeDAO.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -165,7 +166,14 @@
       <option name="project" value="LOCAL" />
       <updated>1574696975212</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="affiliations class methods defined">
+      <created>1574700713668</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1574700713668</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -196,6 +204,7 @@
     <MESSAGE value="Login method defined. minor changes to DAOUtil." />
     <MESSAGE value="get paper with paper id and get papers with user id defined" />
     <MESSAGE value="added note pad" />
-    <option name="LAST_COMMIT_MESSAGE" value="added note pad" />
+    <MESSAGE value="affiliations class methods defined" />
+    <option name="LAST_COMMIT_MESSAGE" value="affiliations class methods defined" />
   </component>
 </project>

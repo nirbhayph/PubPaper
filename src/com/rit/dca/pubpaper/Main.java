@@ -2,9 +2,11 @@ package com.rit.dca.pubpaper;
 
 import com.rit.dca.pubpaper.dao.AffiliationDAO;
 import com.rit.dca.pubpaper.dao.PaperDAO;
+import com.rit.dca.pubpaper.dao.TypeDAO;
 import com.rit.dca.pubpaper.dao.UserDAO;
 import com.rit.dca.pubpaper.model.Affiliation;
 import com.rit.dca.pubpaper.model.Paper;
+import com.rit.dca.pubpaper.model.Type;
 import com.rit.dca.pubpaper.model.User;
 
 import java.util.ArrayList;
@@ -45,6 +47,20 @@ public class Main {
             ArrayList<Affiliation> affiliations = accessAffiliation.getAffiliations();
             for(Affiliation aff : affiliations){
                 System.out.println(aff.getAffiliationId() + " - " + aff.getAffiliationName());
+            }
+
+            // Get all types
+            TypeDAO accessType = new TypeDAO();
+
+            ArrayList<Type> types = accessType.getTypes();
+            for(Type type : types){
+                System.out.println(type.getTypeId() + " - " + type.getTypeName());
+            }
+
+            // Get type instance for a paper id
+            Type type = accessType.getType(9995);
+            if(type != null){
+                System.out.println("\nPaper's Type Is : " + type.getTypeId() + " - " + type.getTypeName());
             }
         }
     }

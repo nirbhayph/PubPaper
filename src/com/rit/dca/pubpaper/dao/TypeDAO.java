@@ -1,7 +1,9 @@
 package com.rit.dca.pubpaper.dao;
 
+import com.rit.dca.pubpaper.database.MySQLDatabase;
 import com.rit.dca.pubpaper.model.Type;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Database Connectivity and Access
@@ -12,20 +14,87 @@ import java.util.ArrayList;
 
 public class TypeDAO {
     /**
-     * Gives a list of type instances
-     * @param paperId for which types are required
-     * @return array list of types for paperId provided
+     * Gives a type's instance
+     * @param paperId for which type instance is required
+     * @return Type instance for paper id provided
      */
-    public ArrayList<Type> getTypes(int paperId){
-        return null;
+    public Type getType(int paperId){
+        MySQLDatabase connection = new MySQLDatabase(DAOUtil.HOST, DAOUtil.USER_NAME, DAOUtil.PASSWORD);
+        Type type = null;
+
+        if(connection.connect()) {
+
+            // setup parameters for types query
+            List<String> typeParams = new ArrayList<String>();
+            typeParams.add(Integer.toString(paperId));
+
+            // call get data on types query
+            ArrayList<ArrayList<String>> typesData = connection.getData(DAOUtil.GET_PAPER_TYPE_ID, typeParams);
+
+            if(typesData.size() == 2){
+                String typeId = typesData.get(1).get(0);
+
+                typeParams = new ArrayList<String>();
+                typeParams.add(typeId);
+
+                typesData = connection.getData(DAOUtil.GET_PAPER_TYPE_WITH_ID, typeParams);
+
+                if(typesData.size() == 2){
+                    type = new Type();
+                    type.setTypeId(Integer.parseInt(typeId));
+                    type.setTypeName(typesData.get(1).get(1));
+                }
+            }
+
+            // close connection to database
+            connection.close();
+        }
+
+        return type;
+
+        // TODO : add exception handling in this method
     }
 
     /**
-     * Gives a type's instance for typeId provided
-     * @param typeId - id for which type information is required
-     * @return type's instance
+     * Gives a list of all type instances
+     * @return ArrayList of type instances
      */
-    public Type getType(int typeId){
-        return null;
+    public ArrayList<Type> getTypes(){
+        MySQLDatabase connection = new MySQLDatabase(DAOUtil.HOST, DAOUtil.USER_NAME, DAOUtil.PASSWORD);
+        ArrayList<Type> types = new ArrayList<Type>();
+
+        if (connection.connect()) {
+
+            // setup parameters for types query
+            List<String> typeParams = new ArrayList<String>();
+
+            // call get data on types query
+            ArrayList<ArrayList<String>> typesData = connection.getData(DAOUtil.GET_ALL_TYPES, typeParams);
+
+            int iCount = 1;
+            for (ArrayList<String> iType : typesData) {
+
+                // skip first row as meta data
+                if (iCount == 1) {
+                    ++iCount;
+                    continue;
+                }
+
+                // setup retrieved type's instance
+                Type type = new Type();
+                type.setTypeName(iType.get(1));
+                type.setTypeId(Integer.parseInt(iType.get(0)));
+
+                // add type instance to returning array list
+                types.add(type);
+            }
+
+            // close connection to database
+            connection.close();
+        }
+
+        return types;
+
+        // TODO : Manage exceptions for this method
     }
 }

@@ -63,7 +63,7 @@ public class AffiliationDAO {
     public ArrayList<Affiliation> getAffiliations() {
 
         MySQLDatabase connection = new MySQLDatabase(DAOUtil.HOST, DAOUtil.USER_NAME, DAOUtil.PASSWORD);
-        ArrayList<Affiliation> affiliations = new ArrayList<>();
+        ArrayList<Affiliation> affiliations = new ArrayList<Affiliation>();
 
         if (connection.connect()) {
 
