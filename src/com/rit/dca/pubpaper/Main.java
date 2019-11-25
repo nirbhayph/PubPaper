@@ -18,7 +18,7 @@ public class Main {
 
         // Authenticate User
         UserDAO user = new UserDAO();
-        User validatedUser = user.login("np5318@rit.edu", "google12");
+        User validatedUser = user.login("stevez@cssconsult.com", "c704e98e5f46b4afd32682cf53d740524b4f6910");
         if(validatedUser != null){
             System.out.println("Logged In Successfully - " + validatedUser.getUserId());
 

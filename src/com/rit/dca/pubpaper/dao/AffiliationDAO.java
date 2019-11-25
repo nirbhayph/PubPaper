@@ -33,17 +33,17 @@ public class AffiliationDAO {
             ArrayList<ArrayList<String>> affiliationsData = connection.getData(DAOUtil.GET_USER_AFFILIATION, affiliationParams);
 
             if(affiliationsData.size() == 2){
-                String affiliationName = affiliationsData.get(1).get(0);
+                int affiliationId = Integer.parseInt(affiliationsData.get(1).get(0));
 
                 affiliationParams = new ArrayList<String>();
-                affiliationParams.add(affiliationName);
+                affiliationParams.add(Integer.toString(affiliationId));
 
-                affiliationsData = connection.getData(DAOUtil.GET_AFFILIATION_WITH_NAME, affiliationParams);
+                affiliationsData = connection.getData(DAOUtil.GET_AFFILIATION_WITH_ID, affiliationParams);
 
                 if(affiliationsData.size() == 2){
                     affiliation = new Affiliation();
-                    affiliation.setAffiliationName(affiliationName);
-                    affiliation.setAffiliationId(Integer.parseInt(affiliationsData.get(1).get(0)));
+                    affiliation.setAffiliationName(affiliationsData.get(1).get(1));
+                    affiliation.setAffiliationId(affiliationId);
                 }
             }
 

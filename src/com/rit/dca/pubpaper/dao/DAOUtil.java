@@ -11,7 +11,7 @@ public class DAOUtil {
 
     // MYSQL credentials
     protected static final String USER_NAME = "root";
-    protected static final String PASSWORD = "root";
+    protected static final String PASSWORD = "google12";
     protected static final String HOST = "jdbc:mysql://localhost:3306/CSM?useSSL=false";
 
     // Authentication
@@ -27,12 +27,12 @@ public class DAOUtil {
 
     // Affiliations
     protected static final String GET_USER_AFFILIATION = "SELECT affiliationId FROM Users WHERE userId=?";
-    protected static final String GET_AFFILIATION_WITH_NAME = "SELECT * FROM _Affiliations WHERE affiliationName=?";
+    protected static final String GET_AFFILIATION_WITH_ID = "SELECT * FROM _Affiliations WHERE affiliationId=?";
     protected static final String GET_ALL_AFFILIATIONS = "SELECT * FROM _Affiliations";
 
     // Types
     protected static final String GET_ALL_TYPES = "SELECT * FROM _Types";
-    protected static final String GET_PAPER_TYPE_ID = "SELECT submissionType FROM Papers WHERE submitterId=?";
+    protected static final String GET_PAPER_TYPE_ID = "SELECT submissionType FROM Papers WHERE paperId=?";
     protected static final String GET_PAPER_TYPE_WITH_ID = "SELECT * FROM _Types WHERE typeId=?";
 
 }
