@@ -19,7 +19,7 @@ public class Main {
         // Authenticate User
         UserDAO user = new UserDAO();
         User validatedUser = user.login("np5318@rit.edu", "google12");
-        if( user != null){
+        if(validatedUser != null){
             System.out.println("Logged In Successfully - " + validatedUser.getUserId());
 
             // Get all papers for validated user
