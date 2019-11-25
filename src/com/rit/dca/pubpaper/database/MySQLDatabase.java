@@ -1,7 +1,13 @@
 package com.rit.dca.pubpaper.database;
 
+import java.sql.PreparedStatement;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
 * Database Connectivity and Access
@@ -55,14 +61,16 @@ public class MySQLDatabase {
       }
       return false;
     }
-    catch (Exception e){
+    catch (SQLException e){
       return false;
     }
   }
 
   /**
   * Prepare query statement
-  * @return PreparedStatement - returns the formed preparedStatement with arguments.
+  * @param query - SQL Query
+  * @param arguments - Parameters for variables in SQL Query
+  * @return PreparedStatement - returns the formed prepared statement with arguments.
   */
   private PreparedStatement prepare(String query, List<String> arguments){
     try{
@@ -71,14 +79,17 @@ public class MySQLDatabase {
         preparedStatement.setString(param+1, arguments.get(param));
       }
       return preparedStatement;
-    }catch(SQLException e){
+    }
+    catch(SQLException e){
       return null;
     }
   }
 
   /**
-  * Execute Select queries using preparedStatement
-  * @return ArrayList<ArrayList<String>> - returns all rows from select query alongwith column headers.
+  * Execute Select queries using prepared statement
+  * @param query - SQL Query
+  * @param arguments - Parameters for variables in SQL Query
+  * @return ArrayList<ArrayList<String>> - returns all rows from select query along with column headers.
   */
   public ArrayList<ArrayList<String>> getData(String query, List<String> arguments){
     ArrayList<ArrayList<String>> allRows = new ArrayList<ArrayList<String>>();
@@ -100,22 +111,26 @@ public class MySQLDatabase {
         allRows.add(row);
       }
       return allRows;
-    }catch(Exception e){
+    }
+    catch(Exception e){
       return null;
     }
   }
 
   /**
   * Execute Update, Delete and Insert queries using preparedStatement
+  * @param query - SQL Query
+  * @param arguments - Parameters for variables in SQL Query
   * @return int - returns rows affected from executing the DML statements.
   */
   public int modifyData(String query, List<String> arguments){
     try{
       PreparedStatement preparedStatement = prepare(query, arguments);
       return preparedStatement.executeUpdate();
-    }catch(SQLException sqlEx) {
+    }
+    catch(SQLException sqlEx) {
       return -1;
-		}
+    }
   }
 
 }
