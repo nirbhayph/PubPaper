@@ -243,5 +243,7 @@
     <MESSAGE value="refactored paper subjects to model" />
     <MESSAGE value="paper authors model class created" />
     <option name="LAST_COMMIT_MESSAGE" value="paper authors model class created" />
+    <MESSAGE value="added getAllUsers to userDAO. Updated Main to test it" />
+    <option name="LAST_COMMIT_MESSAGE" value="added getAllUsers to userDAO. Updated Main to test it" />
   </component>
 </project>

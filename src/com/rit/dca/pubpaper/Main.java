@@ -62,6 +62,12 @@ public class Main {
             if(type != null){
                 System.out.println("\nPaper's Type Is : " + type.getTypeId() + " - " + type.getTypeName());
             }
+
+            // Get all users
+            ArrayList<User> userList = user.getAllUsers(validatedUser.getUserId());
+            for(User iUser: userList){
+                System.out.println("\nFirstName : " + iUser.getFirstName() + "\t|\tLastName : " + iUser.getLastName());
+            }
         }
     }
 }
