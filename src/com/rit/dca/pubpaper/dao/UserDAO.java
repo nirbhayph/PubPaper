@@ -46,10 +46,10 @@ public class UserDAO {
      * Login a particular user into the system
      * @param email    emailId of the user
      * @param password password of the user
-     * @return Token - userId
+     * @return User - user instance
      */
     public User login(String email, String password) {
-        MySQLDatabase connection = new MySQLDatabase(DAOUtil.host, DAOUtil.userName, DAOUtil.password);
+        MySQLDatabase connection = new MySQLDatabase(DAOUtil.HOST, DAOUtil.USER_NAME, DAOUtil.PASSWORD);
 
         if(connection.connect()){
 
@@ -59,7 +59,7 @@ public class UserDAO {
             loginParams.add(password);
 
             // call get data on login query
-            ArrayList<ArrayList<String>> validation = connection.getData(DAOUtil.checkLogin, loginParams);
+            ArrayList<ArrayList<String>> validation = connection.getData(DAOUtil.CHECK_LOGIN, loginParams);
 
             // check if validated successfully
             if(validation.size() == 2){
@@ -80,6 +80,9 @@ public class UserDAO {
 
                 // return validated user's instance
                 return user;
+            }
+            else{
+                connection.close();
             }
         }
 

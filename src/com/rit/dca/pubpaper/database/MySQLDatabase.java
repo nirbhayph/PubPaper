@@ -113,7 +113,8 @@ public class MySQLDatabase {
       return allRows;
     }
     catch(Exception e){
-      return null;
+      e.printStackTrace();
+      return allRows;
     }
   }
 

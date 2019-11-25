@@ -2,12 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2dc52dc1-f0a3-4a78-840d-5474be2d6f57" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/mysql_connector_java_5_1_48.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PubPaper.iml" beforeDir="false" afterPath="$PROJECT_DIR$/PubPaper.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/dao/DAOUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/dao/DAOUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/dao/PaperDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/dao/PaperDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/dao/UserDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/dao/UserDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/database/MySQLDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/database/MySQLDatabase.java" afterDir="false" />
     </list>
@@ -148,7 +146,14 @@
       <option name="project" value="LOCAL" />
       <updated>1574688847546</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Login method defined. minor changes to DAOUtil.">
+      <created>1574692711728</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1574692711728</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -176,6 +181,7 @@
     <MESSAGE value="Utility classes added. Base class for mysqldb created" />
     <MESSAGE value="Fixed imports and comments in MySQLDatabase class." />
     <MESSAGE value="fixed getProfile params" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed getProfile params" />
+    <MESSAGE value="Login method defined. minor changes to DAOUtil." />
+    <option name="LAST_COMMIT_MESSAGE" value="Login method defined. minor changes to DAOUtil." />
   </component>
 </project>
