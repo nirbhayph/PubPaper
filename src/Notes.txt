@@ -1,0 +1,7 @@
+Things we haven't included even partially yet!
+
+We should have getAll method  in each class except User Class without any arguments to get everything
+We should associate other classes objects in the models of PaperDAO and UserDAO as they are linked to child classes
+Exception Handling in every method
+Authorization for some methods
+Delete for authorized users

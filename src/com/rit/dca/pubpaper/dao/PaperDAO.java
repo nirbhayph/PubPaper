@@ -61,7 +61,7 @@ public class PaperDAO {
             // close connection to database
             connection.close();
         }
-        
+
         return papers;
 
         // TODO : add exception handling in this method

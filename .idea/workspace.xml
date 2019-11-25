@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2dc52dc1-f0a3-4a78-840d-5474be2d6f57" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/dao/DAOUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/dao/DAOUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/dao/PaperDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/dao/PaperDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/dao/UserDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/dao/UserDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/database/MySQLDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/database/MySQLDatabase.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -153,7 +148,14 @@
       <option name="project" value="LOCAL" />
       <updated>1574692711728</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="get paper with paper id and get papers with user id defined">
+      <created>1574696505297</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1574696505297</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -182,6 +184,7 @@
     <MESSAGE value="Fixed imports and comments in MySQLDatabase class." />
     <MESSAGE value="fixed getProfile params" />
     <MESSAGE value="Login method defined. minor changes to DAOUtil." />
-    <option name="LAST_COMMIT_MESSAGE" value="Login method defined. minor changes to DAOUtil." />
+    <MESSAGE value="get paper with paper id and get papers with user id defined" />
+    <option name="LAST_COMMIT_MESSAGE" value="get paper with paper id and get papers with user id defined" />
   </component>
 </project>
