@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2dc52dc1-f0a3-4a78-840d-5474be2d6f57" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/mysql_connector_java_5_1_48.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/mysql_connector_java_5_1_48.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/dao/DAOUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/dao/DAOUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/dao/UserDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/dao/UserDAO.java" afterDir="false" />
-    </list>
+    <list default="true" id="2dc52dc1-f0a3-4a78-840d-5474be2d6f57" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -202,7 +195,14 @@
       <option name="project" value="LOCAL" />
       <updated>1574707014541</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="added getAllUsers to userDAO. Updated Main to test it">
+      <created>1574715254374</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1574715254374</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -238,6 +238,7 @@
     <MESSAGE value="notes updated" />
     <MESSAGE value="added paper subjects model class" />
     <MESSAGE value="refactored paper subjects to model" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactored paper subjects to model" />
+    <MESSAGE value="added getAllUsers to userDAO. Updated Main to test it" />
+    <option name="LAST_COMMIT_MESSAGE" value="added getAllUsers to userDAO. Updated Main to test it" />
   </component>
 </project>
