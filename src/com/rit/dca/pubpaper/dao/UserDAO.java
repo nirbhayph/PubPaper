@@ -109,7 +109,7 @@ public class UserDAO {
      */
     public ArrayList<User> getAllUsers(int userId){
         MySQLDatabase connection = new MySQLDatabase(DAOUtil.HOST, DAOUtil.USER_NAME, DAOUtil.PASSWORD);
-        ArrayList<User> userList = new ArrayList<User>();
+        ArrayList<User> userList = null;
 
         if(connection.connect()){
 
@@ -129,6 +129,9 @@ public class UserDAO {
 
                     // call get data on get all users query
                     ArrayList<ArrayList<String>> userData = connection.getData(DAOUtil.GET_ALL_USERS, userParams);
+
+                    // initialize returning user list
+                    userList = new ArrayList<User>();
 
                     int iCount = 1;
                     for (ArrayList<String> iUser : userData) {
@@ -154,27 +157,15 @@ public class UserDAO {
                         // add user instance to returning array list
                         userList.add(user);
                     }
-
-                    // close connection to database
-                    connection.close();
-
-                    return userList;
-
-                }
-                else{
-
-                    // close connection to database
-                    connection.close();
                 }
             }
-            else{
 
-                // close connection to database
-                connection.close();
-            }
+            // close connection to database
+            connection.close();
         }
 
         // return null if unable to validate if user is admin to database
-        return null;
+        // otherwise returns the populated userList
+        return userList;
     }
 }
