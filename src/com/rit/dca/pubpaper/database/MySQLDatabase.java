@@ -28,7 +28,7 @@ public class MySQLDatabase {
   * @param userName - contains the username
   * @param password - contains the password
   */
-  MySQLDatabase(String url, String userName, String password){
+  public MySQLDatabase(String url, String userName, String password){
     this.connectionURL = url;
     this.userName = userName;
     this.password = password;

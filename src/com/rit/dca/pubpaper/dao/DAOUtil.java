@@ -8,7 +8,14 @@ package com.rit.dca.pubpaper.dao;
  */
 
 public class DAOUtil {
-    protected final String userName = "root";
-    protected final String password = "google12";
-    protected final String host = "jdbc:mysql://localhost:3306/travel?useSSL=false";
+
+    // MYSQL credentials
+    protected static final String userName = "root";
+    protected static final String password = "google12";
+    protected static final String host = "jdbc:mysql://localhost:3306/CSM?useSSL=false";
+
+    // Authentication
+    protected  static final String checkLogin = "SELECT * FROM Users WHERE email=? AND pswd=?";
+
+
 }
