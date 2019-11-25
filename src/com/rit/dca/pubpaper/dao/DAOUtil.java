@@ -20,4 +20,9 @@ public class DAOUtil {
     // Paper
     protected static final String GET_USER_PAPERS = "SELECT * FROM Papers WHERE submitterId=?";
     protected static final String GET_PAPER_WITH_PAPER_ID = "SELECT * FROM Papers WHERE submissionId=?";
+
+    // Affiliations
+    protected static final String GET_USER_AFFILIATION = "SELECT affiliation FROM Users WHERE userId=?";
+    protected static final String GET_AFFILIATION_WITH_NAME = "SELECT * FROM _Affiliations WHERE affiliationName=?";
+    protected static final String GET_ALL_AFFILIATIONS = "SELECT * FROM _Affiliations";
 }

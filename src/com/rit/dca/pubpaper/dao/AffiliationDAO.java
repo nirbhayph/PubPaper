@@ -1,7 +1,10 @@
 package com.rit.dca.pubpaper.dao;
 
+import com.rit.dca.pubpaper.database.MySQLDatabase;
 import com.rit.dca.pubpaper.model.Affiliation;
+
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Database Connectivity and Access
@@ -12,20 +15,88 @@ import java.util.ArrayList;
 
 public class AffiliationDAO {
     /**
-     * Gives a list of affiliation instances
-     * @param userId for which affiliations are required
-     * @return array list of affiliations for userId provided
+     * Gives affiliation
+     * @param userId for which affiliation is required
+     * @return affiliation name for userId provided
      */
-    public ArrayList<Affiliation> getAffiliations(int userId){
-        return null;
+    public Affiliation getAffiliation(int userId){
+        MySQLDatabase connection = new MySQLDatabase(DAOUtil.HOST, DAOUtil.USER_NAME, DAOUtil.PASSWORD);
+        Affiliation affiliation = null;
+
+        if(connection.connect()) {
+
+            // setup parameters for affiliations query
+            List<String> affiliationParams = new ArrayList<String>();
+            affiliationParams.add(Integer.toString(userId));
+
+            // call get data on affiliations query
+            ArrayList<ArrayList<String>> affiliationsData = connection.getData(DAOUtil.GET_USER_AFFILIATION, affiliationParams);
+
+            if(affiliationsData.size() == 2){
+                String affiliationName = affiliationsData.get(1).get(0);
+
+                affiliationParams = new ArrayList<String>();
+                affiliationParams.add(affiliationName);
+
+                affiliationsData = connection.getData(DAOUtil.GET_AFFILIATION_WITH_NAME, affiliationParams);
+
+                if(affiliationsData.size() == 2){
+                    affiliation = new Affiliation();
+                    affiliation.setAffiliationName(affiliationName);
+                    affiliation.setAffiliationId(Integer.parseInt(affiliationsData.get(1).get(0)));
+                }
+            }
+
+            // close connection to database
+            connection.close();
+        }
+
+        return affiliation;
+
+        // TODO : add exception handling in this method
     }
 
     /**
-     * Gives a affiliation's instance for affiliationId provided
-     * @param affiliationId - id for which affiliation information is required
-     * @return affiliation's instance
+     * Gives a list of all affiliation instances
+     * @return array list of all affiliation instances
      */
-    public Affiliation getAffiliation(int affiliationId){
-        return null;
+    public ArrayList<Affiliation> getAffiliations() {
+
+        MySQLDatabase connection = new MySQLDatabase(DAOUtil.HOST, DAOUtil.USER_NAME, DAOUtil.PASSWORD);
+        ArrayList<Affiliation> affiliations = new ArrayList<>();
+
+        if (connection.connect()) {
+
+            // setup parameters for affiliations query
+            List<String> affiliationParams = new ArrayList<String>();
+
+            // call get data on affiliations query
+            ArrayList<ArrayList<String>> affiliationsData = connection.getData(DAOUtil.GET_ALL_AFFILIATIONS, affiliationParams);
+
+            int iCount = 1;
+            for (ArrayList<String> iAffiliation : affiliationsData) {
+
+                // skip first row as meta data
+                if (iCount == 1) {
+                    ++iCount;
+                    continue;
+                }
+
+                // setup retrieved affiliation's instance
+                Affiliation affiliation = new Affiliation();
+                affiliation.setAffiliationName(iAffiliation.get(1));
+                affiliation.setAffiliationId(Integer.parseInt(iAffiliation.get(0)));
+
+                // add affiliation instance to returning array list
+                affiliations.add(affiliation);
+            }
+
+            // close connection to database
+            connection.close();
+        }
+
+        return affiliations;
+
+        // TODO : Manage exceptions for this method
     }
 }
