@@ -474,6 +474,7 @@ public class UserDAO {
      *
      * @param adminUserId admin requesting for user information
      * @param userId      requested user
+     * @param adminStatus admin status to be given to the user
      * @return User - user instance
      */
     public User changeAdminStatus(int adminUserId, int userId, boolean adminStatus) {
@@ -507,6 +508,55 @@ public class UserDAO {
 
                     // call modify data on set user as admin query
                     rowsAffected = connection.modifyData(DAOUtil.SET_USER_AS_ADMIN, userParams);
+                    if(rowsAffected == 1){
+                        user = getUser(adminUserId, userId);
+                    }
+                }
+                connection.close();
+            }
+        }
+        return user;
+    }
+
+    /**
+     * Change review status of a particular user (Admin Only)
+     *
+     * @param adminUserId admin requesting for user information
+     * @param userId      requested user
+     * @param reviewStatus review status to be given to the user
+     * @return User - user instance
+     */
+    public User changeReviewStatus(int adminUserId, int userId, boolean reviewStatus) {
+        ArrayList<String> userParams = null;
+        User user = null;
+        int rowsAffected = 0;
+        if(loggedInId == adminUserId){
+
+            MySQLDatabase connection = new MySQLDatabase(DAOUtil.HOST, DAOUtil.USER_NAME, DAOUtil.PASSWORD);
+            if(connection.connect()){
+
+                // create params list for check user query
+                userParams = new ArrayList<String>();
+                userParams.add(Integer.toString(userId));
+
+                // call get data on check user query
+                ArrayList<ArrayList<String>> validateUser = connection.getData(DAOUtil.CHECK_USER_EXIST, userParams);
+
+                // check if user exists
+                if (validateUser.size() == 2) {
+
+                    // create params list for set admin query
+                    userParams = new ArrayList<String>();
+                    if(reviewStatus){
+                        userParams.add(Integer.toString(1));
+                    }
+                    else{
+                        userParams.add(Integer.toString(0));
+                    }
+                    userParams.add(Integer.toString(userId));
+
+                    // call modify data on set user as admin query
+                    rowsAffected = connection.modifyData(DAOUtil.SET_USER_CAN_REVIEW, userParams);
                     if(rowsAffected == 1){
                         user = getUser(adminUserId, userId);
                     }

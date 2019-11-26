@@ -28,6 +28,7 @@ public class DAOUtil {
             " VALUES(?,?,?,?,?,'0','20250101000000',0,?)";
     protected static final String GET_NEXT_USER_ID = "SELECT userId FROM Users ORDER BY userId DESC LIMIT 1";
     protected static final String SET_USER_AS_ADMIN = "UPDATE Users SET isAdmin=? WHERE userId=?";
+    protected static final String SET_USER_CAN_REVIEW = "UPDATE Users SET canReview=? WHERE userId=?";
 
     // Paper Authors
     protected static final String DELETE_PAPER_AUTHORS = "DELETE FROM paperauthors WHERE userId=?";

@@ -15,11 +15,11 @@ DONE - 4) new user can add himself -- setProfile()
 6) set my password
 DONE - 7) delete user/users account -- Story 2
 DONE - 8) admin can update user's role. -- makeUserAdmin(), changeAdminStatus(adminID, userId, adminStatus(1,0))
-9) admin should be able to update affiliations -- add/Delete/Edit affiliationName , (adminID, affiliId, affilName)
-ADD - adminID, affiliNAME | DELETE - adminID, afiliID (CHANGE USER TO NULL) | EDIT - adminID, affiliName
-10) user can update his affiliation -- setProfile()
+DONE - 9) admin should be able to update affiliations -- add/Delete/Edit affiliationName , (adminID, affiliId, affilName)
+          ADD - adminID, affiliNAME | DELETE - adminID, afiliID (CHANGE USER TO NULL) | EDIT - adminID, affiliName
+DONE - 10) user can update his affiliation -- setProfile()
 11) admin can update user's review status -- updateCanReview(adminId, userId, canReivewStatus)
-13) admin can update any of the user's info -- setProfile() // checkAdmin included
+DONE - 13) admin can update any of the user's info -- setProfile() // checkAdmin included
 14) email needs to be sent out for reset password -- tomorrow
 15) user can add papers
 16) user can update his own paper's properties

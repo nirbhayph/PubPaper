@@ -78,6 +78,10 @@ public class Main {
             User aUser = user.changeAdminStatus(validatedUser.getUserId(), 3, true);
             System.out.println("\nAdmin USER :- isAdmin : " + aUser.getIsAdmin() + "\t|\tLastName : " + aUser.getLastName());
 
+            // Give user review status
+            rUser = user.changeReviewStatus(validatedUser.getUserId(), 3, false);
+            System.out.println("\nAdmin USER :- canReview : " + rUser.getCanReview() + "\t|\tLastName : " + rUser.getLastName());
+
             // Add affiliation
             System.out.println("\nAdd Affiliation STATUS : " + accessAffiliation.addAffiliations(validatedUser.getUserId(), "Aamchi University"));
 
