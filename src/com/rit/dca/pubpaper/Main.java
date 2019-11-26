@@ -14,12 +14,12 @@ public class Main {
 
         // Authenticate User
         UserDAO user = new UserDAO();
-        User validatedUser = user.login("stevez@cssconsult.com", "c704e98e5f46b4afd32682cf53d740524b4f6910");
+        User validatedUser = user.login("sgorka@pct.edu", "32c1188618d2781556c80fedaa88c849c4f41ff3");
         if(validatedUser != null){
             System.out.println("Logged In Successfully - " + validatedUser.getUserId());
 
             // Get all papers for validated user
-            PaperDAO accessPapers = new PaperDAO();
+            PaperDAO accessPapers = new PaperDAO(user);
             ArrayList<Paper> userPapers = accessPapers.getPapers(validatedUser.getUserId());
 
             for(Paper paper : userPapers){
@@ -33,7 +33,7 @@ public class Main {
             }
 
             // Get affiliation instance for validated user
-            AffiliationDAO accessAffiliation = new AffiliationDAO();
+            AffiliationDAO accessAffiliation = new AffiliationDAO(user);
             Affiliation affiliation = accessAffiliation.getAffiliation(validatedUser.getUserId());
             if(affiliation != null){
                 System.out.println(affiliation.getAffiliationId() + " - " + affiliation.getAffiliationName());
@@ -80,22 +80,22 @@ public class Main {
 
 
             // Add affiliation
-            System.out.println("\nAdd Affiliation STATUS : " + accessAffiliation.addAffiliations(validatedUser.getUserId(), "Aamchi University"));
+            System.out.println("\nAdd Affiliation STATUS : " + accessAffiliation.addAffiliations("Aamchi University"));
 
             // Edit Affiliation
-            System.out.println("\nUpdate Affiliation Affected Rows : " + accessAffiliation.changeAffiliation(validatedUser.getUserId(), "Aamchi University", "John Doe University"));
+            System.out.println("\nUpdate Affiliation Affected Rows : " + accessAffiliation.changeAffiliation(275, "John Doe University"));
 
             // Delete Affiliation
-            System.out.println("\nDelete Affiliation Affected Rows : " + accessAffiliation.deleteAffiliation(validatedUser.getUserId(), 275));
-            */
+            System.out.println("\nDelete Affiliation Affected Rows : " + accessAffiliation.deleteAffiliation(275));
 
+            */
             /*
             // See a User's Paper's Subjects
             System.out.println("VALIDATED USER's ALL PAPERS SUBJECTS");
             ArrayList<Integer> authorsPapersIds = validatedUser.getAllPapers();
 
             for(int paperId : authorsPapersIds){
-                PaperDAO paperDAO = new PaperDAO();
+                PaperDAO paperDAO = new PaperDAO(user);
                 ArrayList<Subject> subjects = paperDAO.getPaper(paperId).getSubjects();
                 for(Subject subject : subjects){
                     System.out.println(subject.getSubjectName());
@@ -108,14 +108,16 @@ public class Main {
             ArrayList<Integer> authorPapersIds = validatedUser.getAllPapers();
 
             for(int paperId : authorPapersIds){
-                PaperDAO paperDAO = new PaperDAO();
+                PaperDAO paperDAO = new PaperDAO(user);
                 ArrayList<Integer> authorsIds = paperDAO.getPaper(paperId).getAuthors();
                 for(int authorId : authorsIds){
                     System.out.println(user.getPublicProfile(authorId).getFirstName());
                 }
                 System.out.println(paperDAO.getPaper(paperId).getPaperId() + " ENDS HERE ");
             }
-            */
+
+             */
+
 
             //Delete a User
             /*int users[] = {247, 450, 405, 10};

@@ -18,6 +18,10 @@ public class UserDAO {
 
     private int loggedInId = -1;
 
+    public int getLoggedInId() {
+        return loggedInId;
+    }
+
     /**
      * Get the profile info for user object (all properties)
      *
@@ -52,7 +56,7 @@ public class UserDAO {
                     user.setExpiration(userData.get(1).get(6));
 
                     // setup papers for this user
-                    PaperAuthorDAO paperAuthorDAO = new PaperAuthorDAO();
+                    PaperAuthorDAO paperAuthorDAO = new PaperAuthorDAO(this);
                     user.setAllPapers(paperAuthorDAO.getAuthorPapers(uid));
                 }
 
@@ -93,7 +97,7 @@ public class UserDAO {
                 user.setCanReview(userData.get(1).get(5));
 
                 // setup papers for this user
-                PaperAuthorDAO paperAuthorDAO = new PaperAuthorDAO();
+                PaperAuthorDAO paperAuthorDAO = new PaperAuthorDAO(this);
                 user.setAllPapers(paperAuthorDAO.getAuthorPapers(userId));
             }
 
@@ -243,7 +247,7 @@ public class UserDAO {
 
 
                     // setup papers for this user
-                    PaperAuthorDAO paperAuthorDAO = new PaperAuthorDAO();
+                    PaperAuthorDAO paperAuthorDAO = new PaperAuthorDAO(this);
                     user.setAllPapers(paperAuthorDAO.getAuthorPapers(userId));
 
                     // close connection to database
@@ -345,7 +349,7 @@ public class UserDAO {
                         user.setExpiration(iUser.get(6));
 
                         // setup papers for this user
-                        PaperAuthorDAO paperAuthorDAO = new PaperAuthorDAO();
+                        PaperAuthorDAO paperAuthorDAO = new PaperAuthorDAO(this);
                         user.setAllPapers(paperAuthorDAO.getAuthorPapers(userId));
 
                         // add user instance to returning array list
@@ -401,7 +405,7 @@ public class UserDAO {
                         user.setExpiration(userData.get(1).get(6));
 
                         // setup papers for this user
-                        PaperAuthorDAO paperAuthorDAO = new PaperAuthorDAO();
+                        PaperAuthorDAO paperAuthorDAO = new PaperAuthorDAO(this);
                         user.setAllPapers(paperAuthorDAO.getAuthorPapers(userId));
                     }
                 }
@@ -448,7 +452,7 @@ public class UserDAO {
                         queryParams.add(Integer.toString(id));
 
                         // call get data on get all paperIds of a user
-                        PaperDAO accessPapers = new PaperDAO();
+                        PaperDAO accessPapers = new PaperDAO(this);
                         ArrayList<Paper> papersData = accessPapers.getPapers(id);
 
                         //Check if the user has any papers associated
@@ -457,16 +461,15 @@ public class UserDAO {
                             for(Paper paper: papersData){
                                 int paperId = paper.getPaperId();
 
-                                // setup parameters to delete paper subjects
-                                queryParams = new ArrayList<String>();
-                                queryParams.add(Integer.toString(paperId));
-
+                                PaperSubjectDAO accessPaperSubjects = new PaperSubjectDAO(this);
                                 // call modify data to delete papers from paper subjects
-                                rowsAffected = connection.modifyData(DAOUtil.DELETE_PAPER_SUBJECTS, queryParams);
+                                rowsAffected = accessPaperSubjects.deletePaperSubjects(paperId);
 
                                 if(rowsAffected >= 1){
-                                    // call modify data to delete papers from paper authors
-                                    rowsAffected = connection.modifyData(DAOUtil.DELETE_PAPER_AUTHORS, queryParams);
+
+                                    PaperAuthorDAO accessPaperAuthors = new PaperAuthorDAO(this);
+                                    // call modify data to delete papers from paper subjects
+                                    rowsAffected = accessPaperAuthors.deletePaperAuthors(paperId);
 
                                     if(rowsAffected < 1){
                                         rollbackCheck = true;
@@ -479,15 +482,16 @@ public class UserDAO {
                                 }
                             }
 
-                            // setup parameters to delete papers and users
+                            // setup parameters to delete users
                             queryParams = new ArrayList<String>();
                             queryParams.add(Integer.toString(id));
 
                             //Check if previous commands ran perfectly then continue
                             if(!rollbackCheck){
-                                // call modify data to delete papers
-                                int paperRowsAffected = connection.modifyData(DAOUtil.DELETE_USER_PAPERS, queryParams);
-                                if(paperRowsAffected >= 1){
+
+                                rowsAffected = accessPapers.deletePaper(id);
+
+                                if(rowsAffected >= 1){
                                     // call modify data to delete users
                                     userRowsAffected += connection.modifyData(DAOUtil.DELETE_USERS, queryParams);
                                     if(userRowsAffected < 1){

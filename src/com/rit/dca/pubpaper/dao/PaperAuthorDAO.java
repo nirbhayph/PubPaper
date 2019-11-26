@@ -14,6 +14,13 @@ import java.util.List;
  * Profile: https://nirbhay.me
  */
 public class PaperAuthorDAO {
+
+    private UserDAO userAccess;
+
+    public PaperAuthorDAO(UserDAO userAccess){
+        this.userAccess = userAccess;
+    }
+
     /**
      * Gives a list of author ids for
      * paper id ordered according to displayOrder
@@ -85,7 +92,7 @@ public class PaperAuthorDAO {
                     continue;
                 }
 
-                PaperDAO paperDAO = new PaperDAO();
+                PaperDAO paperDAO = new PaperDAO(this.userAccess);
                 int paperId = Integer.parseInt(iAuthorPaper.get(0));
 
                 // add to returning papers ids array list
@@ -99,5 +106,26 @@ public class PaperAuthorDAO {
         return papers;
 
         // TODO : add exception handling in this method
+    }
+
+    public int deletePaperAuthors(int paperId){
+        int rowsAffected = -1;
+
+        MySQLDatabase connection = new MySQLDatabase(DAOUtil.HOST, DAOUtil.USER_NAME, DAOUtil.PASSWORD);
+
+        if (connection.connect()) {
+            if (this.userAccess.checkAdmin(connection, this.userAccess.getLoggedInId())) {
+                // setup parameters for paper authors query
+                List<String> paperAuthorParams = new ArrayList<String>();
+                paperAuthorParams.add(Integer.toString(paperId));
+
+                // call modify data on paper authors delete query
+                rowsAffected = connection.modifyData(DAOUtil.DELETE_PAPER_AUTHORS, paperAuthorParams);
+            }
+            // close connection to database
+            connection.close();
+        }
+
+        return rowsAffected;
     }
 }
