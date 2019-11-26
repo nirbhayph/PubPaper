@@ -99,4 +99,111 @@ public class AffiliationDAO {
 
         // TODO : Manage exceptions for this method
     }
+
+
+    /**
+     * Check whether a user is an admin user
+     *
+     * @param connection  MYSQLDatabase connection object
+     * @param adminUserId id of the user
+     * @return boolean status of validation
+     */
+    protected boolean checkAdmin(MySQLDatabase connection, int adminUserId) {
+        // setup parameters for admin query
+        List<String> adminParams = new ArrayList<String>();
+        adminParams.add(Integer.toString(adminUserId));
+
+        // call get data on admin query
+        ArrayList<ArrayList<String>> adminValidation = connection.getData(DAOUtil.CHECK_ADMIN, adminParams);
+
+        // check if result contains single record and user is admin
+        if (adminValidation.size() == 2) {
+            return Integer.parseInt(adminValidation.get(1).get(0)) == 1;
+        }
+        return false;
+    }
+
+    /**
+     * Get the new affiliation id to be inserted
+     *
+     * @param connection MySQLDatababase connection object
+     * @return int new affiliation id to use
+     */
+    private int nextAffiliationId(MySQLDatabase connection) {
+
+        int newAffiliationId = -1;
+
+        // create params list for next user id query
+        List<String> userParams = new ArrayList<String>();
+
+        // call get data on check user query
+        ArrayList<ArrayList<String>> lastAffiliation = connection.getData(DAOUtil.GET_NEXT_AFFILIATION_ID, userParams);
+
+        if (lastAffiliation.size() == 2) {
+            newAffiliationId = Integer.parseInt(lastAffiliation.get(1).get(0)) + 1;
+        }
+
+        return newAffiliationId;
+    }
+
+    /**
+     * Adds new affiliation to the database
+     * @param adminUserId admin user id
+     * @param affiliationName affiliation name to be added
+     * @return boolean status of affiliation insert
+     */
+    public boolean addAffiliations(int adminUserId, String affiliationName){
+        MySQLDatabase connection = new MySQLDatabase(DAOUtil.HOST, DAOUtil.USER_NAME, DAOUtil.PASSWORD);
+        boolean addStatus = false;
+
+        if(connection.connect()) {
+            if(checkAdmin(connection, adminUserId)) {
+                // setup parameters for add affiliation query
+                List<String> affiliationParams = new ArrayList<String>();
+                affiliationParams.add(Integer.toString(nextAffiliationId(connection)));
+                affiliationParams.add(affiliationName);
+
+                // call modify data to add affiliation query
+                int rowsAffected = connection.modifyData(DAOUtil.INSERT_AFFILIATION, affiliationParams);
+                if(rowsAffected == 1){
+                    addStatus = true;
+                }
+            }
+            // close connection to database
+            connection.close();
+        }
+
+        return addStatus;
+    }
+
+    /**
+     * Deletes existing affiliation from the database
+     * @param adminUserId admin user id
+     * @param affiliationId affiliation id to be deleted
+     * @return int rows affected on deleting affiliation
+     */
+    public int deleteAffiliation(int adminUserId, int affiliationId){
+        MySQLDatabase connection = new MySQLDatabase(DAOUtil.HOST, DAOUtil.USER_NAME, DAOUtil.PASSWORD);
+        int rowsAffected = 0;
+
+        if(connection.connect()) {
+
+            if (checkAdmin(connection, adminUserId)) {
+                // setup parameters for delete affiliation query
+                List<String> affiliationParams = new ArrayList<String>();
+                affiliationParams.add(Integer.toString(affiliationId));
+
+                // call modify data to add affiliation query
+                rowsAffected = connection.modifyData(DAOUtil.DELETE_AFFILIATION, affiliationParams);
+                if(rowsAffected == 1){
+                    int userRowsAffected = connection.modifyData(DAOUtil.SET_USER_AFFILIATION_NULL, affiliationParams);
+                }
+            }
+            // close connection to database
+            connection.close();
+        }
+
+        return rowsAffected;
+    }
+
 }

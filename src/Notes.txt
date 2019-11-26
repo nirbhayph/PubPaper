@@ -7,14 +7,14 @@ Authorization for some methods
 Delete for authorized users
 
 Stories:
-1) admin should be able to see all users -- getAllUsers(), getUser()
-2) admin should be able to delete users -- deleteUsers()
-3) admin should be able to add users -- DISCARDED
-4) new user can add himself -- setProfile()
+DONE - 1) admin should be able to see all users -- getAllUsers(), getUser()
+CODE DONE / LOGIC VERIFY - 2) admin should be able to delete users -- deleteUsers()
+DONE - 3) admin should be able to add users -- DISCARDED
+DONE - 4) new user can add himself -- setProfile()
 5) reset password
 6) set my password
-7) delete user/users account -- Story 2
-8) admin can update user's role. -- makeUserAdmin(), changeAdminStatus(adminID, userId, adminStatus(1,0))
+DONE - 7) delete user/users account -- Story 2
+DONE - 8) admin can update user's role. -- makeUserAdmin(), changeAdminStatus(adminID, userId, adminStatus(1,0))
 9) admin should be able to update affiliations -- add/Delete/Edit affiliationName , (adminID, affiliId, affilName)
 ADD - adminID, affiliNAME | DELETE - adminID, afiliID (CHANGE USER TO NULL) | EDIT - adminID, affiliName
 10) user can update his affiliation -- setProfile()

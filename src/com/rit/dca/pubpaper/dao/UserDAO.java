@@ -372,9 +372,12 @@ public class UserDAO {
                 // check if user is admin
                 if (checkAdmin(connection, adminUserId)) {
 
+                    // pass through each user id
                     for(int id: deletionIds){
                         connection.startTransaction();
                         rowsAffected = 0;
+
+                        //variable to check if rollback should be done or not
                         boolean rollbackCheck = false;
 
                         // setup parameters to get all papers query
@@ -385,7 +388,9 @@ public class UserDAO {
                         ArrayList<ArrayList<String>> papersData = connection.getData(DAOUtil.GET_USER_PAPER_IDS, queryParams);
                         System.out.println("PAPERDATA: "+papersData);
 
+                        //Check if the user has any papers associated
                         if(papersData.size() > 1){
+                            // Pass through each paperid
                             for(ArrayList<String> paper: papersData){
                                 if(!(paper.get(0).equals("paperId"))){
                                     String paperId = paper.get(0);
@@ -410,16 +415,18 @@ public class UserDAO {
                             queryParams = new ArrayList<String>();
                             queryParams.add(Integer.toString(id));
 
+                            //Check if previous commands ran perfectly then continue
                             if(!rollbackCheck){
                                 System.out.println("PAPER PARAMS: "+queryParams);
                                 // call modify data to delete papers
-                                int paperAuthorRowsAffected = connection.modifyData(DAOUtil.DELETE_USER_PAPERS, queryParams);
+                                int paperAuthorRowsAffected = connection.modifyData(DAOUtil.DELETE_PAPER_AUTHORS , queryParams);
                                 System.out.println("PAPER AUTHORS DELETED: "+paperAuthorRowsAffected);
                                 if(paperAuthorRowsAffected >= 1){
                                     // call modify data to delete paper authors
-                                    int paperRowsAffected = connection.modifyData(DAOUtil.DELETE_PAPER_AUTHORS, queryParams);
+                                    int paperRowsAffected = connection.modifyData(DAOUtil.DELETE_USER_PAPERS, queryParams);
                                     System.out.println("PAPERS DELETED: "+paperRowsAffected);
                                     if(paperRowsAffected >= 1){
+                                        // call modify data to delete users
                                         int userRowsAffected = connection.modifyData(DAOUtil.DELETE_USERS, queryParams);
                                         if(userRowsAffected < 1){
                                             rollbackCheck = true;
@@ -434,6 +441,7 @@ public class UserDAO {
                                 }
                             }
                         }
+                        //if no associated paper only delete from user table
                         else{
                             int userRowsAffected = connection.modifyData(DAOUtil.DELETE_USERS, queryParams);
                             if(userRowsAffected < 1){
@@ -441,6 +449,7 @@ public class UserDAO {
                             }
                         }
 
+                        //Check if everything ran successfully else rollback
                         if(!rollbackCheck){
                             connection.endTransaction();
                         }
@@ -458,23 +467,6 @@ public class UserDAO {
 
         // return number of rows affected
         return rowsAffected;
-    }
-
-    /**
-     * Return integer array to comma separated values
-     *
-     * @param userIdList integer array of userIds
-     * @return String comma separated string of userIds
-     */
-    private String convertToCommaIds(int[] userIdList) {
-        String result = "";
-
-        for (int id : userIdList) {
-            result = result + id + ",";
-        }
-        result = result.substring(0, result.length()-1);
-        System.out.println("RESULT: "+result);
-        return result;
     }
 
     /**

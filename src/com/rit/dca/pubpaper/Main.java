@@ -78,7 +78,11 @@ public class Main {
             User aUser = user.changeAdminStatus(validatedUser.getUserId(), 3, true);
             System.out.println("\nAdmin USER :- isAdmin : " + aUser.getIsAdmin() + "\t|\tLastName : " + aUser.getLastName());
 
+            // Add affiliation
+            System.out.println("\nAdd Affiliation STATUS : " + accessAffiliation.addAffiliations(validatedUser.getUserId(), "Aamchi University"));
 
+            // Delete Affiliation
+            System.out.println("\nDelete Affiliation Affected Rows : " + accessAffiliation.deleteAffiliation(validatedUser.getUserId(), 275));
 
             //Delete a User
             /*
