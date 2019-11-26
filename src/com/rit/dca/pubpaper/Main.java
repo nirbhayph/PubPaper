@@ -14,7 +14,7 @@ public class Main {
 
         // Authenticate User
         UserDAO user = new UserDAO();
-        User validatedUser = user.login("xtian2@kennesaw.edu", "ca8c5c4088866562a4a93f8250db4f9795e6f52b");
+        User validatedUser = user.login("stevez@cssconsult.com", "c704e98e5f46b4afd32682cf53d740524b4f6910");
         if(validatedUser != null){
             System.out.println("Logged In Successfully - " + validatedUser.getUserId());
 
@@ -89,6 +89,7 @@ public class Main {
             System.out.println("\nDelete Affiliation Affected Rows : " + accessAffiliation.deleteAffiliation(validatedUser.getUserId(), 275));
             */
 
+            /*
             // See a User's Paper's Subjects
             System.out.println("VALIDATED USER's ALL PAPERS SUBJECTS");
             ArrayList<Integer> authorsPapersIds = validatedUser.getAllPapers();
@@ -114,12 +115,11 @@ public class Main {
                 }
                 System.out.println(paperDAO.getPaper(paperId).getPaperId() + " ENDS HERE ");
             }
+            */
 
             //Delete a User
-            /*
-            int users[] = {247, 450, 405, 10};
-            System.out.println("DELETED: " + user.deleteUsers(validatedUser.getUserId(), users));
-            */
+            /*int users[] = {247, 450, 405, 10};
+            System.out.println("DELETED: " + user.deleteUsers(validatedUser.getUserId(), users));*/
 
 
             // update a user

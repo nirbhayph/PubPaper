@@ -11,7 +11,7 @@ public class DAOUtil {
 
     // MYSQL credentials
     protected static final String USER_NAME = "root";
-    protected static final String PASSWORD = "google12";
+    protected static final String PASSWORD = "root";
     protected static final String HOST = "jdbc:mysql://localhost:3306/CSM?useSSL=false";
 
     // Authentication
@@ -31,7 +31,7 @@ public class DAOUtil {
     protected static final String SET_USER_CAN_REVIEW = "UPDATE Users SET canReview=? WHERE userId=?";
 
     // Paper Authors
-    protected static final String DELETE_PAPER_AUTHORS = "DELETE FROM PaperAuthors WHERE userId=?";
+    protected static final String DELETE_PAPER_AUTHORS = "DELETE FROM PaperAuthors WHERE paperId=?";
     protected static final String GET_PAPER_AUTHORS = "SELECT * FROM PaperAuthors WHERE paperId=? ORDER BY displayOrder ASC";
     protected static final String GET_AUTHOR_PAPERS = "SELECT * FROM PaperAuthors WHERE userId=?";
 
