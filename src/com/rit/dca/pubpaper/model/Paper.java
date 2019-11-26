@@ -1,5 +1,7 @@
 package com.rit.dca.pubpaper.model;
 
+import java.util.ArrayList;
+
 /**
  * Database Connectivity and Access
  * @author Nirbhay Ashok Pherwani
@@ -17,6 +19,8 @@ public class Paper {
     private int submitterId;
     private String fileId;
     private String tentativeStatus;
+    private ArrayList<Subject> subjects;
+    private ArrayList<Integer> authors;
 
     public int getPaperId() {
         return paperId;
@@ -88,5 +92,21 @@ public class Paper {
 
     public void setTentativeStatus(String tentativeStatus) {
         this.tentativeStatus = tentativeStatus;
+    }
+
+    public ArrayList<Subject> getSubjects() {
+        return subjects;
+    }
+
+    public void setSubjects(ArrayList<Subject> subjects) {
+        this.subjects = subjects;
+    }
+
+    public ArrayList<Integer> getAuthors() {
+        return authors;
+    }
+
+    public void setAuthors(ArrayList<Integer> authors) {
+        this.authors = authors;
     }
 }

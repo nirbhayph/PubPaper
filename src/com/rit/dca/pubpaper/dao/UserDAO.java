@@ -18,7 +18,7 @@ public class UserDAO {
     private int loggedInId = -1;
 
     /**
-     * Get the profile info for user object (properties like name, affiliation)
+     * Get the profile info for user object (all properties)
      *
      * @param userId - user id for which profile data is requested.
      * @return User object of the profile requested
@@ -39,7 +39,8 @@ public class UserDAO {
 
                     // setup requested user's object
                     user = new User();
-                    user.setUserId(Integer.parseInt(userData.get(1).get(0)));
+                    int uid = Integer.parseInt(userData.get(1).get(0));
+                    user.setUserId(uid);
                     user.setEmail(userData.get(1).get(3));
                     user.setPwd(userData.get(1).get(4));
                     user.setFirstName(userData.get(1).get(2));
@@ -48,11 +49,55 @@ public class UserDAO {
                     user.setIsAdmin(Integer.parseInt(userData.get(1).get(7)));
                     user.setCanReview(userData.get(1).get(5));
                     user.setExpiration(userData.get(1).get(6));
+
+                    // setup papers for this user
+                    PaperAuthorDAO paperAuthorDAO = new PaperAuthorDAO();
+                    user.setAllPapers(paperAuthorDAO.getAuthorPapers(uid));
                 }
 
                 // close the connection
                 connection.close();
             }
+        }
+        return user;
+    }
+
+    /**
+     * Get the public profile info for user object (properties like name, affiliation)
+     *
+     * @param userId - user id for which public profile data is requested.
+     * @return User object of the public profile requested
+     */
+    public User getPublicProfile(int userId) {
+        User user = null;
+        MySQLDatabase connection = new MySQLDatabase(DAOUtil.HOST, DAOUtil.USER_NAME, DAOUtil.PASSWORD);
+
+        if (connection.connect()) {
+            // setup parameters for get a single user query
+            List<String> userParams = new ArrayList<String>();
+            userParams.add(Integer.toString(userId));
+
+            // call get data on get a single user query
+            ArrayList<ArrayList<String>> userData = connection.getData(DAOUtil.GET_SINGLE_USER, userParams);
+            if (userData.size() == 2) {
+
+                // setup requested user's object
+                user = new User();
+                user.setUserId(Integer.parseInt(userData.get(1).get(0)));
+                user.setEmail(userData.get(1).get(3));
+                user.setFirstName(userData.get(1).get(2));
+                user.setLastName(userData.get(1).get(1));
+                user.setAffiliationId(Integer.parseInt(userData.get(1).get(8)));
+                user.setIsAdmin(Integer.parseInt(userData.get(1).get(7)));
+                user.setCanReview(userData.get(1).get(5));
+
+                // setup papers for this user
+                PaperAuthorDAO paperAuthorDAO = new PaperAuthorDAO();
+                user.setAllPapers(paperAuthorDAO.getAuthorPapers(userId));
+            }
+
+            // close the connection
+            connection.close();
         }
         return user;
     }
@@ -183,7 +228,9 @@ public class UserDAO {
                 if (validation.size() == 2) {
                     // setup validated user's object
                     User user = new User();
-                    user.setUserId(Integer.parseInt(validation.get(1).get(0)));
+
+                    int userId = Integer.parseInt(validation.get(1).get(0));
+                    user.setUserId(userId);
                     user.setEmail(validation.get(1).get(3));
                     user.setPwd(validation.get(1).get(4));
                     user.setFirstName(validation.get(1).get(2));
@@ -192,6 +239,11 @@ public class UserDAO {
                     user.setIsAdmin(Integer.parseInt(validation.get(1).get(7)));
                     user.setCanReview(validation.get(1).get(5));
                     user.setExpiration(validation.get(1).get(6));
+
+
+                    // setup papers for this user
+                    PaperAuthorDAO paperAuthorDAO = new PaperAuthorDAO();
+                    user.setAllPapers(paperAuthorDAO.getAuthorPapers(userId));
 
                     // close connection to database
                     connection.close();
@@ -279,7 +331,9 @@ public class UserDAO {
 
                         // setup retrieved user's instance
                         User user = new User();
-                        user.setUserId(Integer.parseInt(iUser.get(0)));
+
+                        int userId = Integer.parseInt(iUser.get(0));
+                        user.setUserId(userId);
                         user.setEmail(iUser.get(3));
                         user.setPwd(iUser.get(4));
                         user.setFirstName(iUser.get(2));
@@ -288,6 +342,10 @@ public class UserDAO {
                         user.setIsAdmin(Integer.parseInt(iUser.get(7)));
                         user.setCanReview(iUser.get(5));
                         user.setExpiration(iUser.get(6));
+
+                        // setup papers for this user
+                        PaperAuthorDAO paperAuthorDAO = new PaperAuthorDAO();
+                        user.setAllPapers(paperAuthorDAO.getAuthorPapers(userId));
 
                         // add user instance to returning array list
                         userList.add(user);
@@ -340,6 +398,10 @@ public class UserDAO {
                         user.setIsAdmin(Integer.parseInt(userData.get(1).get(7)));
                         user.setCanReview(userData.get(1).get(5));
                         user.setExpiration(userData.get(1).get(6));
+
+                        // setup papers for this user
+                        PaperAuthorDAO paperAuthorDAO = new PaperAuthorDAO();
+                        user.setAllPapers(paperAuthorDAO.getAuthorPapers(userId));
                     }
                 }
 

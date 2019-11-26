@@ -7,7 +7,7 @@ package com.rit.dca.pubpaper.model;
  * Profile: https://nirbhay.me
  */
 
-public class PaperSubjects {
+public class PaperSubject {
     private int paperId;
     private int subjectId;
 

@@ -44,7 +44,9 @@ public class PaperDAO {
 
                 // set new paper instance
                 Paper paper = new Paper();
-                paper.setPaperId(Integer.parseInt(iPaper.get(0)));
+
+                int paperId = Integer.parseInt(iPaper.get(0));
+                paper.setPaperId(paperId);
                 paper.setAbstractText(iPaper.get(2));
                 paper.setFileId(iPaper.get(7));
                 paper.setStatus(iPaper.get(4));
@@ -53,6 +55,12 @@ public class PaperDAO {
                 paper.setTentativeStatus(iPaper.get(8));
                 paper.setTitle(iPaper.get(1));
                 paper.setTrack(iPaper.get(3));
+
+                PaperSubjectDAO paperSubjectDAO = new PaperSubjectDAO();
+                paper.setSubjects(paperSubjectDAO.getPaperSubjects(paperId));
+
+                PaperAuthorDAO paperAuthorDAO = new PaperAuthorDAO();
+                paper.setAuthors(paperAuthorDAO.getPaperAuthors(paperId));
 
                 // add to returning papers array list
                 papers.add(paper);
@@ -98,6 +106,13 @@ public class PaperDAO {
                 paper.setTentativeStatus(paperData.get(1).get(8));
                 paper.setTitle(paperData.get(1).get(1));
                 paper.setTrack(paperData.get(1).get(3));
+
+
+                PaperSubjectDAO paperSubjectDAO = new PaperSubjectDAO();
+                paper.setSubjects(paperSubjectDAO.getPaperSubjects(paperId));
+
+                PaperAuthorDAO paperAuthorDAO = new PaperAuthorDAO();
+                paper.setAuthors(paperAuthorDAO.getPaperAuthors(paperId));
 
                 // close connection to database
                 connection.close();

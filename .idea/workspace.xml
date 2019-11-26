@@ -2,13 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2dc52dc1-f0a3-4a78-840d-5474be2d6f57" name="Default Changelist" comment="updated userDAO to add getProfile, setProfile, getAllUsers, getUser, deleteUsers and makeUserAdmin">
+      <change afterPath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/dao/PaperAuthorDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/dao/PaperSubjectDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/mysql_connector_java_5_1_48.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PubPaper.iml" beforeDir="false" afterPath="$PROJECT_DIR$/PubPaper.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Notes.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/Notes.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/dao/DAOUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/dao/DAOUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/dao/PaperDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/dao/PaperDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/dao/SubjectDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/dao/SubjectDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/dao/UserDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/dao/UserDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/database/MySQLDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/database/MySQLDatabase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/model/Paper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/model/Paper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/model/PaperAuthors.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/model/PaperAuthor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/model/PaperSubjects.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/model/PaperSubject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/model/User.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

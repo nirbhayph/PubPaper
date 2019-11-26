@@ -7,7 +7,7 @@ package com.rit.dca.pubpaper.model;
  * Profile: https://nirbhay.me
  */
 
-public class PaperAuthors {
+public class PaperAuthor {
     private int paperId;
     private int userId;
     private int displayOrder;

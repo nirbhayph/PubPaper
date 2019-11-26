@@ -1,5 +1,7 @@
 package com.rit.dca.pubpaper.model;
 
+import java.util.ArrayList;
+
 /**
  * Class : Database Connectivity and Access (DCA)
  * @author Dhiren Chandnani
@@ -15,6 +17,7 @@ public class User {
     private int isAdmin;
     private int affiliationId;
     private String canReview;
+    private ArrayList<Integer> allPapers;
 
     public int getUserId() {
         return userId;
@@ -86,5 +89,14 @@ public class User {
 
     public void setCanReview(String canReview) {
         this.canReview = canReview;
+    }
+
+
+    public ArrayList<Integer> getAllPapers() {
+        return allPapers;
+    }
+
+    public void setAllPapers(ArrayList<Integer> allPapers) {
+        this.allPapers = allPapers;
     }
 }

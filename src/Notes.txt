@@ -22,6 +22,12 @@ DONE - 11) admin can update user's review status -- updateCanReview(adminId, use
 DONE - 13) admin can update any of the user's info -- setProfile() // checkAdmin included
 14) email needs to be sent out for reset password -- tomorrow
 15) user can add papers
+a) to do this we should update paper authors and paper subjects both
+c) for that - DAO of paper authors and paper subjects
+d) and then link both in papers
+
+
+
 16) user can update his own paper's properties
 17) user can update/add/delete his own paper's subjects
 18) user can update his paper type
@@ -42,3 +48,7 @@ We can store Type Instance in Papers rather than just submissionType
 To note : The functions like getType for PaperId have still been built. But it's good to have vice-versa.
 
 26) make login and registration with salting and not directly. --
+
+CHECK ALL COMMENTS
+CHECK FOR ALL USELESS IMPORTS
+CHECK FOR ALL METHOD AND AUTHOR SIGNATURES

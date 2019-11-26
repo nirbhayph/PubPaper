@@ -1,14 +1,9 @@
 package com.rit.dca.pubpaper;
 
-import com.rit.dca.pubpaper.dao.AffiliationDAO;
-import com.rit.dca.pubpaper.dao.PaperDAO;
-import com.rit.dca.pubpaper.dao.TypeDAO;
-import com.rit.dca.pubpaper.dao.UserDAO;
-import com.rit.dca.pubpaper.model.Affiliation;
-import com.rit.dca.pubpaper.model.Paper;
-import com.rit.dca.pubpaper.model.Type;
-import com.rit.dca.pubpaper.model.User;
+import com.rit.dca.pubpaper.dao.*;
+import com.rit.dca.pubpaper.model.*;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -19,7 +14,7 @@ public class Main {
 
         // Authenticate User
         UserDAO user = new UserDAO();
-        User validatedUser = user.login("stevez@cssconsult.com", "c704e98e5f46b4afd32682cf53d740524b4f6910");
+        User validatedUser = user.login("xtian2@kennesaw.edu", "ca8c5c4088866562a4a93f8250db4f9795e6f52b");
         if(validatedUser != null){
             System.out.println("Logged In Successfully - " + validatedUser.getUserId());
 
@@ -74,6 +69,7 @@ public class Main {
             User rUser = user.getUser(validatedUser.getUserId(), 3);
             System.out.println("\nA USER :- FirstName : " + rUser.getFirstName() + "\t|\tLastName : " + rUser.getLastName());
 
+            /*
             // Make user admin
             User aUser = user.changeAdminStatus(validatedUser.getUserId(), 3, true);
             System.out.println("\nAdmin USER :- isAdmin : " + aUser.getIsAdmin() + "\t|\tLastName : " + aUser.getLastName());
@@ -81,6 +77,7 @@ public class Main {
             // Give user review status
             rUser = user.changeReviewStatus(validatedUser.getUserId(), 3, false);
             System.out.println("\nAdmin USER :- canReview : " + rUser.getCanReview() + "\t|\tLastName : " + rUser.getLastName());
+
 
             // Add affiliation
             System.out.println("\nAdd Affiliation STATUS : " + accessAffiliation.addAffiliations(validatedUser.getUserId(), "Aamchi University"));
@@ -90,6 +87,33 @@ public class Main {
 
             // Delete Affiliation
             System.out.println("\nDelete Affiliation Affected Rows : " + accessAffiliation.deleteAffiliation(validatedUser.getUserId(), 275));
+            */
+
+            // See a User's Paper's Subjects
+            System.out.println("VALIDATED USER's ALL PAPERS SUBJECTS");
+            ArrayList<Integer> authorsPapersIds = validatedUser.getAllPapers();
+
+            for(int paperId : authorsPapersIds){
+                PaperDAO paperDAO = new PaperDAO();
+                ArrayList<Subject> subjects = paperDAO.getPaper(paperId).getSubjects();
+                for(Subject subject : subjects){
+                    System.out.println(subject.getSubjectName());
+                }
+                System.out.println(paperDAO.getPaper(paperId).getPaperId() + " ENDS HERE ");
+            }
+
+            // See a User's Papers Authors
+            System.out.println("VALIDATED USER's ALL PAPERS AUTHORS");
+            ArrayList<Integer> authorPapersIds = validatedUser.getAllPapers();
+
+            for(int paperId : authorPapersIds){
+                PaperDAO paperDAO = new PaperDAO();
+                ArrayList<Integer> authorsIds = paperDAO.getPaper(paperId).getAuthors();
+                for(int authorId : authorsIds){
+                    System.out.println(user.getPublicProfile(authorId).getFirstName());
+                }
+                System.out.println(paperDAO.getPaper(paperId).getPaperId() + " ENDS HERE ");
+            }
 
             //Delete a User
             /*
