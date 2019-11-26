@@ -503,6 +503,16 @@ public class UserDAO {
                 // check if user exists
                 if (validateUser.size() == 2) {
 
+                    // create params list for set admin query
+                    userParams = new ArrayList<String>();
+                    if(adminStatus){
+                        userParams.add(Integer.toString(1));
+                    }
+                    else{
+                        userParams.add(Integer.toString(0));
+                    }
+                    userParams.add(Integer.toString(userId));
+
                     // call modify data on set user as admin query
                     rowsAffected = connection.modifyData(DAOUtil.SET_USER_AS_ADMIN, userParams);
                     if(rowsAffected == 1){
