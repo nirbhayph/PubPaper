@@ -20,6 +20,8 @@ public class DAOUtil {
 
     // Users
     protected static final String GET_ALL_USERS = "SELECT * FROM Users limit 3";
+    protected static final String GET_SINGLE_USER = "SELECT * FROM Users WHERE userId=?";
+    protected static final String DELETE_USERS = "DELETE FROM Users WHERE userId IN(?)";
 
     // Paper
     protected static final String GET_USER_PAPERS = "SELECT * FROM Papers WHERE submitterId=?";

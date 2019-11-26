@@ -7,10 +7,10 @@ Authorization for some methods
 Delete for authorized users
 
 Stories:
-1) admin should be able to see all users
-2) admin should be able to delete users
-3) admin should be able to add users
-4) new user can add himself
+1) admin should be able to see all users -- getAllUsers(), getUser()
+2) admin should be able to delete users -- deleteUsers()
+3) admin should be able to add users -- DISCARDED
+4) new user can add himself -- registerUser()
 5) reset password
 6) set my password
 7) delete my account
