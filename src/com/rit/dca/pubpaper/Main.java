@@ -75,14 +75,17 @@ public class Main {
             System.out.println("\nA USER :- FirstName : " + rUser.getFirstName() + "\t|\tLastName : " + rUser.getLastName());
 
             // Make user admin
-            User aUser = user.makeUserAdmin(validatedUser.getUserId(), 3);
+            User aUser = user.changeAdminStatus(validatedUser.getUserId(), 3, true);
             System.out.println("\nAdmin USER :- isAdmin : " + aUser.getIsAdmin() + "\t|\tLastName : " + aUser.getLastName());
+
+
 
             //Delete a User
             /*
-            int users[] = {9, 10, 11};
+            int users[] = {247, 450, 405, 10};
             System.out.println("DELETED: " + user.deleteUsers(validatedUser.getUserId(), users));
             */
+
 
             // update a user
             /*

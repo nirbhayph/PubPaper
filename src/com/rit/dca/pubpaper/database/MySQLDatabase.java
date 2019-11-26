@@ -135,4 +135,48 @@ public class MySQLDatabase {
     }
   }
 
+    /**
+     * Start Transaction
+     * @return boolean - returns true if transaction started successfully.
+     */
+    public boolean startTransaction(){
+        try{
+            this.connection.setAutoCommit(false);
+            return true;
+        }
+        catch(SQLException sqlEx) {
+            return false;
+        }
+    }
+
+    /**
+     * End Transaction
+     * @return boolean - returns true if transaction committed successfully.
+     */
+    public boolean endTransaction(){
+        try{
+            this.connection.setAutoCommit(true);;
+            return true;
+        }
+        catch(SQLException sqlEx) {
+            return false;
+        }
+    }
+
+    /**
+     * Rollback Transaction
+     * @return boolean - returns true if transaction is rollbacked successfully.
+     */
+    public boolean rollbackTransaction(){
+        try{
+            this.connection.setAutoCommit(true);;
+            return true;
+        }
+        catch(SQLException sqlEx) {
+            return false;
+        }
+    }
+
+
+
 }

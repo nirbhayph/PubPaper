@@ -27,11 +27,16 @@ public class DAOUtil {
     protected static final String INSERT_NEW_USER = "INSERT INTO Users(userId, lastName, firstName, email, pswd, canReview, expiration, isAdmin, affiliationId)" +
             " VALUES(?,?,?,?,?,'0','20250101000000',0,?)";
     protected static final String GET_NEXT_USER_ID = "SELECT userId FROM Users ORDER BY userId DESC LIMIT 1";
-    protected static final String SET_USER_AS_ADMIN = "UPDATE Users SET isAdmin=1 WHERE userId=?";
+    protected static final String SET_USER_AS_ADMIN = "UPDATE Users SET isAdmin=? WHERE userId=?";
+
+    // Paper Authors
+    protected static final String DELETE_PAPER_AUTHORS = "DELETE FROM paperauthors WHERE userId=?";
 
     // Paper
     protected static final String GET_USER_PAPERS = "SELECT * FROM Papers WHERE submitterId=?";
     protected static final String GET_PAPER_WITH_PAPER_ID = "SELECT * FROM Papers WHERE paperId=?";
+    protected static final String GET_USER_PAPER_IDS = "SELECT paperId FROM Papers WHERE submitterId=?";
+    protected static final String DELETE_USER_PAPERS = "DELETE FROM Papers WHERE submitterId=?";
 
     // Affiliations
     protected static final String GET_USER_AFFILIATION = "SELECT affiliationId FROM Users WHERE userId=?";
@@ -43,4 +48,6 @@ public class DAOUtil {
     protected static final String GET_PAPER_TYPE_ID = "SELECT submissionType FROM Papers WHERE paperId=?";
     protected static final String GET_PAPER_TYPE_WITH_ID = "SELECT * FROM _Types WHERE typeId=?";
 
+    // PaperSubjects
+    protected static final String DELETE_PAPER_SUBJECTS = "DELETE FROM papersubjects WHERE paperId=?";
 }

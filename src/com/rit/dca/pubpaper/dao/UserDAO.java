@@ -373,15 +373,83 @@ public class UserDAO {
                 if (checkAdmin(connection, adminUserId)) {
 
                     for(int id: deletionIds){
-                        // setup parameters for delete user query
-                        List<String> userParams = new ArrayList<String>();
-                        userParams.add(Integer.toString(id));
+                        connection.startTransaction();
+                        rowsAffected = 0;
+                        boolean rollbackCheck = false;
 
-                        // call modify data on delete users query
-                        rowsAffected += connection.modifyData(DAOUtil.DELETE_USERS, userParams);
+                        // setup parameters to get all papers query
+                        List<String> queryParams = new ArrayList<String>();
+                        queryParams.add(Integer.toString(id));
+
+                        // call get data on get all paperIds of a user
+                        ArrayList<ArrayList<String>> papersData = connection.getData(DAOUtil.GET_USER_PAPER_IDS, queryParams);
+                        System.out.println("PAPERDATA: "+papersData);
+
+                        if(papersData.size() > 1){
+                            for(ArrayList<String> paper: papersData){
+                                if(!(paper.get(0).equals("paperId"))){
+                                    String paperId = paper.get(0);
+
+                                    // setup parameters to delete paper subjects
+                                    queryParams = new ArrayList<String>();
+                                    queryParams.add(paperId);
+                                    System.out.println("PARAMS: "+queryParams+"\t ID: "+id);
+
+                                    // call modify data to delete papers from paper subjects
+                                    rowsAffected = connection.modifyData(DAOUtil.DELETE_PAPER_SUBJECTS, queryParams);
+                                    System.out.println("ROWSAFFEECTED: "+rowsAffected);
+                                    if(rowsAffected < 1){
+                                        rollbackCheck = true;
+                                        break;
+                                    }
+                                }
+                                System.out.println("PAPER OVER: "+paper);
+                            }
+
+                            // setup parameters to delete papers, paperAuthors and users
+                            queryParams = new ArrayList<String>();
+                            queryParams.add(Integer.toString(id));
+
+                            if(!rollbackCheck){
+                                System.out.println("PAPER PARAMS: "+queryParams);
+                                // call modify data to delete papers
+                                int paperAuthorRowsAffected = connection.modifyData(DAOUtil.DELETE_USER_PAPERS, queryParams);
+                                System.out.println("PAPER AUTHORS DELETED: "+paperAuthorRowsAffected);
+                                if(paperAuthorRowsAffected >= 1){
+                                    // call modify data to delete paper authors
+                                    int paperRowsAffected = connection.modifyData(DAOUtil.DELETE_PAPER_AUTHORS, queryParams);
+                                    System.out.println("PAPERS DELETED: "+paperRowsAffected);
+                                    if(paperRowsAffected >= 1){
+                                        int userRowsAffected = connection.modifyData(DAOUtil.DELETE_USERS, queryParams);
+                                        if(userRowsAffected < 1){
+                                            rollbackCheck = true;
+                                        }
+                                    }
+                                    else{
+                                        rollbackCheck = true;
+                                    }
+                                }
+                                else{
+                                    rollbackCheck = true;
+                                }
+                            }
+                        }
+                        else{
+                            int userRowsAffected = connection.modifyData(DAOUtil.DELETE_USERS, queryParams);
+                            if(userRowsAffected < 1){
+                                rollbackCheck = true;
+                            }
+                        }
+
+                        if(!rollbackCheck){
+                            connection.endTransaction();
+                        }
+                        else{
+                            connection.rollbackTransaction();
+                        }
+                        System.out.println("DONE: "+id);
                     }
                 }
-
                 // close connection to database
                 connection.close();
             }
@@ -416,7 +484,7 @@ public class UserDAO {
      * @param userId      requested user
      * @return User - user instance
      */
-    public User makeUserAdmin(int adminUserId, int userId) {
+    public User changeAdminStatus(int adminUserId, int userId, boolean adminStatus) {
         ArrayList<String> userParams = null;
         User user = null;
         int rowsAffected = 0;
