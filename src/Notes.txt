@@ -18,7 +18,7 @@ DONE - 8) admin can update user's role. -- makeUserAdmin(), changeAdminStatus(ad
 DONE - 9) admin should be able to update affiliations -- add/Delete/Edit affiliationName , (adminID, affiliId, affilName)
           ADD - adminID, affiliNAME | DELETE - adminID, afiliID (CHANGE USER TO NULL) | EDIT - adminID, affiliName
 DONE - 10) user can update his affiliation -- setProfile()
-11) admin can update user's review status -- updateCanReview(adminId, userId, canReivewStatus)
+DONE - 11) admin can update user's review status -- updateCanReview(adminId, userId, canReivewStatus)
 DONE - 13) admin can update any of the user's info -- setProfile() // checkAdmin included
 14) email needs to be sent out for reset password -- tomorrow
 15) user can add papers
