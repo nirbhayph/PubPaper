@@ -10,35 +10,35 @@ Stories:
 1) admin should be able to see all users -- getAllUsers(), getUser()
 2) admin should be able to delete users -- deleteUsers()
 3) admin should be able to add users -- DISCARDED
-4) new user can add himself -- registerUser()
+4) new user can add himself -- setProfile()
 5) reset password
 6) set my password
-7) delete my account
-8) admin can update user's role.
-9) admin should be able to update affiliations
-10) user can update his affiliation
-11) admin can update user's review status
-13) admin can update any of the user's info
-14) email needs to be sent out for reset password
+7) delete user/users account -- Story 2
+8) admin can update user's role. -- makeUserAdmin(), changeAdminStatus(adminID, userId, adminStatus(1,0))
+9) admin should be able to update affiliations -- add/Delete/Edit affiliationName , (adminID, affiliId, affilName)
+ADD - adminID, affiliNAME | DELETE - adminID, afiliID (CHANGE USER TO NULL) | EDIT - adminID, affiliName
+10) user can update his affiliation -- setProfile()
+11) admin can update user's review status -- updateCanReview(adminId, userId, canReivewStatus)
+13) admin can update any of the user's info -- setProfile() // checkAdmin included
+14) email needs to be sent out for reset password -- tomorrow
 15) user can add papers
 16) user can update his own paper's properties
 17) user can update/add/delete his own paper's subjects
 18) user can update his paper type
 19) user can delete his paper's properties (We need to set them to null if he does so)
 20) PaperAuthors can be updated by paper submitter
-21) user cannot change properties like isAdmin or canReview without admin permission.
-22) admin can give user these properties
+
 23) reviewing papers after submission functionality needs to be built for papers and admin can allocate that!
     (NOT NECESSARY TO BUILD)
 
-24) Remember to associate authorization in a clean way for each task
+24) Remember to associate authorization in a clean way for each task -- done .. keep doing
 25) We should associate other classes objects in the models of PaperDAO and UserDAO as they are linked to child classes,
 this will make some tasks easy if we have the Paper/User Object in Hand!
-For Eg - PaperModel can have AffiliationObject inside it rather than just affiliation id. We will have to write second query in get method to achieve this.
+For Eg - UserModel can have AffiliationObject inside it rather than just affiliation id. We will have to write second query in get method to achieve this.
 Another Eg - We should store ArrayList<PaperSubjects> in Papers
 ArrayList<PaperAuthors> in both users and papers.
 We can store Type Instance in Papers rather than just submissionType
 
 To note : The functions like getType for PaperId have still been built. But it's good to have vice-versa.
 
-26) make login and registration with salting and not directly.
+26) make login and registration with salting and not directly. --

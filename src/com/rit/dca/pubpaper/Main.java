@@ -10,6 +10,7 @@ import com.rit.dca.pubpaper.model.Type;
 import com.rit.dca.pubpaper.model.User;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Main {
 
@@ -68,6 +69,49 @@ public class Main {
             for(User iUser: userList){
                 System.out.println("\nFirstName : " + iUser.getFirstName() + "\t|\tLastName : " + iUser.getLastName());
             }
+
+            // Get a user
+            User rUser = user.getUser(validatedUser.getUserId(), 3);
+            System.out.println("\nA USER :- FirstName : " + rUser.getFirstName() + "\t|\tLastName : " + rUser.getLastName());
+
+            // Make user admin
+            User aUser = user.makeUserAdmin(validatedUser.getUserId(), 3);
+            System.out.println("\nAdmin USER :- isAdmin : " + aUser.getIsAdmin() + "\t|\tLastName : " + aUser.getLastName());
+
+            //Delete a User
+            /*
+            int users[] = {9, 10, 11};
+            System.out.println("DELETED: " + user.deleteUsers(validatedUser.getUserId(), users));
+            */
+
+            // update a user
+            /*
+            HashMap<String, Object> userData = new HashMap<String, Object>();
+            userData.put("userId", 2);
+            userData.put("lastName", "Stark");
+            userData.put("firstName", "Tony");
+            userData.put("email", "luntb@byu.edu");
+            userData.put("affiliationId", 77);
+
+            User updatedUser = user.setProfile(userData);
+            System.out.println("\nUPDATED USER:- FirstName : " + updatedUser.getFirstName() + "\t|\tLastName : " + updatedUser.getLastName());
+            */
+
         }
+
+        // Register a user
+        /*
+        UserDAO newReg = new UserDAO();
+        HashMap<String, Object> newUserData = new HashMap<String, Object>();
+        newUserData.put("lastName", "Stark");
+        newUserData.put("firstName", "Tony");
+        newUserData.put("email", "ironman@avengers.com");
+        newUserData.put("password", "google12");
+        newUserData.put("affiliationId", 77);
+
+        User insertedUser = newReg.setProfile(newUserData);
+        System.out.println("\nINSERTED USER:- FirstName : " + insertedUser.getFirstName() + "\t|\tLastName : " + insertedUser.getLastName());
+        */
+
     }
 }

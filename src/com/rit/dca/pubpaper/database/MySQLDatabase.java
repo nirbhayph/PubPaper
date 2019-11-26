@@ -130,7 +130,8 @@ public class MySQLDatabase {
       return preparedStatement.executeUpdate();
     }
     catch(SQLException sqlEx) {
-      return -1;
+      sqlEx.printStackTrace();
+      return 0;
     }
   }
 

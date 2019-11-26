@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2dc52dc1-f0a3-4a78-840d-5474be2d6f57" name="Default Changelist" comment="">
+    <list default="true" id="2dc52dc1-f0a3-4a78-840d-5474be2d6f57" name="Default Changelist" comment="updated userDAO to add getProfile, setProfile, getAllUsers, getUser, deleteUsers and makeUserAdmin">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PubPaper.iml" beforeDir="false" afterPath="$PROJECT_DIR$/PubPaper.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Notes.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/Notes.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/dao/DAOUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/dao/DAOUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/dao/UserDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/dao/UserDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/database/MySQLDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/rit/dca/pubpaper/database/MySQLDatabase.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -27,9 +32,9 @@
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="Libraries" />
-    <property name="project.structure.proportion" value="0.0" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../PE03_FinalFiles/Database_Drivers/mysql-connector-java-5.1.48.jar!/" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
   </component>
   <component name="RunDashboard">
@@ -205,7 +210,14 @@
       <option name="project" value="LOCAL" />
       <updated>1574707211776</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="updated userDAO to add getUser and deleteUser">
+      <created>1574733339024</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1574733339024</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -242,8 +254,9 @@
     <MESSAGE value="added paper subjects model class" />
     <MESSAGE value="refactored paper subjects to model" />
     <MESSAGE value="paper authors model class created" />
-    <option name="LAST_COMMIT_MESSAGE" value="paper authors model class created" />
     <MESSAGE value="added getAllUsers to userDAO. Updated Main to test it" />
-    <option name="LAST_COMMIT_MESSAGE" value="added getAllUsers to userDAO. Updated Main to test it" />
+    <MESSAGE value="updated userDAO to add getUser and deleteUser" />
+    <MESSAGE value="updated userDAO to add getProfile, setProfile, getAllUsers, getUser, deleteUsers and makeUserAdmin" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated userDAO to add getProfile, setProfile, getAllUsers, getUser, deleteUsers and makeUserAdmin" />
   </component>
 </project>
