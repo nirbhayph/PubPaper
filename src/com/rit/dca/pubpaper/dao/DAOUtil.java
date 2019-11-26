@@ -46,6 +46,8 @@ public class DAOUtil {
     protected static final String GET_NEXT_AFFILIATION_ID = "SELECT affiliationId FROM _Affiliations ORDER BY affiliationId DESC LIMIT 1";
     protected static final String DELETE_AFFILIATION = "DELETE FROM _Affiliations WHERE affiliationId=?";
     protected static final String SET_USER_AFFILIATION_NULL = "UPDATE Users SET affiliationId=NULL WHERE affiliationId=?";
+    protected static final String UPDATE_AFFILIATION = "UPDATE _Affiliations SET affiliationName=? WHERE affiliationName=?";
+
 
     // Types
     protected static final String GET_ALL_TYPES = "SELECT * FROM _Types";

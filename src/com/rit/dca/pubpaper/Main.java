@@ -81,6 +81,9 @@ public class Main {
             // Add affiliation
             System.out.println("\nAdd Affiliation STATUS : " + accessAffiliation.addAffiliations(validatedUser.getUserId(), "Aamchi University"));
 
+            // Edit Affiliation
+            System.out.println("\nUpdate Affiliation Affected Rows : " + accessAffiliation.changeAffiliation(validatedUser.getUserId(), "Aamchi University", "John Doe University"));
+
             // Delete Affiliation
             System.out.println("\nDelete Affiliation Affected Rows : " + accessAffiliation.deleteAffiliation(validatedUser.getUserId(), 275));
 

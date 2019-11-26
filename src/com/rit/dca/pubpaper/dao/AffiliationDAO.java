@@ -206,4 +206,33 @@ public class AffiliationDAO {
         return rowsAffected;
     }
 
+    /**
+     * Change affiliation name in the database
+     * @param adminUserId admin user id
+     * @param dbAffiliationName affiliation name to be changed
+     * @param newAffiliationName affiliation name to be changed to
+     * @return int rows affected on deleting affiliation
+     */
+    public int changeAffiliation(int adminUserId, String dbAffiliationName, String newAffiliationName){
+        MySQLDatabase connection = new MySQLDatabase(DAOUtil.HOST, DAOUtil.USER_NAME, DAOUtil.PASSWORD);
+        int rowsAffected = 0;
+
+        if(connection.connect()) {
+
+            if (checkAdmin(connection, adminUserId)) {
+                // setup parameters for set affiliation query
+                List<String> affiliationParams = new ArrayList<String>();
+                affiliationParams.add(newAffiliationName);
+                affiliationParams.add(dbAffiliationName);
+
+                // call modify data to update affiliation
+                rowsAffected = connection.modifyData(DAOUtil.UPDATE_AFFILIATION, affiliationParams);
+            }
+            // close connection to database
+            connection.close();
+        }
+
+        return rowsAffected;
+    }
+
 }
