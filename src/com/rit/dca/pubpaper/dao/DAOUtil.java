@@ -70,5 +70,9 @@ public class DAOUtil {
     // Subject
     protected  static final String GET_SUBJECT = "SELECT * FROM _subjects WHERE subjectId=?";
     protected  static final String GET_ALL_SUBJECTS = "SELECT * FROM _subjects";
-
+    protected static final String GET_LAST_SUBJECT_ID = "SELECT subjectId FROM _subjects ORDER BY subjectId DESC LIMIT 1";
+    protected static final String INSERT_SUBJECT = "INSERT INTO _subjects VALUES (?,?)";
+    protected static final String DELETE_SUBJECT = "DELETE FROM _subjects WHERE subjectId=?";
+    protected static final String DELETE_SUBJECT_PAPER = "DELETE FROM papersubjects where subjectid=?";
+    protected static final String UPDATE_SUBJECT = "UPDATE _subjects SET subjectName=? WHERE subjectId=?";
 }

@@ -134,15 +134,26 @@ public class TypeDAO {
 
         if(connection.connect()) {
             if(this.userAccess.checkAdmin(connection, this.userAccess.getLoggedInId())) {
+                connection.startTransaction();
                 // setup parameters for add type query
                 List<String> typeParams = new ArrayList<String>();
-                typeParams.add(Integer.toString(nextTypeId(connection)));
-                typeParams.add(typeName);
+                int nextTId = nextTypeId(connection);
+                if(nextTId != -1){
+                    typeParams.add(Integer.toString(nextTId));
+                    typeParams.add(typeName);
 
-                // call modify data to add type query
-                int rowsAffected = connection.modifyData(DAOUtil.INSERT_TYPE, typeParams);
-                if(rowsAffected == 1){
-                    addStatus = true;
+                    // call modify data to add type query
+                    int rowsAffected = connection.modifyData(DAOUtil.INSERT_TYPE, typeParams);
+                    if(rowsAffected == 1){
+                        addStatus = true;
+                        connection.endTransaction();
+                    }
+                    else{
+                        connection.rollbackTransaction();
+                    }
+                }
+                else{
+                    connection.rollbackTransaction();
                 }
             }
             // close connection to database

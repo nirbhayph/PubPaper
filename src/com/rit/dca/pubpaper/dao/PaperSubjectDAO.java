@@ -8,6 +8,7 @@ import java.util.List;
 
 /**
  * Database Connectivity and Access
+ *
  * @author Nirbhay Ashok Pherwani
  * Email: np5318@rit.edu
  * Profile: https://nirbhay.me
@@ -16,19 +17,20 @@ import java.util.List;
 public class PaperSubjectDAO {
     private UserDAO userAccess;
 
-    public PaperSubjectDAO(UserDAO userAccess){
+    public PaperSubjectDAO(UserDAO userAccess) {
         this.userAccess = userAccess;
     }
 
     /**
      * Gives a list of subject instances for paper id
+     *
      * @param paperId for which subjects are required
      * @return array list of subjects for paperId provided
      */
-    public ArrayList<Subject> getPaperSubjects(int paperId){
+    public ArrayList<Subject> getPaperSubjects(int paperId) {
         ArrayList<Subject> subjects = new ArrayList<Subject>();
 
-        if(this.userAccess.getLoggedInId() != -1) {
+        if (this.userAccess.getLoggedInId() != -1) {
             MySQLDatabase connection = new MySQLDatabase(DAOUtil.HOST, DAOUtil.USER_NAME, DAOUtil.PASSWORD);
 
             if (connection.connect()) {
@@ -69,9 +71,9 @@ public class PaperSubjectDAO {
         // TODO : add exception handling in this method
     }
 
-    public int deletePaperSubjects(int paperId){
-      int rowsAffected = -1;
-      MySQLDatabase connection = new MySQLDatabase(DAOUtil.HOST, DAOUtil.USER_NAME, DAOUtil.PASSWORD);
+    public int deletePaperSubjects(int paperId) {
+        int rowsAffected = -1;
+        MySQLDatabase connection = new MySQLDatabase(DAOUtil.HOST, DAOUtil.USER_NAME, DAOUtil.PASSWORD);
 
         if (connection.connect()) {
             if (this.userAccess.checkAdmin(connection, this.userAccess.getLoggedInId())) {
@@ -86,6 +88,6 @@ public class PaperSubjectDAO {
             // close connection to database
             connection.close();
         }
-      return rowsAffected;
+        return rowsAffected;
     }
 }

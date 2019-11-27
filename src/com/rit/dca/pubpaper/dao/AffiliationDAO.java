@@ -147,15 +147,26 @@ public class AffiliationDAO {
 
         if(connection.connect()) {
             if(this.userAccess.checkAdmin(connection, this.userAccess.getLoggedInId())) {
-                // setup parameters for add affiliation query
-                List<String> affiliationParams = new ArrayList<String>();
-                affiliationParams.add(Integer.toString(nextAffiliationId(connection)));
-                affiliationParams.add(affiliationName);
+                connection.startTransaction();
+                int nextAId = nextAffiliationId(connection);
+                if(nextAId != -1){
+                    // setup parameters for add affiliation query
+                    List<String> affiliationParams = new ArrayList<String>();
+                    affiliationParams.add(Integer.toString(nextAId));
+                    affiliationParams.add(affiliationName);
 
-                // call modify data to add affiliation query
-                int rowsAffected = connection.modifyData(DAOUtil.INSERT_AFFILIATION, affiliationParams);
-                if(rowsAffected == 1){
-                    addStatus = true;
+                    // call modify data to add affiliation query
+                    int rowsAffected = connection.modifyData(DAOUtil.INSERT_AFFILIATION, affiliationParams);
+                    if(rowsAffected == 1){
+                        addStatus = true;
+                        connection.endTransaction();
+                    }
+                    else{
+                        connection.rollbackTransaction();
+                    }
+                }
+                else{
+                    connection.rollbackTransaction();
                 }
             }
             // close connection to database
