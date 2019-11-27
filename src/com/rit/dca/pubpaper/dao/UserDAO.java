@@ -4,9 +4,14 @@ import com.rit.dca.pubpaper.database.MySQLDatabase;
 import com.rit.dca.pubpaper.model.Paper;
 import com.rit.dca.pubpaper.model.User;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+
+import org.apache.commons.codec.digest.DigestUtils;
 
 /**
  * Database Connectivity and Access
@@ -47,13 +52,11 @@ public class UserDAO {
                     int uid = Integer.parseInt(userData.get(1).get(0));
                     user.setUserId(uid);
                     user.setEmail(userData.get(1).get(3));
-                    user.setPwd(userData.get(1).get(4));
                     user.setFirstName(userData.get(1).get(2));
                     user.setLastName(userData.get(1).get(1));
                     user.setAffiliationId(Integer.parseInt(userData.get(1).get(8)));
                     user.setIsAdmin(Integer.parseInt(userData.get(1).get(7)));
                     user.setCanReview(userData.get(1).get(5));
-                    user.setExpiration(userData.get(1).get(6));
 
                     // setup papers for this user
                     PaperAuthorDAO paperAuthorDAO = new PaperAuthorDAO(this);
@@ -63,46 +66,6 @@ public class UserDAO {
                 // close the connection
                 connection.close();
             }
-        }
-        return user;
-    }
-
-    /**
-     * Get the public profile info for user object (properties like name, affiliation)
-     *
-     * @param userId - user id for which public profile data is requested.
-     * @return User object of the public profile requested
-     */
-    public User getPublicProfile(int userId) {
-        User user = null;
-        MySQLDatabase connection = new MySQLDatabase(DAOUtil.HOST, DAOUtil.USER_NAME, DAOUtil.PASSWORD);
-
-        if (connection.connect()) {
-            // setup parameters for get a single user query
-            List<String> userParams = new ArrayList<String>();
-            userParams.add(Integer.toString(userId));
-
-            // call get data on get a single user query
-            ArrayList<ArrayList<String>> userData = connection.getData(DAOUtil.GET_SINGLE_USER, userParams);
-            if (userData.size() == 2) {
-
-                // setup requested user's object
-                user = new User();
-                user.setUserId(Integer.parseInt(userData.get(1).get(0)));
-                user.setEmail(userData.get(1).get(3));
-                user.setFirstName(userData.get(1).get(2));
-                user.setLastName(userData.get(1).get(1));
-                user.setAffiliationId(Integer.parseInt(userData.get(1).get(8)));
-                user.setIsAdmin(Integer.parseInt(userData.get(1).get(7)));
-                user.setCanReview(userData.get(1).get(5));
-
-                // setup papers for this user
-                PaperAuthorDAO paperAuthorDAO = new PaperAuthorDAO(this);
-                user.setAllPapers(paperAuthorDAO.getAuthorPapers(userId));
-            }
-
-            // close the connection
-            connection.close();
         }
         return user;
     }
@@ -140,6 +103,7 @@ public class UserDAO {
                         userParams.add(userData.get("firstName").toString());
                         userParams.add(userData.get("email").toString());
                         userParams.add(userData.get("affiliationId").toString());
+                        userParams.add(setPassword(userData.get("password").toString()));
                         userParams.add(Integer.toString(userId));
 
                         rowsAffected = connection.modifyData(DAOUtil.UPDATE_USER_PROFILE, userParams);
@@ -157,7 +121,7 @@ public class UserDAO {
                 userParams.add(userData.get("lastName").toString());
                 userParams.add(userData.get("firstName").toString());
                 userParams.add(userData.get("email").toString());
-                userParams.add(userData.get("password").toString());
+                userParams.add(setPassword(userData.get("password").toString()));
                 userParams.add(userData.get("affiliationId").toString());
 
                 rowsAffected = connection.modifyData(DAOUtil.INSERT_NEW_USER, userParams);
@@ -204,6 +168,9 @@ public class UserDAO {
      * @return Boolean value indicating if password reset was successful or no
      */
     private boolean resetPassword(String email) {
+        if(this.loggedInId != -1){
+
+        }
         return false;
     }
 
@@ -218,64 +185,76 @@ public class UserDAO {
         if (loggedInId == -1) {
             MySQLDatabase connection = new MySQLDatabase(DAOUtil.HOST, DAOUtil.USER_NAME, DAOUtil.PASSWORD);
 
-            if (connection.connect()) {
+            try {
+                if (connection.connect()) {
 
-                // setup parameters for login query
-                List<String> loginParams = new ArrayList<String>();
-                loginParams.add(email);
-                loginParams.add(password);
+                    // setup parameters for login query
+                    List<String> loginParams = new ArrayList<String>();
+                    loginParams.add(email);
+                    loginParams.add(password);
 
-                // call get data on login query
-                ArrayList<ArrayList<String>> validation = connection.getData(DAOUtil.CHECK_LOGIN, loginParams);
+                    // call get data on login query
+                    ArrayList<ArrayList<String>> validation = connection.getData(DAOUtil.CHECK_LOGIN, loginParams);
 
-                // check if validated successfully
-                if (validation.size() == 2) {
-                    // setup validated user's object
-                    User user = new User();
+                    boolean userValidated = false;
+                    if (validation.size() == 2) {
+                        String hash = validation.get(1).get(4);
+                        if (hash.equals(DigestUtils.shaHex(password))) {
+                            if (new SimpleDateFormat("dd/MM/yyyy").parse(validation.get(1).get(6)).before(new Date())) {
+                                userValidated = true;
+                            }
+                        }
+                    }
 
-                    int userId = Integer.parseInt(validation.get(1).get(0));
-                    user.setUserId(userId);
-                    user.setEmail(validation.get(1).get(3));
-                    user.setPwd(validation.get(1).get(4));
-                    user.setFirstName(validation.get(1).get(2));
-                    user.setLastName(validation.get(1).get(1));
-                    user.setAffiliationId(Integer.parseInt(validation.get(1).get(8)));
-                    user.setIsAdmin(Integer.parseInt(validation.get(1).get(7)));
-                    user.setCanReview(validation.get(1).get(5));
-                    user.setExpiration(validation.get(1).get(6));
+                    // check if validated successfully
+                    if (userValidated) {
 
+                        // setup validated user's object
+                        User user = new User();
 
-                    // setup papers for this user
-                    PaperAuthorDAO paperAuthorDAO = new PaperAuthorDAO(this);
-                    user.setAllPapers(paperAuthorDAO.getAuthorPapers(userId));
+                        int userId = Integer.parseInt(validation.get(1).get(0));
+                        user.setUserId(userId);
+                        user.setEmail(validation.get(1).get(3));
+                        user.setFirstName(validation.get(1).get(2));
+                        user.setLastName(validation.get(1).get(1));
+                        user.setAffiliationId(Integer.parseInt(validation.get(1).get(8)));
+                        user.setIsAdmin(Integer.parseInt(validation.get(1).get(7)));
+                        user.setCanReview(validation.get(1).get(5));
 
-                    // close connection to database
-                    connection.close();
+                        // setup papers for this user
+                        PaperAuthorDAO paperAuthorDAO = new PaperAuthorDAO(this);
+                        user.setAllPapers(paperAuthorDAO.getAuthorPapers(userId));
 
-                    loggedInId = user.getUserId();
+                        // close connection to database
+                        connection.close();
 
-                    // return validated user's instance
-                    return user;
-                } else {
-                    connection.close();
+                        loggedInId = user.getUserId();
+
+                        // return validated user's instance
+                        return user;
+                    } else {
+                        connection.close();
+                    }
                 }
+            }
+            catch(ParseException p){
+
             }
         }
 
         // return null if unable to validate user
         return null;
-
-        // TODO : add exception handling in this method
     }
 
     /**
-     * Set user's password for the first time
+     * Returns hashed password
      *
      * @param password password of the user
-     * @return Boolean value indicating if setting the password was successful
+     * @return String hashed password string
      */
-    private boolean setPassword(String password) {
-        return false;
+    private String setPassword(String password) {
+        String hashedPassword = DigestUtils.shaHex(password);
+        return hashedPassword;
     }
 
     /**
@@ -335,13 +314,11 @@ public class UserDAO {
                     int userId = Integer.parseInt(iUser.get(0));
                     user.setUserId(userId);
                     user.setEmail(iUser.get(3));
-                    user.setPwd(iUser.get(4));
                     user.setFirstName(iUser.get(2));
                     user.setLastName(iUser.get(1));
                     user.setAffiliationId(Integer.parseInt(iUser.get(8)));
                     user.setIsAdmin(Integer.parseInt(iUser.get(7)));
                     user.setCanReview(iUser.get(5));
-                    user.setExpiration(iUser.get(6));
 
                     // setup papers for this user
                     PaperAuthorDAO paperAuthorDAO = new PaperAuthorDAO(this);
@@ -384,13 +361,11 @@ public class UserDAO {
                     user = new User();
                     user.setUserId(Integer.parseInt(userData.get(1).get(0)));
                     user.setEmail(userData.get(1).get(3));
-                    user.setPwd(userData.get(1).get(4));
                     user.setFirstName(userData.get(1).get(2));
                     user.setLastName(userData.get(1).get(1));
                     user.setAffiliationId(Integer.parseInt(userData.get(1).get(8)));
                     user.setIsAdmin(Integer.parseInt(userData.get(1).get(7)));
                     user.setCanReview(userData.get(1).get(5));
-                    user.setExpiration(userData.get(1).get(6));
 
                     // setup papers for this user
                     PaperAuthorDAO paperAuthorDAO = new PaperAuthorDAO(this);
@@ -405,8 +380,6 @@ public class UserDAO {
         // return null if unable to find user / not admin,
         // otherwise return the requested user
         return user;
-
-        // TODO : add exception handling in this method
     }
 
     /**
