@@ -1,6 +1,7 @@
 package com.rit.dca.pubpaper.dao;
 
 import com.rit.dca.pubpaper.database.MySQLDatabase;
+import com.rit.dca.pubpaper.model.Paper;
 import com.rit.dca.pubpaper.model.Subject;
 
 import java.lang.reflect.Array;
@@ -79,6 +80,9 @@ public class PaperSubjectDAO {
 
         if (connection.connect()) {
             PaperDAO accessPaper = new PaperDAO(this.userAccess);
+            System.out.println("PAPER ID: "+paperId);
+            Paper myPaper = accessPaper.getPaper(paperId);
+            System.out.println("MY PAPER: "+myPaper.getTitle());
             int submitterId = accessPaper.getPaper(paperId).getSubmitterId();
             if(submitterId == this.userAccess.getLoggedInId() || this.userAccess.checkAdmin(connection, this.userAccess.getLoggedInId())){
                 if(connection.startTransaction()){
@@ -113,7 +117,7 @@ public class PaperSubjectDAO {
         return rowsAffected;
     }
 
-    public int updatePaperSubject(int paperId, int replaceSubjectId, int replaceSubjectIdWith){
+    public int updatePaperSubject(int paperId, int subjectId){
         int rowsAffected = 0;
         MySQLDatabase connection = new MySQLDatabase(DAOUtil.HOST, DAOUtil.USER_NAME, DAOUtil.PASSWORD);
 
@@ -123,11 +127,10 @@ public class PaperSubjectDAO {
             if(submitterId == this.userAccess.getLoggedInId() || this.userAccess.checkAdmin(connection, this.userAccess.getLoggedInId())){
                 if(connection.startTransaction()){
                     List<String> paperSubjectParams = new ArrayList<>();
-                    paperSubjectParams.add(Integer.toString(replaceSubjectIdWith));
                     paperSubjectParams.add(Integer.toString(paperId));
-                    paperSubjectParams.add(Integer.toString(replaceSubjectId));
+                    paperSubjectParams.add(Integer.toString(subjectId));
 
-                    rowsAffected = connection.modifyData(DAOUtil.UPDATE_PAPER_SUBJECT, paperSubjectParams);
+                    rowsAffected = connection.modifyData(DAOUtil.INSERT_UPDATE_PAPER_SUBJECT, paperSubjectParams);
                     if(rowsAffected == 1){
                         connection.endTransaction();
                     }

@@ -174,7 +174,7 @@ public class Main {
              */
 
             // Delete Paper
-            PaperDAO paperDAO = new PaperDAO(user);
+            //PaperDAO paperDAO = new PaperDAO(user);
             //System.out.println("DELETED PAPER ROWS: "+ paperDAO.deletePaper(2));
 
 
@@ -188,11 +188,13 @@ public class Main {
             updatePaperData.put("fileId", "ZZX22");
             int subjectIdArr[] = {5, 9, 10, 13, 16};
             updatePaperData.put("subjects", subjectIdArr);
-            int coAuthorsIdArr[] = {1};
+            int coAuthorsIdArr[] = {1, 419, 3, 5, 420, 6};
             updatePaperData.put("coAuthors", coAuthorsIdArr);
 
-            //PaperDAO paperDAO = new PaperDAO(user);
-            //paperDAO.setPaper(updatePaperData);
+            PaperDAO paperDAO = new PaperDAO(user);
+            Paper updatedPaper = paperDAO.setPaper(updatePaperData);
+            System.out.println("PAPER TITLE : " + updatedPaper.getTitle());
+
 
 
             // Create New Paper
@@ -205,7 +207,7 @@ public class Main {
             newPaperData.put("fileId", "NQAA");
             int _subjectIdArr[] = {5, 9, 10};
             newPaperData.put("subjects", _subjectIdArr);
-            int _coAuthorsIdArr[] = {389};
+            int _coAuthorsIdArr[] = {68};
             newPaperData.put("coAuthors", _coAuthorsIdArr);
 
             //Paper newPaper = paperDAO.setPaper(newPaperData);

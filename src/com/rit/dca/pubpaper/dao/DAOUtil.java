@@ -40,7 +40,12 @@ public class DAOUtil {
     protected static final String INSERT_PAPER_AUTHOR = "INSERT INTO PaperAuthors VALUES (?,?,?)";
     protected static final String UPDATE_PAPER_AUTHOR = "UPDATE PaperAuthors SET userId=? WHERE paperId=? AND userId=?";
     protected static final String UPDATE_PAPER_AUTHOR_DISPLAY_ORDER = "Update PaperAuthors SET displayOrder=? WHERE paperId=? AND userId=?";
-
+    protected static final String INSERT_UPDATE_PAPER_AUTHOR = "INSERT INTO paperauthors (paperId, userId, displayOrder) " +
+            "VALUES (?, ?, ?) " +
+            "ON DUPLICATE KEY UPDATE " +
+            "paperId = VALUES(paperId), " +
+            "userId = VALUES(userId)," +
+            "displayOrder = ?";
 
     // Paper
     protected static final String GET_USER_PAPERS = "SELECT * FROM Papers WHERE submitterId=?";
@@ -48,8 +53,11 @@ public class DAOUtil {
     protected static final String GET_USER_PAPER_IDS = "SELECT paperId FROM Papers WHERE submitterId=?";
     protected static final String DELETE_USER_PAPERS = "DELETE FROM Papers WHERE submitterId=?";
     //protected static final String INSERT_PAPER = "";
-    //protected static final String UPDATE_PAPER = "UPDATE Papers SET title=?, abstract=?, submissionType=?, fileId=? WHERE paperId=? AND submitterId=?";
+    protected static final String UPDATE_PAPER = "UPDATE Papers SET title=?, abstract=?, submissionType=?, fileId=? WHERE paperId=? AND submitterId=?";
     protected static final String DELETE_PAPER = "DELETE FROM Papers WHERE paperId=?";
+    protected static final String GET_NEXT_PAPER_ID = "SELECT paperId FROM papers ORDER BY paperId DESC LIMIT 1";
+    protected static final String INSERT_NEW_PAPER = "INSERT INTO Papers(paperId, title, abstract, track, submissionType, fileId, submitterId, status, tentativeStatus)" +
+            " VALUES(?,?,?,NULL,?,?,?,'Submitted','Undecided')";
 
     // Affiliations
     protected static final String GET_USER_AFFILIATION = "SELECT affiliationId FROM Users WHERE userId=?";
@@ -80,7 +88,11 @@ public class DAOUtil {
     protected static final String GET_PAPER_SUBJECTS = "SELECT * FROM PaperSubjects WHERE paperId=?";
     protected static final String INSERT_PAPER_SUBJECT = "INSERT INTO PaperSubjects VALUES (?,?)";
     protected static final String UPDATE_PAPER_SUBJECT = "UPDATE PaperSubjects SET subjectId=? WHERE paperid=? AND subjectId=?";
-
+    protected static final String INSERT_UPDATE_PAPER_SUBJECT = "INSERT INTO papersubjects (paperId, subjectId) " +
+            "VALUES (?, ?) " +
+            "ON DUPLICATE KEY UPDATE " +
+            "paperId = VALUES(paperId), " +
+            "subjectId = VALUES(subjectId)";
     // Subject
     protected  static final String GET_SUBJECT = "SELECT * FROM _subjects WHERE subjectId=?";
     protected  static final String GET_ALL_SUBJECTS = "SELECT * FROM _subjects";
