@@ -183,7 +183,9 @@ public class SubjectDAO {
                 // call modify data to add affiliation query
                 rowsAffected = connection.modifyData(DAOUtil.DELETE_SUBJECT, subjectParams);
                 if(rowsAffected == 1){
-                    int paperSubjectRowsAffected = connection.modifyData(DAOUtil.DELETE_SUBJECT_PAPER, subjectParams);
+                    PaperSubjectDAO accessPaperSubjectDAO = new PaperSubjectDAO(this.userAccess);
+
+                    int paperSubjectRowsAffected = accessPaperSubjectDAO.deleteSubjectPapers(subjectId);
                     if(paperSubjectRowsAffected < 0){
                         connection.rollbackTransaction();
                     }

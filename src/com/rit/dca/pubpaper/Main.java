@@ -14,7 +14,7 @@ public class Main {
 
         // Authenticate User
         UserDAO user = new UserDAO();
-        User validatedUser = user.login("sgorka@pct.edu", "32c1188618d2781556c80fedaa88c849c4f41ff3");
+        User validatedUser = user.login("stevez@cssconsult.com", "c704e98e5f46b4afd32682cf53d740524b4f6910");
         if(validatedUser != null){
             System.out.println("Logged In Successfully - " + validatedUser.getUserId());
 
@@ -89,6 +89,7 @@ public class Main {
             System.out.println("\nDelete Affiliation Affected Rows : " + accessAffiliation.deleteAffiliation(275));
             */
 
+            /*
             // Add type
             System.out.println("\nAdd Type STATUS : " + accessType.addTypes("Aamchi Type"));
 
@@ -97,6 +98,50 @@ public class Main {
 
             // Delete type
             System.out.println("\nDelete Type Affected Rows : " + accessType.deleteType(8));
+            */
+
+            /*
+            SubjectDAO accessSubject = new SubjectDAO(user);
+            // Add subject
+            System.out.println("\nAdd Subject STATUS : " + accessSubject.addSubject("Aamchi Subject"));
+
+            // Edit subject
+            System.out.println("\nUpdate Subject Affected Rows : " + accessSubject.changeSubject(27, "John Doe Subject"));
+
+            // Delete subject
+            System.out.println("\nDelete Subject Affected Rows : " + accessSubject.deleteSubject(27));
+
+            */
+
+            /*
+            PaperSubjectDAO accessPaperSubject = new PaperSubjectDAO(user);
+            // Add paper subject
+            int subjectIds[] = {25, 23};
+            System.out.println("\nAdd PaperSubject: " + accessPaperSubject.addPaperSubject(99, subjectIds));
+
+            // Update paper subject
+            System.out.println("\nUpdate PaperSubject: " + accessPaperSubject.updatePaperSubject(3, 25, 23));
+            */
+
+            /*
+            PaperAuthorDAO accessPaperAuthor = new PaperAuthorDAO(user);
+
+            // Get Display Order
+            System.out.println("Paper Author Display Order: " + accessPaperAuthor.getDisplayOrder(52, 149));
+
+            // Add Paper Author
+            System.out.println("Add Paper Author: " + accessPaperAuthor.addPaperAuthor(52, 159,5));
+
+            // Update Paper Author
+            System.out.println("Update Paper Author: " + accessPaperAuthor.updatePaperAuthor(52, 159,154));
+
+            // Update Display Order
+            System.out.println("Update Paper Author Display Order: " + accessPaperAuthor.updateDisplayOrder(52, 6,154));
+
+            // Delete a single Paper Author
+            System.out.println("Update Paper Author Display Order: " + accessPaperAuthor.deleteSinglePaperAuthor(52, 154));
+
+            */
 
 
             /*

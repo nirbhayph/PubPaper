@@ -32,8 +32,15 @@ public class DAOUtil {
 
     // Paper Authors
     protected static final String DELETE_PAPER_AUTHORS = "DELETE FROM PaperAuthors WHERE paperId=?";
+    protected static final String DELETE_AUTHOR_PAPERS = "DELETE FROM PaperAuthors WHERE userId=?";
+    protected static final String DELETE_SINGLE_PAPER_AUTHOR = "DELETE FROM PaperAuthors WHERE paperId=? AND userId=?";
     protected static final String GET_PAPER_AUTHORS = "SELECT * FROM PaperAuthors WHERE paperId=? ORDER BY displayOrder ASC";
     protected static final String GET_AUTHOR_PAPERS = "SELECT * FROM PaperAuthors WHERE userId=?";
+    protected static final String GET_DISPLAY_ORDER = "SELECT displayOrder FROM PaperAuthors WHERE paperId=? AND userId=?";
+    protected static final String INSERT_PAPER_AUTHOR = "INSERT INTO PaperAuthors VALUES (?,?,?)";
+    protected static final String UPDATE_PAPER_AUTHOR = "UPDATE PaperAuthors SET userId=? WHERE paperId=? AND userId=?";
+    protected static final String UPDATE_PAPER_AUTHOR_DISPLAY_ORDER = "Update PaperAuthors SET displayOrder=? WHERE paperId=? AND userId=?";
+
 
     // Paper
     protected static final String GET_USER_PAPERS = "SELECT * FROM Papers WHERE submitterId=?";
@@ -65,7 +72,11 @@ public class DAOUtil {
 
     // PaperSubjects
     protected static final String DELETE_PAPER_SUBJECTS = "DELETE FROM PaperSubjects WHERE paperId=?";
+    protected static final String DELETE_SUBJECT_PAPERS = "DELETE FROM papersubjects where subjectid=?";
+    protected static final String DELETE_SINGLE_PAPER_SUBJECT = "DELETE FROM papersubjects WHERE paperId=? AND subjectId=?";
     protected static final String GET_PAPER_SUBJECTS = "SELECT * FROM PaperSubjects WHERE paperId=?";
+    protected static final String INSERT_PAPER_SUBJECT = "INSERT INTO PaperSubjects VALUES (?,?)";
+    protected static final String UPDATE_PAPER_SUBJECT = "UPDATE PaperSubjects SET subjectId=? WHERE paperid=? AND subjectId=?";
 
     // Subject
     protected  static final String GET_SUBJECT = "SELECT * FROM _subjects WHERE subjectId=?";
@@ -73,6 +84,5 @@ public class DAOUtil {
     protected static final String GET_LAST_SUBJECT_ID = "SELECT subjectId FROM _subjects ORDER BY subjectId DESC LIMIT 1";
     protected static final String INSERT_SUBJECT = "INSERT INTO _subjects VALUES (?,?)";
     protected static final String DELETE_SUBJECT = "DELETE FROM _subjects WHERE subjectId=?";
-    protected static final String DELETE_SUBJECT_PAPER = "DELETE FROM papersubjects where subjectid=?";
     protected static final String UPDATE_SUBJECT = "UPDATE _subjects SET subjectName=? WHERE subjectId=?";
 }

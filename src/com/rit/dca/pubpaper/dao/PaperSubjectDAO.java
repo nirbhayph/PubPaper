@@ -3,6 +3,7 @@ package com.rit.dca.pubpaper.dao;
 import com.rit.dca.pubpaper.database.MySQLDatabase;
 import com.rit.dca.pubpaper.model.Subject;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,6 +72,81 @@ public class PaperSubjectDAO {
         // TODO : add exception handling in this method
     }
 
+    public int addPaperSubject(int paperId, int[] subjectIds){
+        int rowsAffected = 0;
+        boolean rollbackCheck = false;
+        MySQLDatabase connection = new MySQLDatabase(DAOUtil.HOST, DAOUtil.USER_NAME, DAOUtil.PASSWORD);
+
+        if (connection.connect()) {
+            PaperDAO accessPaper = new PaperDAO(this.userAccess);
+            int submitterId = accessPaper.getPaper(paperId).getSubmitterId();
+            if(submitterId == this.userAccess.getLoggedInId() || this.userAccess.checkAdmin(connection, this.userAccess.getLoggedInId())){
+                if(connection.startTransaction()){
+                    for(int subjectId : subjectIds){
+                        List<String> paperSubjectParams = new ArrayList<>();
+                        paperSubjectParams.add(Integer.toString(paperId));
+                        paperSubjectParams.add(Integer.toString(subjectId));
+
+                        int paperSubjectRowsAffected = connection.modifyData(DAOUtil.INSERT_PAPER_SUBJECT, paperSubjectParams);
+                        if(paperSubjectRowsAffected == 1){
+                            rowsAffected += 1;
+                        }
+                        else{
+                            connection.rollbackTransaction();
+                            rollbackCheck = true;
+                            break;
+                        }
+                    }
+                    if(!rollbackCheck){
+                        connection.endTransaction();
+                    }
+                }
+                else{
+                    /* Exception Here */
+                }
+            }
+            else{
+                /* Exception Here */
+            }
+            connection.close();
+        }
+        return rowsAffected;
+    }
+
+    public int updatePaperSubject(int paperId, int replaceSubjectId, int replaceSubjectIdWith){
+        int rowsAffected = 0;
+        MySQLDatabase connection = new MySQLDatabase(DAOUtil.HOST, DAOUtil.USER_NAME, DAOUtil.PASSWORD);
+
+        if (connection.connect()) {
+            PaperDAO accessPaper = new PaperDAO(this.userAccess);
+            int submitterId = accessPaper.getPaper(paperId).getSubmitterId();
+            if(submitterId == this.userAccess.getLoggedInId() || this.userAccess.checkAdmin(connection, this.userAccess.getLoggedInId())){
+                if(connection.startTransaction()){
+                    List<String> paperSubjectParams = new ArrayList<>();
+                    paperSubjectParams.add(Integer.toString(replaceSubjectIdWith));
+                    paperSubjectParams.add(Integer.toString(paperId));
+                    paperSubjectParams.add(Integer.toString(replaceSubjectId));
+
+                    rowsAffected = connection.modifyData(DAOUtil.UPDATE_PAPER_SUBJECT, paperSubjectParams);
+                    if(rowsAffected == 1){
+                        connection.endTransaction();
+                    }
+                    else{
+                        connection.rollbackTransaction();
+                    }
+                }
+                else{
+                    /* Exception Here */
+                }
+            }
+            else{
+                /* Exception Here */
+            }
+            connection.close();
+        }
+        return rowsAffected;
+    }
+
     public int deletePaperSubjects(int paperId) {
         int rowsAffected = -1;
         MySQLDatabase connection = new MySQLDatabase(DAOUtil.HOST, DAOUtil.USER_NAME, DAOUtil.PASSWORD);
@@ -90,4 +166,46 @@ public class PaperSubjectDAO {
         }
         return rowsAffected;
     }
+
+    public int deleteSubjectPapers(int subjectId) {
+        int rowsAffected = -1;
+        MySQLDatabase connection = new MySQLDatabase(DAOUtil.HOST, DAOUtil.USER_NAME, DAOUtil.PASSWORD);
+
+        if (connection.connect()) {
+            if (this.userAccess.checkAdmin(connection, this.userAccess.getLoggedInId())) {
+
+                // setup parameters for paper subjects query
+                List<String> paperSubjectsParams = new ArrayList<String>();
+                paperSubjectsParams.add(Integer.toString(subjectId));
+
+                // call modify data on paper subjects delete query
+                rowsAffected = connection.modifyData(DAOUtil.DELETE_SUBJECT_PAPERS, paperSubjectsParams);
+            }
+            // close connection to database
+            connection.close();
+        }
+        return rowsAffected;
+    }
+
+    public int deleteSinglePaperSubject(int paperId, int subjectId) {
+        int rowsAffected = -1;
+        MySQLDatabase connection = new MySQLDatabase(DAOUtil.HOST, DAOUtil.USER_NAME, DAOUtil.PASSWORD);
+
+        if (connection.connect()) {
+            if (this.userAccess.checkAdmin(connection, this.userAccess.getLoggedInId())) {
+
+                // setup parameters for paper subject query
+                List<String> paperSubjectParams = new ArrayList<String>();
+                paperSubjectParams.add(Integer.toString(paperId));
+                paperSubjectParams.add(Integer.toString(subjectId));
+
+                // call modify data on paper subject delete query
+                rowsAffected = connection.modifyData(DAOUtil.DELETE_SINGLE_PAPER_SUBJECT, paperSubjectParams);
+            }
+            // close connection to database
+            connection.close();
+        }
+        return rowsAffected;
+    }
+
 }
