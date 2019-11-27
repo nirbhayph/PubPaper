@@ -489,7 +489,7 @@ public class UserDAO {
                             //Check if previous commands ran perfectly then continue
                             if(!rollbackCheck){
 
-                                rowsAffected = accessPapers.deletePaper(id);
+                                rowsAffected = accessPapers.deleteUserPaper(id);
 
                                 if(rowsAffected >= 1){
                                     // call modify data to delete users

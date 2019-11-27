@@ -143,7 +143,7 @@ public class PaperDAO {
      * Creates a new paper or updates an existing
      * paper and sets the information for it
      * @param paperDetails key value pairs containing paper information
-     * @return Paper instance for  created / updated paper
+     * @return Paper instance for created / updated paper
      */
     public Paper setPaper(HashMap<String, Object> paperDetails){
         //int paperId, String submissionTitle, String submissionAbstract, int submissionType, String fileName,
@@ -151,7 +151,7 @@ public class PaperDAO {
         return null;
     }
 
-    public int deletePaper(int submitterId){
+    public int deleteUserPaper(int submitterId){
         int rowsAffected = -1;
             MySQLDatabase connection = new MySQLDatabase(DAOUtil.HOST, DAOUtil.USER_NAME, DAOUtil.PASSWORD);
             if (connection.connect()) {
@@ -168,6 +168,49 @@ public class PaperDAO {
                 connection.close();
             }
         return rowsAffected;
+    }
+
+    public int deletePaper(int paperId){
+        int rowsAffected = -1, paperRowsAffected = -1;
+        boolean rollbackCheck = false;
+        MySQLDatabase connection = new MySQLDatabase(DAOUtil.HOST, DAOUtil.USER_NAME, DAOUtil.PASSWORD);
+        if (connection.connect()) {
+            if (this.userAccess.checkAdmin(connection, this.userAccess.getLoggedInId())) {
+                connection.startTransaction();
+                PaperSubjectDAO accessPaperSubjects = new PaperSubjectDAO(this.userAccess);
+                // call modify data to delete papers from paper subjects
+                rowsAffected = accessPaperSubjects.deletePaperSubjects(paperId);
+                //System.out.println("ROWS AFFECTED: "+rowsAffected);
+                if(rowsAffected >= 0){
+                    PaperAuthorDAO accessPaperAuthors = new PaperAuthorDAO(this.userAccess);
+                    // call modify data to delete papers from paper subjects
+                    rowsAffected = accessPaperAuthors.deletePaperAuthors(paperId);
+                    if(rowsAffected >= 0){
+                        List<String> paperParams = new ArrayList<>();
+                        paperParams.add(Integer.toString(paperId));
+                        paperRowsAffected = connection.modifyData(DAOUtil.DELETE_PAPER, paperParams);
+                        if(paperRowsAffected == 1){
+                            connection.endTransaction();
+                        }
+                        else{
+                            rollbackCheck = true;
+                        }
+                    }
+                    else{
+                        rollbackCheck = true;
+                    }
+                }
+                else{
+                    rollbackCheck = true;
+                }
+
+                if(rollbackCheck){
+                    connection.rollbackTransaction();
+                }
+            }
+            connection.close();
+        }
+        return paperRowsAffected;
     }
 
 }

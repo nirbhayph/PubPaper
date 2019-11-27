@@ -173,6 +173,11 @@ public class Main {
 
              */
 
+            // Delete Paper
+            PaperDAO paperDAO = new PaperDAO(user);
+            System.out.println("DELETED PAPER ROWS: "+ paperDAO.deletePaper(2));
+
+
 
             // Update Paper
             HashMap<String, Object> updatePaperData = new HashMap<String, Object>();
@@ -186,14 +191,14 @@ public class Main {
             int coAuthorsIdArr[] = {1};
             updatePaperData.put("coAuthors", coAuthorsIdArr);
 
-            PaperDAO paperDAO = new PaperDAO();
-            paperDAO.setPaper(updatePaperData);
+            //PaperDAO paperDAO = new PaperDAO(user);
+            //paperDAO.setPaper(updatePaperData);
 
 
             // Create New Paper
 
             HashMap<String, Object> newPaperData = new HashMap<String, Object>();
-            newPaperData.put("paperId", 9910);
+            //newPaperData.put("paperId", 9910);
             newPaperData.put("title", "nirbhay rules");
             newPaperData.put("abstract", "This is the boss");
             newPaperData.put("submissionType", 1);
@@ -203,7 +208,7 @@ public class Main {
             int _coAuthorsIdArr[] = {389};
             newPaperData.put("coAuthors", _coAuthorsIdArr);
 
-            paperDAO.setPaper(newPaperData);
+            //paperDAO.setPaper(newPaperData);
 
 
             //Delete a User
