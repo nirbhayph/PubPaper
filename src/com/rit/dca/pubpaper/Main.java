@@ -14,12 +14,12 @@ public class Main {
 
         // Authenticate User
         UserDAO user = new UserDAO();
-        User validatedUser = user.login("xtian2@kennesaw.edu", "ca8c5c4088866562a4a93f8250db4f9795e6f52b");
+        User validatedUser = user.login("stevez@cssconsult.com", "c704e98e5f46b4afd32682cf53d740524b4f6910");
         if(validatedUser != null){
             System.out.println("Logged In Successfully - " + validatedUser.getUserId());
 
             // Get all papers for validated user
-            PaperDAO accessPapers = new PaperDAO();
+            PaperDAO accessPapers = new PaperDAO(user);
             ArrayList<Paper> userPapers = accessPapers.getPapers(validatedUser.getUserId());
 
             for(Paper paper : userPapers){
@@ -33,7 +33,7 @@ public class Main {
             }
 
             // Get affiliation instance for validated user
-            AffiliationDAO accessAffiliation = new AffiliationDAO();
+            AffiliationDAO accessAffiliation = new AffiliationDAO(user);
             Affiliation affiliation = accessAffiliation.getAffiliation(validatedUser.getUserId());
             if(affiliation != null){
                 System.out.println(affiliation.getAffiliationId() + " - " + affiliation.getAffiliationName());
@@ -46,7 +46,7 @@ public class Main {
             }
 
             // Get all types
-            TypeDAO accessType = new TypeDAO();
+            TypeDAO accessType = new TypeDAO(user);
 
             ArrayList<Type> types = accessType.getTypes();
             for(Type type : types){
@@ -80,21 +80,77 @@ public class Main {
 
 
             // Add affiliation
-            System.out.println("\nAdd Affiliation STATUS : " + accessAffiliation.addAffiliations(validatedUser.getUserId(), "Aamchi University"));
+            System.out.println("\nAdd Affiliation STATUS : " + accessAffiliation.addAffiliations("Aamchi University"));
 
             // Edit Affiliation
-            System.out.println("\nUpdate Affiliation Affected Rows : " + accessAffiliation.changeAffiliation(validatedUser.getUserId(), "Aamchi University", "John Doe University"));
+            System.out.println("\nUpdate Affiliation Affected Rows : " + accessAffiliation.changeAffiliation(275, "John Doe University"));
 
             // Delete Affiliation
-            System.out.println("\nDelete Affiliation Affected Rows : " + accessAffiliation.deleteAffiliation(validatedUser.getUserId(), 275));
+            System.out.println("\nDelete Affiliation Affected Rows : " + accessAffiliation.deleteAffiliation(275));
             */
 
+            /*
+            // Add type
+            System.out.println("\nAdd Type STATUS : " + accessType.addTypes("Aamchi Type"));
+
+            // Edit type
+            System.out.println("\nUpdate Type Affected Rows : " + accessType.changeType(8, "John Doe Type"));
+
+            // Delete type
+            System.out.println("\nDelete Type Affected Rows : " + accessType.deleteType(8));
+            */
+
+            /*
+            SubjectDAO accessSubject = new SubjectDAO(user);
+            // Add subject
+            System.out.println("\nAdd Subject STATUS : " + accessSubject.addSubject("Aamchi Subject"));
+
+            // Edit subject
+            System.out.println("\nUpdate Subject Affected Rows : " + accessSubject.changeSubject(27, "John Doe Subject"));
+
+            // Delete subject
+            System.out.println("\nDelete Subject Affected Rows : " + accessSubject.deleteSubject(27));
+
+            */
+
+            /*
+            PaperSubjectDAO accessPaperSubject = new PaperSubjectDAO(user);
+            // Add paper subject
+            int subjectIds[] = {25, 23};
+            System.out.println("\nAdd PaperSubject: " + accessPaperSubject.addPaperSubject(99, subjectIds));
+
+            // Update paper subject
+            System.out.println("\nUpdate PaperSubject: " + accessPaperSubject.updatePaperSubject(3, 25, 23));
+            */
+
+            /*
+            PaperAuthorDAO accessPaperAuthor = new PaperAuthorDAO(user);
+
+            // Get Display Order
+            System.out.println("Paper Author Display Order: " + accessPaperAuthor.getDisplayOrder(52, 149));
+
+            // Add Paper Author
+            System.out.println("Add Paper Author: " + accessPaperAuthor.addPaperAuthor(52, 159,5));
+
+            // Update Paper Author
+            System.out.println("Update Paper Author: " + accessPaperAuthor.updatePaperAuthor(52, 159,154));
+
+            // Update Display Order
+            System.out.println("Update Paper Author Display Order: " + accessPaperAuthor.updateDisplayOrder(52, 6,154));
+
+            // Delete a single Paper Author
+            System.out.println("Update Paper Author Display Order: " + accessPaperAuthor.deleteSinglePaperAuthor(52, 154));
+
+            */
+
+
+            /*
             // See a User's Paper's Subjects
             System.out.println("VALIDATED USER's ALL PAPERS SUBJECTS");
             ArrayList<Integer> authorsPapersIds = validatedUser.getAllPapers();
 
             for(int paperId : authorsPapersIds){
-                PaperDAO paperDAO = new PaperDAO();
+                PaperDAO paperDAO = new PaperDAO(user);
                 ArrayList<Subject> subjects = paperDAO.getPaper(paperId).getSubjects();
                 for(Subject subject : subjects){
                     System.out.println(subject.getSubjectName());
@@ -107,13 +163,16 @@ public class Main {
             ArrayList<Integer> authorPapersIds = validatedUser.getAllPapers();
 
             for(int paperId : authorPapersIds){
-                PaperDAO paperDAO = new PaperDAO();
+                PaperDAO paperDAO = new PaperDAO(user);
                 ArrayList<Integer> authorsIds = paperDAO.getPaper(paperId).getAuthors();
                 for(int authorId : authorsIds){
                     System.out.println(user.getPublicProfile(authorId).getFirstName());
                 }
                 System.out.println(paperDAO.getPaper(paperId).getPaperId() + " ENDS HERE ");
             }
+
+             */
+
 
             // Update Paper
             HashMap<String, Object> updatePaperData = new HashMap<String, Object>();
@@ -148,10 +207,8 @@ public class Main {
 
 
             //Delete a User
-            /*
-            int users[] = {247, 450, 405, 10};
-            System.out.println("DELETED: " + user.deleteUsers(validatedUser.getUserId(), users));
-            */
+            /*int users[] = {247, 450, 405, 10};
+            System.out.println("DELETED: " + user.deleteUsers(validatedUser.getUserId(), users));*/
 
 
             // update a user

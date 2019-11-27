@@ -131,7 +131,7 @@ public class MySQLDatabase {
     }
     catch(SQLException sqlEx) {
       sqlEx.printStackTrace();
-      return 0;
+      return -1;
     }
   }
 
