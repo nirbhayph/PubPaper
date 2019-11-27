@@ -16,7 +16,7 @@ public class Main {
         UserDAO user = new UserDAO();
         User validatedUser = user.login("stevez@cssconsult.com", "c704e98e5f46b4afd32682cf53d740524b4f6910");
         if(validatedUser != null){
-            System.out.println("Logged In Successfully - " + validatedUser.getUserId());
+            System.out.println("Logged In Successfully - " + user.getLoggedInId());
 
             // Get all papers for validated user
             PaperDAO accessPapers = new PaperDAO(user);
@@ -60,13 +60,13 @@ public class Main {
             }
 
             // Get all users
-            ArrayList<User> userList = user.getAllUsers(validatedUser.getUserId());
+            ArrayList<User> userList = user.getAllUsers();
             for(User iUser: userList){
                 System.out.println("\nFirstName : " + iUser.getFirstName() + "\t|\tLastName : " + iUser.getLastName());
             }
 
             // Get a user
-            User rUser = user.getUser(validatedUser.getUserId(), 3);
+            User rUser = user.getUser(3);
             System.out.println("\nA USER :- FirstName : " + rUser.getFirstName() + "\t|\tLastName : " + rUser.getLastName());
 
             /*
@@ -175,13 +175,13 @@ public class Main {
 
             // Delete Paper
             PaperDAO paperDAO = new PaperDAO(user);
-            System.out.println("DELETED PAPER ROWS: "+ paperDAO.deletePaper(2));
+            //System.out.println("DELETED PAPER ROWS: "+ paperDAO.deletePaper(2));
 
 
 
             // Update Paper
             HashMap<String, Object> updatePaperData = new HashMap<String, Object>();
-            updatePaperData.put("paperId", 103);
+            updatePaperData.put("paperId", 68);
             updatePaperData.put("title", "Mixed Reality");
             updatePaperData.put("abstract", "This is my paper abstract");
             updatePaperData.put("submissionType", 2);
@@ -208,7 +208,8 @@ public class Main {
             int _coAuthorsIdArr[] = {389};
             newPaperData.put("coAuthors", _coAuthorsIdArr);
 
-            //paperDAO.setPaper(newPaperData);
+            //Paper newPaper = paperDAO.setPaper(newPaperData);
+            //System.out.println("PAPER TITLE : " + newPaper.getTitle());
 
 
             //Delete a User

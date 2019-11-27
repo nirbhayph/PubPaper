@@ -30,7 +30,7 @@ public class UserDAO {
      */
     public User getProfile(int userId) {
         User user = null;
-        if(loggedInId == userId){
+        if (loggedInId == userId) {
             MySQLDatabase connection = new MySQLDatabase(DAOUtil.HOST, DAOUtil.USER_NAME, DAOUtil.PASSWORD);
 
             if (connection.connect()) {
@@ -125,7 +125,7 @@ public class UserDAO {
                 // get userId from hash map
                 int userId = Integer.parseInt(userData.get("userId").toString());
 
-                if(userId == loggedInId || checkAdmin(connection, loggedInId)){
+                if (userId == loggedInId || checkAdmin(connection, loggedInId)) {
                     // create params list for check user query
                     userParams = new ArrayList<String>();
                     userParams.add(Integer.toString(userId));
@@ -149,8 +149,7 @@ public class UserDAO {
                         }
                     }
                 }
-            }
-            else if(!(userData.containsKey("userId")) && loggedInId == -1){
+            } else if (!(userData.containsKey("userId")) && loggedInId == -1) {
                 // Insert new user
                 userParams = new ArrayList<String>();
                 int newUserId = nextUserId(connection);
@@ -216,7 +215,7 @@ public class UserDAO {
      * @return User - user instance
      */
     public User login(String email, String password) {
-        if(loggedInId == -1){
+        if (loggedInId == -1) {
             MySQLDatabase connection = new MySQLDatabase(DAOUtil.HOST, DAOUtil.USER_NAME, DAOUtil.PASSWORD);
 
             if (connection.connect()) {
@@ -257,8 +256,7 @@ public class UserDAO {
 
                     // return validated user's instance
                     return user;
-                }
-                else {
+                } else {
                     connection.close();
                 }
             }
@@ -305,61 +303,57 @@ public class UserDAO {
     /**
      * Get all users (Admin only)
      *
-     * @param adminUserId id of the user
      * @return ArrayList<User> Arraylist of all users in the database
      */
-    public ArrayList<User> getAllUsers(int adminUserId) {
+    public ArrayList<User> getAllUsers() {
         ArrayList<User> userList = null;
-        if(adminUserId == loggedInId){
-            MySQLDatabase connection = new MySQLDatabase(DAOUtil.HOST, DAOUtil.USER_NAME, DAOUtil.PASSWORD);
-            if (connection.connect()) {
-                // check if user is admin
-                if (checkAdmin(connection, adminUserId)) {
+        MySQLDatabase connection = new MySQLDatabase(DAOUtil.HOST, DAOUtil.USER_NAME, DAOUtil.PASSWORD);
+        if (connection.connect()) {
+            // check if user is admin
+            if (loggedInId != -1 && checkAdmin(connection, loggedInId)) {
+                // setup parameters for get all users query
+                List<String> userParams = new ArrayList<String>();
 
-                    // setup parameters for get all users query
-                    List<String> userParams = new ArrayList<String>();
+                // call get data on get all users query
+                ArrayList<ArrayList<String>> userData = connection.getData(DAOUtil.GET_ALL_USERS, userParams);
 
-                    // call get data on get all users query
-                    ArrayList<ArrayList<String>> userData = connection.getData(DAOUtil.GET_ALL_USERS, userParams);
+                // initialize returning user list
+                userList = new ArrayList<User>();
 
-                    // initialize returning user list
-                    userList = new ArrayList<User>();
+                int iCount = 1;
+                for (ArrayList<String> iUser : userData) {
 
-                    int iCount = 1;
-                    for (ArrayList<String> iUser : userData) {
-
-                        // skip first row as meta data
-                        if (iCount == 1) {
-                            ++iCount;
-                            continue;
-                        }
-
-                        // setup retrieved user's instance
-                        User user = new User();
-
-                        int userId = Integer.parseInt(iUser.get(0));
-                        user.setUserId(userId);
-                        user.setEmail(iUser.get(3));
-                        user.setPwd(iUser.get(4));
-                        user.setFirstName(iUser.get(2));
-                        user.setLastName(iUser.get(1));
-                        user.setAffiliationId(Integer.parseInt(iUser.get(8)));
-                        user.setIsAdmin(Integer.parseInt(iUser.get(7)));
-                        user.setCanReview(iUser.get(5));
-                        user.setExpiration(iUser.get(6));
-
-                        // setup papers for this user
-                        PaperAuthorDAO paperAuthorDAO = new PaperAuthorDAO(this);
-                        user.setAllPapers(paperAuthorDAO.getAuthorPapers(userId));
-
-                        // add user instance to returning array list
-                        userList.add(user);
+                    // skip first row as meta data
+                    if (iCount == 1) {
+                        ++iCount;
+                        continue;
                     }
-                }
 
-                // close connection to database
-                connection.close();
+                    // setup retrieved user's instance
+                    User user = new User();
+
+                    int userId = Integer.parseInt(iUser.get(0));
+                    user.setUserId(userId);
+                    user.setEmail(iUser.get(3));
+                    user.setPwd(iUser.get(4));
+                    user.setFirstName(iUser.get(2));
+                    user.setLastName(iUser.get(1));
+                    user.setAffiliationId(Integer.parseInt(iUser.get(8)));
+                    user.setIsAdmin(Integer.parseInt(iUser.get(7)));
+                    user.setCanReview(iUser.get(5));
+                    user.setExpiration(iUser.get(6));
+
+                    // setup papers for this user
+                    PaperAuthorDAO paperAuthorDAO = new PaperAuthorDAO(this);
+                    user.setAllPapers(paperAuthorDAO.getAuthorPapers(userId));
+
+                    // add user instance to returning array list
+                    userList.add(user);
+                }
             }
+
+            // close connection to database
+            connection.close();
         }
 
         // return null if unable to validate if user is admin to database
@@ -370,44 +364,37 @@ public class UserDAO {
     /**
      * Get a particular user information (Admin Only)
      *
-     * @param adminUserId admin requesting for user information
-     * @param userId      requested user
+     * @param userId requested user
      * @return User - user instance
      */
-    public User getUser(int adminUserId, int userId) {
+    public User getUser(int userId) {
         User user = null;
-        if(loggedInId == adminUserId){
-            MySQLDatabase connection = new MySQLDatabase(DAOUtil.HOST, DAOUtil.USER_NAME, DAOUtil.PASSWORD);
+        MySQLDatabase connection = new MySQLDatabase(DAOUtil.HOST, DAOUtil.USER_NAME, DAOUtil.PASSWORD);
+        if (connection.connect()) {
+            if (loggedInId != -1 && checkAdmin(connection, loggedInId)) {
+                // setup parameters for get a single user query
+                List<String> userParams = new ArrayList<String>();
+                userParams.add(Integer.toString(userId));
 
-            if (connection.connect()) {
+                // call get data on get a single user query
+                ArrayList<ArrayList<String>> userData = connection.getData(DAOUtil.GET_SINGLE_USER, userParams);
+                if (userData.size() == 2) {
 
-                // check if user is admin
-                if (checkAdmin(connection, adminUserId)) {
+                    // setup requested user's object
+                    user = new User();
+                    user.setUserId(Integer.parseInt(userData.get(1).get(0)));
+                    user.setEmail(userData.get(1).get(3));
+                    user.setPwd(userData.get(1).get(4));
+                    user.setFirstName(userData.get(1).get(2));
+                    user.setLastName(userData.get(1).get(1));
+                    user.setAffiliationId(Integer.parseInt(userData.get(1).get(8)));
+                    user.setIsAdmin(Integer.parseInt(userData.get(1).get(7)));
+                    user.setCanReview(userData.get(1).get(5));
+                    user.setExpiration(userData.get(1).get(6));
 
-                    // setup parameters for get a single user query
-                    List<String> userParams = new ArrayList<String>();
-                    userParams.add(Integer.toString(userId));
-
-                    // call get data on get a single user query
-                    ArrayList<ArrayList<String>> userData = connection.getData(DAOUtil.GET_SINGLE_USER, userParams);
-                    if (userData.size() == 2) {
-
-                        // setup requested user's object
-                        user = new User();
-                        user.setUserId(Integer.parseInt(userData.get(1).get(0)));
-                        user.setEmail(userData.get(1).get(3));
-                        user.setPwd(userData.get(1).get(4));
-                        user.setFirstName(userData.get(1).get(2));
-                        user.setLastName(userData.get(1).get(1));
-                        user.setAffiliationId(Integer.parseInt(userData.get(1).get(8)));
-                        user.setIsAdmin(Integer.parseInt(userData.get(1).get(7)));
-                        user.setCanReview(userData.get(1).get(5));
-                        user.setExpiration(userData.get(1).get(6));
-
-                        // setup papers for this user
-                        PaperAuthorDAO paperAuthorDAO = new PaperAuthorDAO(this);
-                        user.setAllPapers(paperAuthorDAO.getAuthorPapers(userId));
-                    }
+                    // setup papers for this user
+                    PaperAuthorDAO paperAuthorDAO = new PaperAuthorDAO(this);
+                    user.setAllPapers(paperAuthorDAO.getAuthorPapers(userId));
                 }
 
                 // close connection to database
@@ -425,99 +412,91 @@ public class UserDAO {
     /**
      * Delete a particular user (Admin only)
      *
-     * @param adminUserId id of the user
      * @param deletionIds integer array of userIds to delete
      * @return integer number of rowsAffected for the delete operation
      */
-    public int deleteUsers(int adminUserId, int[] deletionIds) {
+    public int deleteUsers(int[] deletionIds) {
         int userRowsAffected = 0;
-        if(adminUserId == loggedInId){
-            MySQLDatabase connection = new MySQLDatabase(DAOUtil.HOST, DAOUtil.USER_NAME, DAOUtil.PASSWORD);
+        MySQLDatabase connection = new MySQLDatabase(DAOUtil.HOST, DAOUtil.USER_NAME, DAOUtil.PASSWORD);
 
-            if (connection.connect()) {
 
-                // check if user is admin
-                if (checkAdmin(connection, adminUserId)) {
+        if (connection.connect()) {
+            if (loggedInId != -1 && checkAdmin(connection, loggedInId)) {
+                // pass through each user id
+                for (int id : deletionIds) {
+                    connection.startTransaction();
+                    int rowsAffected = 0;
 
-                    // pass through each user id
-                    for(int id: deletionIds){
-                        connection.startTransaction();
-                        int rowsAffected = 0;
+                    //variable to check if rollback should be done or not
+                    boolean rollbackCheck = false;
 
-                        //variable to check if rollback should be done or not
-                        boolean rollbackCheck = false;
+                    // setup parameters to get all papers query
+                    List<String> queryParams = new ArrayList<String>();
+                    queryParams.add(Integer.toString(id));
 
-                        // setup parameters to get all papers query
-                        List<String> queryParams = new ArrayList<String>();
-                        queryParams.add(Integer.toString(id));
+                    // call get data on get all paperIds of a user
+                    PaperDAO accessPapers = new PaperDAO(this);
+                    ArrayList<Paper> papersData = accessPapers.getPapers(id);
 
-                        // call get data on get all paperIds of a user
-                        PaperDAO accessPapers = new PaperDAO(this);
-                        ArrayList<Paper> papersData = accessPapers.getPapers(id);
+                    //Check if the user has any papers associated
+                    if (papersData.size() >= 1) {
+                        // Pass through each paper id
+                        for (Paper paper : papersData) {
+                            int paperId = paper.getPaperId();
 
-                        //Check if the user has any papers associated
-                        if(papersData.size() >= 1){
-                            // Pass through each paper id
-                            for(Paper paper: papersData){
-                                int paperId = paper.getPaperId();
+                            PaperSubjectDAO accessPaperSubjects = new PaperSubjectDAO(this);
+                            // call modify data to delete papers from paper subjects
+                            rowsAffected = accessPaperSubjects.deletePaperSubjects(paperId);
 
-                                PaperSubjectDAO accessPaperSubjects = new PaperSubjectDAO(this);
+                            if (rowsAffected >= 1) {
+
+                                PaperAuthorDAO accessPaperAuthors = new PaperAuthorDAO(this);
                                 // call modify data to delete papers from paper subjects
-                                rowsAffected = accessPaperSubjects.deletePaperSubjects(paperId);
+                                rowsAffected = accessPaperAuthors.deletePaperAuthors(paperId);
 
-                                if(rowsAffected >= 1){
-
-                                    PaperAuthorDAO accessPaperAuthors = new PaperAuthorDAO(this);
-                                    // call modify data to delete papers from paper subjects
-                                    rowsAffected = accessPaperAuthors.deletePaperAuthors(paperId);
-
-                                    if(rowsAffected < 1){
-                                        rollbackCheck = true;
-                                        break;
-                                    }
-                                }
-                                else{
+                                if (rowsAffected < 1) {
                                     rollbackCheck = true;
                                     break;
                                 }
-                            }
-
-                            // setup parameters to delete users
-                            queryParams = new ArrayList<String>();
-                            queryParams.add(Integer.toString(id));
-
-                            //Check if previous commands ran perfectly then continue
-                            if(!rollbackCheck){
-
-                                rowsAffected = accessPapers.deleteUserPaper(id);
-
-                                if(rowsAffected >= 1){
-                                    // call modify data to delete users
-                                    userRowsAffected += connection.modifyData(DAOUtil.DELETE_USERS, queryParams);
-                                    if(userRowsAffected < 1){
-                                        rollbackCheck = true;
-                                    }
-                                }
-                                else{
-                                    rollbackCheck = true;
-                                }
+                            } else {
+                                rollbackCheck = true;
+                                break;
                             }
                         }
-                        //if no associated paper only delete from user table
-                        else{
-                            userRowsAffected += connection.modifyData(DAOUtil.DELETE_USERS, queryParams);
-                            if(userRowsAffected < 1){
+
+                        // setup parameters to delete users
+                        queryParams = new ArrayList<String>();
+                        queryParams.add(Integer.toString(id));
+
+                        //Check if previous commands ran perfectly then continue
+                        if (!rollbackCheck) {
+
+                            rowsAffected = accessPapers.deleteUserPaper(id);
+
+                            if (rowsAffected >= 1) {
+                                // call modify data to delete users
+                                userRowsAffected += connection.modifyData(DAOUtil.DELETE_USERS, queryParams);
+                                if (userRowsAffected < 1) {
+                                    rollbackCheck = true;
+                                }
+                            } else {
                                 rollbackCheck = true;
                             }
                         }
+                    }
+                    //if no associated paper only delete from user table
+                    else {
+                        userRowsAffected += connection.modifyData(DAOUtil.DELETE_USERS, queryParams);
+                        if (userRowsAffected < 1) {
+                            rollbackCheck = true;
+                        }
+                    }
 
-                        //Check if everything ran successfully else rollback
-                        if(!rollbackCheck){
-                            connection.endTransaction();
-                        }
-                        else{
-                            connection.rollbackTransaction();
-                        }
+                    //Check if everything ran successfully else rollback
+                    if (!rollbackCheck) {
+                        connection.endTransaction();
+                    } else {
+                        connection.rollbackTransaction();
                     }
                 }
                 // close connection to database
@@ -532,19 +511,19 @@ public class UserDAO {
     /**
      * Make a particular user Admin (Admin Only)
      *
-     * @param adminUserId admin requesting for user information
      * @param userId      requested user
      * @param adminStatus admin status to be given to the user
      * @return User - user instance
      */
-    public User changeAdminStatus(int adminUserId, int userId, boolean adminStatus) {
+    public User changeAdminStatus(int userId, boolean adminStatus) {
         ArrayList<String> userParams = null;
         User user = null;
         int rowsAffected = 0;
-        if(loggedInId == adminUserId){
+        MySQLDatabase connection = new MySQLDatabase(DAOUtil.HOST, DAOUtil.USER_NAME, DAOUtil.PASSWORD);
 
-            MySQLDatabase connection = new MySQLDatabase(DAOUtil.HOST, DAOUtil.USER_NAME, DAOUtil.PASSWORD);
-            if(connection.connect()){
+
+        if (connection.connect()) {
+            if (loggedInId != -1 && checkAdmin(connection, loggedInId)) {
 
                 // create params list for check user query
                 userParams = new ArrayList<String>();
@@ -558,18 +537,17 @@ public class UserDAO {
 
                     // create params list for set admin query
                     userParams = new ArrayList<String>();
-                    if(adminStatus){
+                    if (adminStatus) {
                         userParams.add(Integer.toString(1));
-                    }
-                    else{
+                    } else {
                         userParams.add(Integer.toString(0));
                     }
                     userParams.add(Integer.toString(userId));
 
                     // call modify data on set user as admin query
                     rowsAffected = connection.modifyData(DAOUtil.SET_USER_AS_ADMIN, userParams);
-                    if(rowsAffected == 1){
-                        user = getUser(adminUserId, userId);
+                    if (rowsAffected == 1) {
+                        user = getUser(userId);
                     }
                 }
                 connection.close();
@@ -581,20 +559,17 @@ public class UserDAO {
     /**
      * Change review status of a particular user (Admin Only)
      *
-     * @param adminUserId admin requesting for user information
-     * @param userId      requested user
+     * @param userId       requested user
      * @param reviewStatus review status to be given to the user
      * @return User - user instance
      */
-    public User changeReviewStatus(int adminUserId, int userId, boolean reviewStatus) {
+    public User changeReviewStatus(int userId, boolean reviewStatus) {
         ArrayList<String> userParams = null;
         User user = null;
         int rowsAffected = 0;
-        if(loggedInId == adminUserId){
-
-            MySQLDatabase connection = new MySQLDatabase(DAOUtil.HOST, DAOUtil.USER_NAME, DAOUtil.PASSWORD);
-            if(connection.connect()){
-
+        MySQLDatabase connection = new MySQLDatabase(DAOUtil.HOST, DAOUtil.USER_NAME, DAOUtil.PASSWORD);
+        if (connection.connect()) {
+            if (loggedInId != -1 && checkAdmin(connection, loggedInId)) {
                 // create params list for check user query
                 userParams = new ArrayList<String>();
                 userParams.add(Integer.toString(userId));
@@ -607,18 +582,17 @@ public class UserDAO {
 
                     // create params list for set admin query
                     userParams = new ArrayList<String>();
-                    if(reviewStatus){
+                    if (reviewStatus) {
                         userParams.add(Integer.toString(1));
-                    }
-                    else{
+                    } else {
                         userParams.add(Integer.toString(0));
                     }
                     userParams.add(Integer.toString(userId));
 
                     // call modify data on set user as admin query
                     rowsAffected = connection.modifyData(DAOUtil.SET_USER_CAN_REVIEW, userParams);
-                    if(rowsAffected == 1){
-                        user = getUser(adminUserId, userId);
+                    if (rowsAffected == 1) {
+                        user = getUser(userId);
                     }
                 }
                 connection.close();
