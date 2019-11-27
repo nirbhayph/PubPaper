@@ -1,5 +1,8 @@
 package com.rit.dca.pubpaper.database;
 
+import com.rit.dca.pubpaper.exception.CustomExceptionUtil;
+import com.rit.dca.pubpaper.exception.PubPaperException;
+
 import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -38,7 +41,7 @@ public class MySQLDatabase {
   * Connects to MYSQL DB using the MYSQL Driver
   * @return boolean - returns true or false based on ability to connect.
   */
-  public boolean connect(){
+  public boolean connect() /*throws PubPaperException*/ {
     try{
       Class.forName(MySQLUtil.MYSQL_DRIVER);
       this.connection = DriverManager.getConnection(connectionURL, userName, password);
@@ -46,6 +49,7 @@ public class MySQLDatabase {
     }
     catch (Exception e){
       return false;
+      //throw new PubPaperException(e, MySQLUtil.UNABLE_TO_CONNECT, CustomExceptionUtil.getCaller(e));
     }
   }
 

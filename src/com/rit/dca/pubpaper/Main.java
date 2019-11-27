@@ -1,6 +1,7 @@
 package com.rit.dca.pubpaper;
 
 import com.rit.dca.pubpaper.dao.*;
+import com.rit.dca.pubpaper.exception.CustomExceptionUtil;
 import com.rit.dca.pubpaper.model.*;
 
 import java.lang.reflect.Array;
@@ -16,20 +17,20 @@ public class Main {
         UserDAO user = new UserDAO();
         User validatedUser = user.login("stevez@cssconsult.com", "c704e98e5f46b4afd32682cf53d740524b4f6910");
         if(validatedUser != null){
-            System.out.println("Logged In Successfully - " + validatedUser.getUserId());
+            System.out.println(ModelUtil.getJson(validatedUser));
 
             // Get all papers for validated user
             PaperDAO accessPapers = new PaperDAO(user);
             ArrayList<Paper> userPapers = accessPapers.getPapers(validatedUser.getUserId());
 
             for(Paper paper : userPapers){
-                System.out.println(paper.getTitle());
+                System.out.println(ModelUtil.getJson(paper));
             }
 
             // Get a paper for paperId requested
             Paper paper = accessPapers.getPaper(47);
             if(paper != null){
-                System.out.println("Retrieved paper - "+paper.getTitle().replace('+', ' '));
+                System.out.println(ModelUtil.getJson(paper));
             }
 
             // Get affiliation instance for validated user
@@ -186,8 +187,8 @@ public class Main {
             int coAuthorsIdArr[] = {1};
             updatePaperData.put("coAuthors", coAuthorsIdArr);
 
-            PaperDAO paperDAO = new PaperDAO();
-            paperDAO.setPaper(updatePaperData);
+            PaperDAO paperDAO = new PaperDAO(user);
+            //paperDAO.setPaper(updatePaperData);
 
 
             // Create New Paper
@@ -203,7 +204,7 @@ public class Main {
             int _coAuthorsIdArr[] = {389};
             newPaperData.put("coAuthors", _coAuthorsIdArr);
 
-            paperDAO.setPaper(newPaperData);
+            //paperDAO.setPaper(newPaperData);
 
 
             //Delete a User

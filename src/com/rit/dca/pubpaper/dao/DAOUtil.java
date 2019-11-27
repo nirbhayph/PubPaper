@@ -11,7 +11,7 @@ public class DAOUtil {
 
     // MYSQL credentials
     protected static final String USER_NAME = "root";
-    protected static final String PASSWORD = "root";
+    protected static final String PASSWORD = "google12";
     protected static final String HOST = "jdbc:mysql://localhost:3306/CSM?useSSL=false";
 
     // Authentication
