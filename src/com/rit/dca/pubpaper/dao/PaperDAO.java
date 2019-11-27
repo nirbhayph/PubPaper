@@ -15,6 +15,7 @@ import java.util.List;
  */
 
 public class PaperDAO {
+
     /**
      * Gives a list of paper instances
      * @param userId for which papers are required
@@ -139,6 +140,8 @@ public class PaperDAO {
     public Paper setPaper(HashMap<String, Object> paperDetails){
         //int paperId, String submissionTitle, String submissionAbstract, int submissionType, String fileName,
         //String[] subjects, String[] coAuthorsFirstNames, String[] coAuthorsLastNames
+
+
         return null;
     }
 

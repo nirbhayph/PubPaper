@@ -17,6 +17,10 @@ public class UserDAO {
 
     private int loggedInId = -1;
 
+    public int getLoggedInId() {
+        return loggedInId;
+    }
+
     /**
      * Get the profile info for user object (all properties)
      *

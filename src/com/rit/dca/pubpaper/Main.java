@@ -115,6 +115,38 @@ public class Main {
                 System.out.println(paperDAO.getPaper(paperId).getPaperId() + " ENDS HERE ");
             }
 
+            // Update Paper
+            HashMap<String, Object> updatePaperData = new HashMap<String, Object>();
+            updatePaperData.put("paperId", 103);
+            updatePaperData.put("title", "Mixed Reality");
+            updatePaperData.put("abstract", "This is my paper abstract");
+            updatePaperData.put("submissionType", 2);
+            updatePaperData.put("fileId", "ZZX22");
+            int subjectIdArr[] = {5, 9, 10, 13, 16};
+            updatePaperData.put("subjects", subjectIdArr);
+            int coAuthorsIdArr[] = {1};
+            updatePaperData.put("coAuthors", coAuthorsIdArr);
+
+            PaperDAO paperDAO = new PaperDAO();
+            paperDAO.setPaper(updatePaperData);
+
+
+            // Create New Paper
+
+            HashMap<String, Object> newPaperData = new HashMap<String, Object>();
+            newPaperData.put("paperId", 9910);
+            newPaperData.put("title", "nirbhay rules");
+            newPaperData.put("abstract", "This is the boss");
+            newPaperData.put("submissionType", 1);
+            newPaperData.put("fileId", "NQAA");
+            int _subjectIdArr[] = {5, 9, 10};
+            newPaperData.put("subjects", _subjectIdArr);
+            int _coAuthorsIdArr[] = {389};
+            newPaperData.put("coAuthors", _coAuthorsIdArr);
+
+            paperDAO.setPaper(newPaperData);
+
+
             //Delete a User
             /*
             int users[] = {247, 450, 405, 10};

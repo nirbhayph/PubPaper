@@ -40,6 +40,8 @@ public class DAOUtil {
     protected static final String GET_PAPER_WITH_PAPER_ID = "SELECT * FROM Papers WHERE paperId=?";
     protected static final String GET_USER_PAPER_IDS = "SELECT paperId FROM Papers WHERE submitterId=?";
     protected static final String DELETE_USER_PAPERS = "DELETE FROM Papers WHERE submitterId=?";
+    //protected static final String INSERT_PAPER = "";
+    //protected static final String UPDATE_PAPER = "UPDATE Papers SET title=?, abstract=?, submissionType=?, fileId=? WHERE paperId=? AND submitterId=?";
 
     // Affiliations
     protected static final String GET_USER_AFFILIATION = "SELECT affiliationId FROM Users WHERE userId=?";
