@@ -46,7 +46,7 @@ public class Main {
             }
 
             // Get all types
-            TypeDAO accessType = new TypeDAO();
+            TypeDAO accessType = new TypeDAO(user);
 
             ArrayList<Type> types = accessType.getTypes();
             for(Type type : types){
@@ -87,8 +87,18 @@ public class Main {
 
             // Delete Affiliation
             System.out.println("\nDelete Affiliation Affected Rows : " + accessAffiliation.deleteAffiliation(275));
-
             */
+
+            // Add type
+            System.out.println("\nAdd Type STATUS : " + accessType.addTypes("Aamchi Type"));
+
+            // Edit type
+            System.out.println("\nUpdate Type Affected Rows : " + accessType.changeType(8, "John Doe Type"));
+
+            // Delete type
+            System.out.println("\nDelete Type Affected Rows : " + accessType.deleteType(8));
+
+
             /*
             // See a User's Paper's Subjects
             System.out.println("VALIDATED USER's ALL PAPERS SUBJECTS");

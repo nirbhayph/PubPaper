@@ -46,7 +46,7 @@ public class DAOUtil {
     protected static final String GET_AFFILIATION_WITH_ID = "SELECT * FROM _Affiliations WHERE affiliationId=?";
     protected static final String GET_ALL_AFFILIATIONS = "SELECT * FROM _Affiliations";
     protected static final String INSERT_AFFILIATION = "INSERT INTO _Affiliations VALUES (?,?)";
-    protected static final String GET_NEXT_AFFILIATION_ID = "SELECT affiliationId FROM _Affiliations ORDER BY affiliationId DESC LIMIT 1";
+    protected static final String GET_LAST_AFFILIATION_ID = "SELECT affiliationId FROM _Affiliations ORDER BY affiliationId DESC LIMIT 1";
     protected static final String DELETE_AFFILIATION = "DELETE FROM _Affiliations WHERE affiliationId=?";
     protected static final String SET_USER_AFFILIATION_NULL = "UPDATE Users SET affiliationId=NULL WHERE affiliationId=?";
     protected static final String UPDATE_AFFILIATION = "UPDATE _Affiliations SET affiliationName=? WHERE affiliationId=?";
@@ -56,6 +56,12 @@ public class DAOUtil {
     protected static final String GET_ALL_TYPES = "SELECT * FROM _Types";
     protected static final String GET_PAPER_TYPE_ID = "SELECT submissionType FROM Papers WHERE paperId=?";
     protected static final String GET_PAPER_TYPE_WITH_ID = "SELECT * FROM _Types WHERE typeId=?";
+    protected static final String GET_LAST_TYPE_ID = "SELECT typeId FROM _Types ORDER BY typeId DESC LIMIT 1";
+    protected static final String INSERT_TYPE = "INSERT INTO _Types VALUES (?,?)";
+    protected static final String DELETE_TYPE = "DELETE FROM _Types WHERE typeId=?";
+    protected static final String SET_PAPER_TYPE_NULL = "UPDATE Papers SET submissionType=NULL WHERE submissionType=?";
+    protected static final String UPDATE_TYPE = "UPDATE _Types SET typeName=? WHERE typeId=?";
+
 
     // PaperSubjects
     protected static final String DELETE_PAPER_SUBJECTS = "DELETE FROM PaperSubjects WHERE paperId=?";

@@ -52,3 +52,4 @@ To note : The functions like getType for PaperId have still been built. But it's
 CHECK ALL COMMENTS
 CHECK FOR ALL USELESS IMPORTS
 CHECK FOR ALL METHOD AND AUTHOR SIGNATURES
+CHECK ALL VARIABLE NAMES

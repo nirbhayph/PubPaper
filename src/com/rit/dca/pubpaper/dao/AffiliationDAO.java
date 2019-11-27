@@ -127,7 +127,7 @@ public class AffiliationDAO {
         List<String> userParams = new ArrayList<String>();
 
         // call get data on check user query
-        ArrayList<ArrayList<String>> lastAffiliation = connection.getData(DAOUtil.GET_NEXT_AFFILIATION_ID, userParams);
+        ArrayList<ArrayList<String>> lastAffiliation = connection.getData(DAOUtil.GET_LAST_AFFILIATION_ID, userParams);
 
         if (lastAffiliation.size() == 2) {
             newAffiliationId = Integer.parseInt(lastAffiliation.get(1).get(0)) + 1;

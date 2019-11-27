@@ -108,4 +108,93 @@ public class TypeDAO {
 
         // TODO : Manage exceptions for this method
     }
+
+
+    private int nextTypeId(MySQLDatabase connection) {
+
+        int nextTypeId = -1;
+
+        // create params list for next user id query
+        List<String> typeParams = new ArrayList<String>();
+
+        // call get data on check type query
+        ArrayList<ArrayList<String>> lastType = connection.getData(DAOUtil.GET_LAST_TYPE_ID, typeParams);
+
+        if (lastType.size() == 2) {
+            nextTypeId = Integer.parseInt(lastType.get(1).get(0)) + 1;
+        }
+
+        return nextTypeId;
+    }
+
+
+    public boolean addTypes(String typeName){
+        MySQLDatabase connection = new MySQLDatabase(DAOUtil.HOST, DAOUtil.USER_NAME, DAOUtil.PASSWORD);
+        boolean addStatus = false;
+
+        if(connection.connect()) {
+            if(this.userAccess.checkAdmin(connection, this.userAccess.getLoggedInId())) {
+                // setup parameters for add type query
+                List<String> typeParams = new ArrayList<String>();
+                typeParams.add(Integer.toString(nextTypeId(connection)));
+                typeParams.add(typeName);
+
+                // call modify data to add type query
+                int rowsAffected = connection.modifyData(DAOUtil.INSERT_TYPE, typeParams);
+                if(rowsAffected == 1){
+                    addStatus = true;
+                }
+            }
+            // close connection to database
+            connection.close();
+        }
+
+        return addStatus;
+    }
+
+
+    public int deleteType(int typeId){
+        MySQLDatabase connection = new MySQLDatabase(DAOUtil.HOST, DAOUtil.USER_NAME, DAOUtil.PASSWORD);
+        int rowsAffected = 0;
+
+        if(connection.connect()) {
+            if (this.userAccess.checkAdmin(connection, this.userAccess.getLoggedInId())) {
+                // setup parameters for delete type query
+                List<String> typeParams = new ArrayList<String>();
+                typeParams.add(Integer.toString(typeId));
+
+                // call modify data to delete type query
+                rowsAffected = connection.modifyData(DAOUtil.DELETE_TYPE, typeParams);
+                if(rowsAffected == 1){
+                    int papersRowsAffected = connection.modifyData(DAOUtil.SET_PAPER_TYPE_NULL, typeParams);
+                }
+            }
+            // close connection to database
+            connection.close();
+        }
+        return rowsAffected;
+    }
+
+    public int changeType(int typeId, String newTypeName){
+        MySQLDatabase connection = new MySQLDatabase(DAOUtil.HOST, DAOUtil.USER_NAME, DAOUtil.PASSWORD);
+        int rowsAffected = 0;
+
+        if(connection.connect()) {
+
+            if (this.userAccess.checkAdmin(connection, this.userAccess.getLoggedInId())) {
+                // setup parameters for set type query
+                List<String> typeParams = new ArrayList<String>();
+                typeParams.add(newTypeName);
+                typeParams.add(Integer.toString(typeId));
+
+                // call modify data to update type
+                rowsAffected = connection.modifyData(DAOUtil.UPDATE_TYPE, typeParams);
+            }
+            // close connection to database
+            connection.close();
+        }
+
+        return rowsAffected;
+    }
+
 }
