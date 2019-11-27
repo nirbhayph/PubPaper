@@ -4,6 +4,7 @@ import com.rit.dca.pubpaper.database.MySQLDatabase;
 import com.rit.dca.pubpaper.model.Paper;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -139,19 +140,156 @@ public class PaperDAO {
         // TODO: Manage exceptions in this method
     }
 
+    private int nextPaperId(MySQLDatabase connection) {
+
+        int newPaperId = -1;
+
+        // create params list for next user id query
+        List<String> paperParams = new ArrayList<String>();
+
+        // call get data on check user query
+        ArrayList<ArrayList<String>> lastPaper = connection.getData(DAOUtil.GET_NEXT_PAPER_ID, paperParams);
+
+        if (lastPaper.size() == 2) {
+            newPaperId = Integer.parseInt(lastPaper.get(1).get(0)) + 1;
+        }
+
+        return newPaperId;
+    }
+
     /**
      * Creates a new paper or updates an existing
      * paper and sets the information for it
      * @param paperDetails key value pairs containing paper information
-     * @return Paper instance for  created / updated paper
+     * @return Paper instance for created / updated paper
      */
     public Paper setPaper(HashMap<String, Object> paperDetails){
         //int paperId, String submissionTitle, String submissionAbstract, int submissionType, String fileName,
         //String[] subjects, String[] coAuthorsFirstNames, String[] coAuthorsLastNames
-        return null;
+
+        MySQLDatabase connection = new MySQLDatabase(DAOUtil.HOST, DAOUtil.USER_NAME, DAOUtil.PASSWORD);
+        List<String> paperParams = null;
+        Paper paper = null;
+        int rowsAffected = -1;
+        boolean rollbackCheck = false;
+
+        if (connection.connect()) {
+            if (paperDetails.containsKey("paperId") && this.userAccess.getLoggedInId() != -1 ) {
+                // get userId from hash map
+                int paperId = Integer.parseInt(paperDetails.get("paperId").toString());
+                Paper myPaper = getPaper(paperId);
+                if(myPaper.getSubmitterId() == this.userAccess.getLoggedInId() || this.userAccess.checkAdmin(connection, this.userAccess.getLoggedInId())){
+                    paperParams = new ArrayList<String>();
+                    paperParams.add(paperDetails.get("title").toString()); // title
+                    paperParams.add(paperDetails.get("abstract").toString()); // abstract
+                    paperParams.add(paperDetails.get("submissionType").toString()); // submissionType
+                    paperParams.add(paperDetails.get("fileId").toString()); // fileId
+                    paperParams.add(Integer.toString(paperId)); // paperId
+                    paperParams.add(Integer.toString(myPaper.getSubmitterId())); // submitterId (ASK)
+                    rowsAffected = connection.modifyData(DAOUtil.UPDATE_PAPER, paperParams);
+                    System.out.println("PAPER UPDATE ROWS: "+rowsAffected);
+                    if(rowsAffected == 1){
+                        PaperSubjectDAO accessPaperSubject = new PaperSubjectDAO(this.userAccess);
+                        int[] subjectsArray = (int[])paperDetails.get("subjects");
+                        // call modify data on paper subjects update query
+                        for(int subjectId : subjectsArray){
+                            rowsAffected = accessPaperSubject.updatePaperSubject(paperId, subjectId);
+                            if(rowsAffected < 1){
+                                rollbackCheck = true;
+                                break;
+                            }
+                        }
+
+                        PaperAuthorDAO accessPaperAuthor = new PaperAuthorDAO(this.userAccess);
+                        int[] authorsArray = (int[])paperDetails.get("coAuthors");
+                        int counter = 0;
+                        // call modify data on paper subjects update query
+                        for(int userId : authorsArray){
+                            rowsAffected = accessPaperAuthor.updatePaperAuthor(paperId, userId, counter++);
+                            if(rowsAffected < 1){
+                                rollbackCheck = true;
+                                break;
+                            }
+                        }
+                    }
+                    else{
+                        rollbackCheck = true;
+                    }
+
+                    if(rollbackCheck){
+                        //connection.rollbackTransaction();
+                    }
+                    else{
+                        paper = getPaper(paperId);
+                    }
+                }
+            }
+            else if(!(paperDetails.containsKey("paperId")) && this.userAccess.getLoggedInId() != -1){
+
+                // Insert new paper
+                // paperId, title, abstract, submissionType, fileId, submitterId
+                paperParams = new ArrayList<String>();
+                int newPaperId = nextPaperId(connection);
+                paperParams.add(Integer.toString(newPaperId)); // paperId
+                paperParams.add(paperDetails.get("title").toString()); // title
+                paperParams.add(paperDetails.get("abstract").toString()); // abstract
+                paperParams.add(paperDetails.get("submissionType").toString()); // submissionType
+                paperParams.add(paperDetails.get("fileId").toString()); // fileId
+                paperParams.add(Integer.toString(this.userAccess.getLoggedInId())); // submitterId
+
+                rowsAffected = connection.modifyData(DAOUtil.INSERT_NEW_PAPER, paperParams);
+                if (rowsAffected == 1) {
+                    PaperSubjectDAO accessPaperSubjects = new PaperSubjectDAO(this.userAccess);
+
+                    // call modify data to add papers to paper subjects
+                    int[] subjectsArray = (int[])paperDetails.get("subjects");
+
+                    rowsAffected = accessPaperSubjects.addPaperSubject(newPaperId, subjectsArray);
+                    if(rowsAffected == subjectsArray.length){
+                        PaperAuthorDAO accessPaperAuthors = new PaperAuthorDAO(this.userAccess);
+
+                        // call modify data to add papers to paper authors
+                        int[] usersArray = (int[])paperDetails.get("coAuthors");
+                        ArrayList<Integer> authors = new ArrayList<Integer>();
+                        for(int userId : usersArray){
+                            authors.add(userId);
+                        }
+                        authors.add(0, this.userAccess.getLoggedInId());
+
+                        int counter = 0;
+
+                        for(int userId: authors){
+                            rowsAffected = accessPaperAuthors.addPaperAuthor(newPaperId, userId, counter);
+                            if(rowsAffected == 0) {
+                                rollbackCheck = true;
+                                break;
+                            }
+                            counter = counter + 1;
+                        }
+                        if(counter == authors.size()){
+                            connection.endTransaction();
+                            paper = getPaper(newPaperId);
+                        }
+                    }
+                    else{
+                        rollbackCheck = true;
+                    }
+                }
+                else{
+                    rollbackCheck = true;
+                }
+
+                if(rollbackCheck){
+                    //connection.rollbackTransaction();
+                }
+            }
+            //Close the connection
+            connection.close();
+        }
+        return paper;
     }
 
-    public int deletePaper(int submitterId){
+    public int deleteUserPaper(int submitterId){
         int rowsAffected = -1;
             MySQLDatabase connection = new MySQLDatabase(DAOUtil.HOST, DAOUtil.USER_NAME, DAOUtil.PASSWORD);
             if (connection.connect()) {
@@ -168,6 +306,49 @@ public class PaperDAO {
                 connection.close();
             }
         return rowsAffected;
+    }
+
+    public int deletePaper(int paperId){
+        int rowsAffected = -1, paperRowsAffected = -1;
+        boolean rollbackCheck = false;
+        MySQLDatabase connection = new MySQLDatabase(DAOUtil.HOST, DAOUtil.USER_NAME, DAOUtil.PASSWORD);
+        if (connection.connect()) {
+            if (this.userAccess.checkAdmin(connection, this.userAccess.getLoggedInId())) {
+                connection.startTransaction();
+                PaperSubjectDAO accessPaperSubjects = new PaperSubjectDAO(this.userAccess);
+                // call modify data to delete papers from paper subjects
+                rowsAffected = accessPaperSubjects.deletePaperSubjects(paperId);
+                //System.out.println("ROWS AFFECTED: "+rowsAffected);
+                if(rowsAffected >= 0){
+                    PaperAuthorDAO accessPaperAuthors = new PaperAuthorDAO(this.userAccess);
+                    // call modify data to delete papers from paper subjects
+                    rowsAffected = accessPaperAuthors.deletePaperAuthors(paperId);
+                    if(rowsAffected >= 0){
+                        List<String> paperParams = new ArrayList<>();
+                        paperParams.add(Integer.toString(paperId));
+                        paperRowsAffected = connection.modifyData(DAOUtil.DELETE_PAPER, paperParams);
+                        if(paperRowsAffected == 1){
+                            connection.endTransaction();
+                        }
+                        else{
+                            rollbackCheck = true;
+                        }
+                    }
+                    else{
+                        rollbackCheck = true;
+                    }
+                }
+                else{
+                    rollbackCheck = true;
+                }
+
+                if(rollbackCheck){
+                    connection.rollbackTransaction();
+                }
+            }
+            connection.close();
+        }
+        return paperRowsAffected;
     }
 
 }

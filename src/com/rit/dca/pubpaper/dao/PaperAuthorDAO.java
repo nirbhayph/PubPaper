@@ -160,7 +160,7 @@ public class PaperAuthorDAO {
         return rowsAffected;
     }
 
-    public int updatePaperAuthor(int paperId, int replaceUserId, int replaceUserIdWith){
+    public int updatePaperAuthor(int paperId, int userId, int displayOrder){
         int rowsAffected = 0;
         MySQLDatabase connection = new MySQLDatabase(DAOUtil.HOST, DAOUtil.USER_NAME, DAOUtil.PASSWORD);
 
@@ -170,45 +170,12 @@ public class PaperAuthorDAO {
             if(submitterId == this.userAccess.getLoggedInId() || this.userAccess.checkAdmin(connection, this.userAccess.getLoggedInId())){
                 if(connection.startTransaction()){
                     List<String> paperAuthorParams = new ArrayList<>();
-                    paperAuthorParams.add(Integer.toString(replaceUserIdWith));
-                    paperAuthorParams.add(Integer.toString(paperId));
-                    paperAuthorParams.add(Integer.toString(replaceUserId));
-
-                    rowsAffected = connection.modifyData(DAOUtil.UPDATE_PAPER_AUTHOR, paperAuthorParams);
-                    if(rowsAffected == 1){
-                        connection.endTransaction();
-                    }
-                    else{
-                        connection.rollbackTransaction();
-                    }
-                }
-                else{
-                    /* Exception Here */
-                }
-            }
-            else{
-                /* Exception Here */
-            }
-            connection.close();
-        }
-        return rowsAffected;
-    }
-
-    public int updateDisplayOrder(int paperId, int displayOrder, int userId){
-        int rowsAffected = 0;
-        MySQLDatabase connection = new MySQLDatabase(DAOUtil.HOST, DAOUtil.USER_NAME, DAOUtil.PASSWORD);
-
-        if (connection.connect()) {
-            PaperDAO accessPaper = new PaperDAO(this.userAccess);
-            int submitterId = accessPaper.getPaper(paperId).getSubmitterId();
-            if(submitterId == this.userAccess.getLoggedInId() || this.userAccess.checkAdmin(connection, this.userAccess.getLoggedInId())){
-                if(connection.startTransaction()){
-                    List<String> paperAuthorParams = new ArrayList<>();
-                    paperAuthorParams.add(Integer.toString(displayOrder));
                     paperAuthorParams.add(Integer.toString(paperId));
                     paperAuthorParams.add(Integer.toString(userId));
+                    paperAuthorParams.add(Integer.toString(displayOrder));
+                    paperAuthorParams.add(Integer.toString(displayOrder));
 
-                    rowsAffected = connection.modifyData(DAOUtil.UPDATE_PAPER_AUTHOR_DISPLAY_ORDER, paperAuthorParams);
+                    rowsAffected = connection.modifyData(DAOUtil.INSERT_UPDATE_PAPER_AUTHOR, paperAuthorParams);
                     if(rowsAffected == 1){
                         connection.endTransaction();
                     }

@@ -17,6 +17,7 @@ public class Main {
         UserDAO user = new UserDAO();
         User validatedUser = user.login("stevez@cssconsult.com", "c704e98e5f46b4afd32682cf53d740524b4f6910");
         if(validatedUser != null){
+            System.out.println("Logged In Successfully - " + user.getLoggedInId());
             System.out.println(ModelUtil.getJson(validatedUser));
 
             // Get all papers for validated user
@@ -61,13 +62,13 @@ public class Main {
             }
 
             // Get all users
-            ArrayList<User> userList = user.getAllUsers(validatedUser.getUserId());
+            ArrayList<User> userList = user.getAllUsers();
             for(User iUser: userList){
                 System.out.println("\nFirstName : " + iUser.getFirstName() + "\t|\tLastName : " + iUser.getLastName());
             }
 
             // Get a user
-            User rUser = user.getUser(validatedUser.getUserId(), 3);
+            User rUser = user.getUser(3);
             System.out.println("\nA USER :- FirstName : " + rUser.getFirstName() + "\t|\tLastName : " + rUser.getLastName());
 
             /*
@@ -174,37 +175,45 @@ public class Main {
 
              */
 
+            // Delete Paper
+            //PaperDAO paperDAO = new PaperDAO(user);
+            //System.out.println("DELETED PAPER ROWS: "+ paperDAO.deletePaper(2));
+
+
 
             // Update Paper
             HashMap<String, Object> updatePaperData = new HashMap<String, Object>();
-            updatePaperData.put("paperId", 103);
+            updatePaperData.put("paperId", 68);
             updatePaperData.put("title", "Mixed Reality");
             updatePaperData.put("abstract", "This is my paper abstract");
             updatePaperData.put("submissionType", 2);
             updatePaperData.put("fileId", "ZZX22");
             int subjectIdArr[] = {5, 9, 10, 13, 16};
             updatePaperData.put("subjects", subjectIdArr);
-            int coAuthorsIdArr[] = {1};
+            int coAuthorsIdArr[] = {1, 419, 3, 5, 420, 6};
             updatePaperData.put("coAuthors", coAuthorsIdArr);
 
             PaperDAO paperDAO = new PaperDAO(user);
-            //paperDAO.setPaper(updatePaperData);
+            Paper updatedPaper = paperDAO.setPaper(updatePaperData);
+            System.out.println("PAPER TITLE : " + updatedPaper.getTitle());
+
 
 
             // Create New Paper
 
             HashMap<String, Object> newPaperData = new HashMap<String, Object>();
-            newPaperData.put("paperId", 9910);
+            //newPaperData.put("paperId", 9910);
             newPaperData.put("title", "nirbhay rules");
             newPaperData.put("abstract", "This is the boss");
             newPaperData.put("submissionType", 1);
             newPaperData.put("fileId", "NQAA");
             int _subjectIdArr[] = {5, 9, 10};
             newPaperData.put("subjects", _subjectIdArr);
-            int _coAuthorsIdArr[] = {389};
+            int _coAuthorsIdArr[] = {68};
             newPaperData.put("coAuthors", _coAuthorsIdArr);
 
-            //paperDAO.setPaper(newPaperData);
+            //Paper newPaper = paperDAO.setPaper(newPaperData);
+            //System.out.println("PAPER TITLE : " + newPaper.getTitle());
 
 
             //Delete a User
