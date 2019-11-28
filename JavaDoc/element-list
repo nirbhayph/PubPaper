@@ -1,0 +1,6 @@
+com.rit.dca.pubpaper
+com.rit.dca.pubpaper.dao
+com.rit.dca.pubpaper.database
+com.rit.dca.pubpaper.exception
+com.rit.dca.pubpaper.mail
+com.rit.dca.pubpaper.model

@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"com.rit.dca.pubpaper"},{"l":"com.rit.dca.pubpaper.dao"},{"l":"com.rit.dca.pubpaper.database"},{"l":"com.rit.dca.pubpaper.exception"},{"l":"com.rit.dca.pubpaper.mail"},{"l":"com.rit.dca.pubpaper.model"}]
