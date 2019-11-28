@@ -11,7 +11,7 @@ public class DAOUtil {
 
     // MYSQL credentials
     protected static final String USER_NAME = "root";
-    protected static final String PASSWORD = "google12";
+    protected static final String PASSWORD = "root";
     protected static final String HOST = "jdbc:mysql://localhost:3306/CSM?useSSL=false";
 
     // Authentication
@@ -52,12 +52,11 @@ public class DAOUtil {
     protected static final String GET_PAPER_WITH_PAPER_ID = "SELECT * FROM Papers WHERE paperId=?";
     protected static final String GET_USER_PAPER_IDS = "SELECT paperId FROM Papers WHERE submitterId=?";
     protected static final String DELETE_USER_PAPERS = "DELETE FROM Papers WHERE submitterId=?";
-    //protected static final String INSERT_PAPER = "";
     protected static final String UPDATE_PAPER = "UPDATE Papers SET title=?, abstract=?, submissionType=?, fileId=? WHERE paperId=? AND submitterId=?";
     protected static final String DELETE_PAPER = "DELETE FROM Papers WHERE paperId=?";
     protected static final String GET_NEXT_PAPER_ID = "SELECT paperId FROM papers ORDER BY paperId DESC LIMIT 1";
     protected static final String INSERT_NEW_PAPER = "INSERT INTO Papers(paperId, title, abstract, track, submissionType, fileId, submitterId, status, tentativeStatus)" +
-            " VALUES(?,?,?,NULL,?,?,?,'Submitted','Undecided')";
+            " VALUES(?,?,?,NULL,?,?,?,'Undecided','Undecided')";
 
     // Affiliations
     protected static final String GET_USER_AFFILIATION = "SELECT affiliationId FROM Users WHERE userId=?";
@@ -100,4 +99,54 @@ public class DAOUtil {
     protected static final String INSERT_SUBJECT = "INSERT INTO _subjects VALUES (?,?)";
     protected static final String DELETE_SUBJECT = "DELETE FROM _subjects WHERE subjectId=?";
     protected static final String UPDATE_SUBJECT = "UPDATE _subjects SET subjectName=? WHERE subjectId=?";
+
+    // Exception Handling
+
+    // Type
+    public static final String UNABLE_TO_GET_TYPE = "Unable to retrieve type data";
+    public static final String UNABLE_TO_GET_TYPES = "Unable to retrieve types data";
+    public static final String UNABLE_TO_ADD_TYPE = "Unable to add type";
+    public static final String UNABLE_TO_CHANGE_TYPE = "Unable to change type";
+    public static final String UNABLE_TO_DELETE_TYPE = "Unable to delete type";
+
+    // Affiliation
+    public static final String UNABLE_TO_GET_AFFILIATION = "Unable to retrieve affiliation data";
+    public static final String UNABLE_TO_GET_AFFILIATIONS = "Unable to retrieve affiliations data";
+    public static final String UNABLE_TO_ADD_AFFILIATION = "Unable to add affiliation";
+    public static final String UNABLE_TO_CHANGE_AFFILIATION = "Unable to change affiliation";
+    public static final String UNABLE_TO_DELETE_AFFILIATION = "Unable to delete affiliation";
+
+    // Subject
+    public static final String UNABLE_TO_GET_SUBJECT = "Unable to retrieve subject data";
+    public static final String UNABLE_TO_GET_SUBJECTS = "Unable to retrieve subjects data";
+    public static final String UNABLE_TO_ADD_SUBJECT = "Unable to add subject";
+    public static final String UNABLE_TO_CHANGE_SUBJECT = "Unable to change subject";
+    public static final String UNABLE_TO_DELETE_SUBJECT = "Unable to delete subject";
+
+    // PaperSubject
+    public static final String UNABLE_TO_GET_PAPER_SUBJECTS = "Unable to retrieve paper's subject data";
+    public static final String UNABLE_TO_ADD_PAPER_SUBJECT = "Unable to add paper's subject data";
+    public static final String UNABLE_TO_UPDATE_PAPER_SUBJECT = "Unable to update paper's subject data";
+    public static final String UNABLE_TO_DELETE_PAPER_SUBJECT = "Unable to delete paper's subject data";
+    public static final String UNABLE_TO_DELETE_SUBJECT_PAPERS = "Unable to delete subjects for the paper";
+    public static final String UNABLE_TO_DELETE_SINGLE_PAPER_SUBJECT = "Unable to delete a single paper subject entry";
+
+    // PaperAuthor
+    public static final String UNABLE_TO_GET_PAPER_AUTHORS = "Unable to retrieve paper's authors data";
+    public static final String UNABLE_TO_GET_AUTHOR_PAPERS = "Unable to retrieve author's papers data";
+    public static final String UNABLE_TO_GET_DISPLAY_ORDER = "Unable to get display order";
+    public static final String UNABLE_TO_ADD_PAPER_AUTHORS = "Unable to add paper's authors data";
+    public static final String UNABLE_TO_UPDATE_PAPER_AUTHORS = "Unable to update paper's authors data";
+    public static final String UNABLE_TO_DELETE_PAPER_AUTHORS = "Unable to delete paper's authors data";
+    public static final String UNABLE_TO_DELETE_AUTHOR_PAPERS = "Unable to delete author's papers";
+    public static final String UNABLE_TO_DELETE_SINGLE_PAPER_AUTHOR = "Unable to delete a single paper author entry";
+
+    // Paper
+    public static final String UNABLE_TO_GET_PAPERS = "Unable to retrieve papers data";
+    public static final String UNABLE_TO_GET_PAPER = "Unable to retrieve a single paper data";
+    public static final String UNABLE_TO_SET_PAPER = "Unable to set paper";
+    public static final String UNABLE_TO_DELETE_USER_PAPER = "Unable to delete user's papers";
+    public static final String UNABLE_TO_DELETE_PAPER = "Unable to delete a single paper";
+
+
 }
