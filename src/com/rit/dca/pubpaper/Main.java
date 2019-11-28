@@ -168,7 +168,7 @@ public class Main {
                 PaperDAO paperDAO = new PaperDAO(user);
                 ArrayList<Integer> authorsIds = paperDAO.getPaper(paperId).getAuthors();
                 for(int authorId : authorsIds){
-                    System.out.println(user.getPublicProfile(authorId).getFirstName());
+                    System.out.println(user.getProfile(authorId).getFirstName());
                 }
                 System.out.println(paperDAO.getPaper(paperId).getPaperId() + " ENDS HERE ");
             }
@@ -228,6 +228,7 @@ public class Main {
             userData.put("lastName", "Stark");
             userData.put("firstName", "Tony");
             userData.put("email", "luntb@byu.edu");
+            userData.put("password", "google13");
             userData.put("affiliationId", 77);
 
             User updatedUser = user.setProfile(userData);
