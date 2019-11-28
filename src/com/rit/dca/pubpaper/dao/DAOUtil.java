@@ -38,8 +38,6 @@ public class DAOUtil {
     protected static final String GET_AUTHOR_PAPERS = "SELECT * FROM PaperAuthors WHERE userId=?";
     protected static final String GET_DISPLAY_ORDER = "SELECT displayOrder FROM PaperAuthors WHERE paperId=? AND userId=?";
     protected static final String INSERT_PAPER_AUTHOR = "INSERT INTO PaperAuthors VALUES (?,?,?)";
-    protected static final String UPDATE_PAPER_AUTHOR = "UPDATE PaperAuthors SET userId=? WHERE paperId=? AND userId=?";
-    protected static final String UPDATE_PAPER_AUTHOR_DISPLAY_ORDER = "Update PaperAuthors SET displayOrder=? WHERE paperId=? AND userId=?";
     protected static final String INSERT_UPDATE_PAPER_AUTHOR = "INSERT INTO paperauthors (paperId, userId, displayOrder) " +
             "VALUES (?, ?, ?) " +
             "ON DUPLICATE KEY UPDATE " +
@@ -50,7 +48,6 @@ public class DAOUtil {
     // Paper
     protected static final String GET_USER_PAPERS = "SELECT * FROM Papers WHERE submitterId=?";
     protected static final String GET_PAPER_WITH_PAPER_ID = "SELECT * FROM Papers WHERE paperId=?";
-    protected static final String GET_USER_PAPER_IDS = "SELECT paperId FROM Papers WHERE submitterId=?";
     protected static final String DELETE_USER_PAPERS = "DELETE FROM Papers WHERE submitterId=?";
     protected static final String UPDATE_PAPER = "UPDATE Papers SET title=?, abstract=?, submissionType=?, fileId=? WHERE paperId=? AND submitterId=?";
     protected static final String DELETE_PAPER = "DELETE FROM Papers WHERE paperId=?";
@@ -86,7 +83,6 @@ public class DAOUtil {
     protected static final String DELETE_SINGLE_PAPER_SUBJECT = "DELETE FROM papersubjects WHERE paperId=? AND subjectId=?";
     protected static final String GET_PAPER_SUBJECTS = "SELECT * FROM PaperSubjects WHERE paperId=?";
     protected static final String INSERT_PAPER_SUBJECT = "INSERT INTO PaperSubjects VALUES (?,?)";
-    protected static final String UPDATE_PAPER_SUBJECT = "UPDATE PaperSubjects SET subjectId=? WHERE paperid=? AND subjectId=?";
     protected static final String INSERT_UPDATE_PAPER_SUBJECT = "INSERT INTO papersubjects (paperId, subjectId) " +
             "VALUES (?, ?) " +
             "ON DUPLICATE KEY UPDATE " +
@@ -147,6 +143,19 @@ public class DAOUtil {
     public static final String UNABLE_TO_SET_PAPER = "Unable to set paper";
     public static final String UNABLE_TO_DELETE_USER_PAPER = "Unable to delete user's papers";
     public static final String UNABLE_TO_DELETE_PAPER = "Unable to delete a single paper";
+
+    // User
+    public static final String UNABLE_TO_GET_USER_PROFILE = "Unable to retrieve users profile";
+    public static final String UNABLE_TO_SET_USER_PROFILE = "Unable to set users profile";
+    public static final String UNABLE_TO_RESET_PASSWORD = "Unable to reset users password";
+    public static final String UNABLE_TO_LOGIN = "Unable to Login";
+    public static final String UNABLE_TO_LOGIN_TRY_LATER = "Unable to login. Please try again later";
+    public static final String UNABLE_TO_CHECK_ADMIN = "Unable to check if user is admin";
+    public static final String UNABLE_TO_GET_ALL_USERS = "Unable to retrieve all user profiles";
+    public static final String UNABLE_TO_GET_USER = "Unable to retrieve a particular user";
+    public static final String UNABLE_TO_DELETE_USER = "Unable to delete user profiles";
+    public static final String UNABLE_TO_CHANGE_ADMIN_STATUS = "Unable to change admin status of a user";
+    public static final String UNABLE_TO_CHANGE_REVIEW_STATUS = "Unable to change review status of a user";
 
 
 }

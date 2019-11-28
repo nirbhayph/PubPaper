@@ -148,18 +148,17 @@ public class SubjectDAO {
     /**
      * Add a new subject to the database (only ADMIN)
      * @param subjectName to be added to the database
-     * @return boolean success or failure to add a new subject
+     * @return Subject instance of added subject
      * @throws PubPaperException
      */
-    public boolean addSubject(String subjectName) throws PubPaperException{
+    public Subject addSubject(String subjectName) throws PubPaperException{
         MySQLDatabase connection = new MySQLDatabase(DAOUtil.HOST, DAOUtil.USER_NAME, DAOUtil.PASSWORD);
-        boolean addStatus = false;
+        Subject subject = null;
 
         try {
             if (connection.connect()) {
                 // check if user is admin
                 if (this.userAccess.checkAdmin(connection, this.userAccess.getLoggedInId())) {
-                    connection.startTransaction();
                     // get new subject id
                     int nextSId = nextSubjectId(connection);
                     if (nextSId != -1) {
@@ -170,14 +169,10 @@ public class SubjectDAO {
 
                         // call modify data to add subject query
                         int rowsAffected = connection.modifyData(DAOUtil.INSERT_SUBJECT, subjectParams);
+                        System.out.println(rowsAffected);
                         if (rowsAffected == 1) {
-                            addStatus = true;
-                            connection.endTransaction();
-                        } else {
-                            connection.rollbackTransaction();
+                            subject = this.getSubject(nextSId);
                         }
-                    } else {
-                        connection.rollbackTransaction();
                     }
                 }
                 // close connection to database
@@ -188,7 +183,7 @@ public class SubjectDAO {
             throw new PubPaperException(e, DAOUtil.UNABLE_TO_ADD_SUBJECT, CustomExceptionUtil.getCaller(e));
         }
 
-        return addStatus;
+        return subject;
     }
 
     /**

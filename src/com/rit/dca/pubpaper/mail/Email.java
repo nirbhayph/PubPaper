@@ -1,77 +1,51 @@
 package com.rit.dca.pubpaper.mail;
 
-import com.sun.mail.smtp.SMTPTransport;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 public class Email {
 
-    // for example, smtp.mailgun.org
-    private static final String SMTP_SERVER = "smtp server ";
-    private static final String USERNAME = "";
-    private static final String PASSWORD = "";
-
-    private static final String EMAIL_FROM = "From@gmail.com";
-    private static final String EMAIL_TO = "email_1@yahoo.com, email_2@gmail.com";
-    private static final String EMAIL_TO_CC = "";
-
-    private static final String EMAIL_SUBJECT = "Test Send Email via SMTP";
-    private static final String EMAIL_TEXT = "Hello Java Mail \n ABC123";
-
-    public static void main(String[] args) {
-
-        Properties prop = System.getProperties();
-        prop.put("mail.smtp.host", SMTP_SERVER); //optional, defined in SMTPTransport
-        prop.put("mail.smtp.auth", "true");
-        prop.put("mail.smtp.port", "25"); // default port 25
-
-        Session session = Session.getInstance(prop, null);
-        Message msg = new MimeMessage(session);
-
+    public void sendMail(String emailTo, String emailText) {
+        //Setting up configurations for the email connection to the Google SMTP server using TLS
+        Properties props = new Properties();
+        props.put("mail.smtp.host", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.auth", "true");
+        //Establishing a session with required user details
+        Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication("pubpaper.dca@gmail.com", "Google_12");
+            }
+        });
         try {
-
-            // from
-            msg.setFrom(new InternetAddress(EMAIL_FROM));
-
-            // to
-            msg.setRecipients(Message.RecipientType.TO,
-                    InternetAddress.parse(EMAIL_TO, false));
-
-            // cc
-            msg.setRecipients(Message.RecipientType.CC,
-                    InternetAddress.parse(EMAIL_TO_CC, false));
-
-            // subject
-            msg.setSubject(EMAIL_SUBJECT);
-
-            // content
-            msg.setText(EMAIL_TEXT);
-
+            //Creating a Message object to set the email content
+            MimeMessage msg = new MimeMessage(session);
+            //Storing the comma seperated values to email addresses
+            String to = emailTo;
+            /*Parsing the String with defualt delimiter as a comma by marking the boolean as true and storing the email
+            addresses in an array of InternetAddress objects*/
+            InternetAddress[] address = InternetAddress.parse(to, true);
+            //Setting the recepients from the address variable
+            msg.setRecipients(Message.RecipientType.TO, address);
+            String timeStamp = new SimpleDateFormat("yyyymmdd_hh-mm-ss").format(new Date());
+            msg.setSubject("Temporary Password (Valid 5 Minutes) " + timeStamp);
             msg.setSentDate(new Date());
-
-            // Get SMTPTransport
-            SMTPTransport t = (SMTPTransport) session.getTransport("smtp");
-
-            // connect
-            t.connect(SMTP_SERVER, USERNAME, PASSWORD);
-
-            // send
-            t.sendMessage(msg, msg.getAllRecipients());
-
-            System.out.println("Response: " + t.getLastServerResponse());
-
-            t.close();
-
-        } catch (MessagingException e) {
-            e.printStackTrace();
+            msg.setText(emailText);
+            msg.setHeader("XPriority", "1");
+            Transport.send(msg);
+            System.out.println("Mail has been sent successfully");
+        } catch (MessagingException mex) {
+            System.out.println("Unable to send an email" + mex);
         }
-
-
     }
 }
-
