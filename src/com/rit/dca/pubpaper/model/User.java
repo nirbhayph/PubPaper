@@ -12,8 +12,6 @@ public class User {
     private String lastName;
     private String firstName;
     private String email;
-    private String pwd;
-    private String expiration;
     private int isAdmin;
     private int affiliationId;
     private String canReview;
@@ -49,22 +47,6 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPwd() {
-        return pwd;
-    }
-
-    public void setPwd(String pwd) {
-        this.pwd = pwd;
-    }
-
-    public String getExpiration() {
-        return expiration;
-    }
-
-    public void setExpiration(String expiration) {
-        this.expiration = expiration;
     }
 
     public int getIsAdmin() {
